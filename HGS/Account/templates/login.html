@@ -1,0 +1,72 @@
+{%  extends 'base.html '%}
+{% load static %}
+
+{% block title %}
+{{ Login }}
+{% endblock %}
+
+{% block content %}
+<style>
+       .fb {
+            background-color: #3B5998;
+            color: white;
+            }
+        .google {
+                background-color: #dd4b39;
+                color: white;
+                }
+</style>
+<div class="page-content">
+    <div class="holder breadcrumbs-wrap mt-0">
+    <div class="container">
+        <ul class="breadcrumbs">
+            <li><a href="index.html">Home</a></li>
+            <li><span>Account</span></li>
+        </ul>
+    </div>
+</div>
+    <div class="holder">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-18 col-lg-12">
+                <h2 class="text-center">Login</h2>
+                <div class="form-wrapper">
+                    <h4 class="text-center"> <p> Don't have an account? <a href="account-create.html" class="custom-color" data-fancybox data-src="#modalTerms">Create Account</a></p></h4>    
+                    <form method="post" action="#">
+                        {% csrf_token %}
+                        <div class="form-group">
+                            <input type="text" class="form-control" name="username" placeholder="E-mail">
+                        </div>
+                        <div class="form-group">
+                            <input type="text" class="form-control" name="password" placeholder="Password ">
+                        </div>
+                        
+                        
+                        <div class="text-center">
+                            <button class="btn">Login</button>
+                        </div>
+                        <div>
+                            <h4 class="text-center"> <p> <a href="#" class="custom-color" data-fancybox data-src="#modalTerms">Forgot Password</a></p></h4>    
+                            <h2 class="text-center">You can login with</h2>
+                        </div>
+                       
+                        <div class="text-center">
+                            <div class="col">
+                                <a href="#" class="fb btn">
+                                  <i class="fa fa-facebook fa-fw"></i> Login with Facebook
+                                 </a>
+                                 
+                                <a href="#" class="google btn"><i class="fa fa-google fa-fw">
+                                  </i> Login with Google+
+                                </a>
+                              </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+
+{% endblock %}

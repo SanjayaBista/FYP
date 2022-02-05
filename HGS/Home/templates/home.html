@@ -1,0 +1,156 @@
+{% extends 'base.html'%}
+{% load static %}
+
+{% block title %}
+{{ Home }}
+{% endblock %}
+
+{% block content %}
+
+<div class="page-content">
+    <div class="holder fullwidth full-nopad mt-1">
+        <div class="container">
+            <div class="bnslider-wrapper">
+                <div class="bnslider bnslider--lg keep-scale" id="bnslider-001"
+                    data-slick='{"arrows": true, "dots": true}' data-autoplay="false" data-speed="12000"
+                    data-start-width="1917" data-start-height="764" data-start-mwidth="1650" data-start-mheight="1000">
+                    <div class="bnslider-slide">
+                        <div class="bnslider-image-mobile lazyload" data-bgset="{% static 'images/2.webp' %}">
+                        </div>
+                        <div class="bnslider-image lazyload" data-bgset="{% static 'images/2.webp' %}"></div>
+                        <div class="bnslider-text-wrap bnslider-overlay ">
+                            <div class="bnslider-text-content txt-middle txt-right txt-middle-m txt-center-m">
+                                <div class="bnslider-text-content-flex ">
+                                    <div class="bnslider-vert w-s-60 w-ms-100" style="padding: 0px">
+                                        <div class="bnslider-text order-1 mt-sm bnslider-text--md text-center data-ini"
+                                            data-animation="fadeInUp" data-animation-delay="800"
+                                            data-fontcolor="#282828" data-fontweight="700" data-fontline="1.5">Best
+                                            Selling This Year</div>
+                                        <div class="bnslider-text order-2 mt-sm bnslider-text--xs text-center data-ini"
+                                            data-animation="fadeInUp" data-animation-delay="1000"
+                                            data-fontcolor="#7c7c7c" data-fontweight="400" data-fontline="1.5">
+                                            Cristiano Ronaldo</div>
+                                        <div class="btn-wrap text-center  order-4 mt-md" data-animation="fadeIn"
+                                            data-animation-delay="2000" style="opacity: 1;">
+                                            <a href="" class="btn">
+                                                Shop now
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="bnslider-slide">
+                        <div class="bnslider-image-mobile lazyload" data-bgset="{% static 'images/cr7.jpg' %}"></div>
+                        <div class="bnslider-image lazyload" data-bgset="{% static 'images/cr7.jpg' %}"></div>
+                        <div class="bnslider-text-wrap bnslider-overlay ">
+                            <div class="bnslider-text-content txt-middle txt-right txt-middle-m txt-center-m">
+                                <div class="bnslider-text-content-flex ">
+                                    <div class="bnslider-vert w-s-60 w-ms-100" style="padding: 0px">
+                                        <div class="bnslider-text order-1 mt-sm bnslider-text--md text-center data-ini"
+                                            data-animation="fadeInUp" data-animation-delay="800"
+                                            data-fontcolor="#282828" data-fontweight="700" data-fontline="1.5">Best
+                                            Price This Year</div>
+                                        <div class="bnslider-text order-2 mt-sm bnslider-text--xs text-center data-ini"
+                                            data-animation="fadeInUp" data-animation-delay="1000"
+                                            data-fontcolor="#7c7c7c" data-fontweight="400" data-fontline="1.5">
+                                            eCommerce HTML Template</div>
+                                        <div class="btn-wrap text-center  order-4 mt-md" data-animation="fadeIn"
+                                            data-animation-delay="2000" style="opacity: 1;">
+                                            <a href class="btn">
+                                                Shop now
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div>
+                <div class="bnslider-arrows container-fluid">
+                    <div></div>
+                </div>
+                <div class="bnslider-dots container-fluid"></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="prd-grid-wrap">
+        <div class="prd-grid data-to-show-4 data-to-show-md-3 data-to-show-sm-2 data-to-show-xs-2"
+            data-grid-tab-content></div>
+        <div class="loader-horizontal-sm js-loader-horizontal-sm d-none" data-loader-horizontal style="opacity: 0;">
+            <span></span>
+        </div>
+
+    </div>
+</div>
+<div class="holder holder-mt-medium ">
+</div>
+<div class="holder">
+    <div class="container">
+        <div class="title-wrap text-center">
+            <h2 style="color: brown;" class="h1-style">New Arrivals</h2>
+            <hr color="#1BECB4" style="width:50%;text-align:center;">
+            <!-- <div class="h-sub maxW-825">Hurry up! Limited</div> -->
+        </div>
+        <div class="prd-grid-wrap position-relative">
+            <div class="prd-grid data-to-show-4 data-to-show-lg-4 data-to-show-md-3 data-to-show-sm-2 data-to-show-xs-2 js-category-grid"
+                data-grid-tab-content>
+
+                {% for product in latest_product %}
+                <div class="prd prd--style2 prd-labels--max prd-labels-shadow ">
+                    <div class="prd-inside">
+                        <div class="prd-img-area">
+                            <a href="{{ product.get_absolute_url }}" class="prd-img image-hover-scale image-container">
+                                <img src="{% if product.image %} {{ product.image.url }} {% else %} {% static 'images/NoImage.png' %}{% endif %}"
+                                    data-src="" alt=""  class="js-prd-img lazyload fade-up">
+                              </a>
+                            <div class="prd-circle-labels">
+                                <a href="#" class="circle-label-compare circle-label-wishlist--add js-add-wishlist mt-0"
+                                    title="Add To Wishlist"><i class="icon-heart-stroke"></i></a><a href="#"
+                                    class="circle-label-compare circle-label-wishlist--off js-remove-wishlist mt-0"
+                                    title="Remove From Wishlist"><i class="icon-heart-hover"></i></a>
+                            </div>
+                        </div>
+                        <div class="prd-info">
+                            <div class="prd-info-wrap">
+                                <div class="prd-rating justify-content-center"><i class="icon-star-fill fill"></i><i
+                                        class="icon-star-fill fill"></i><i class="icon-star-fill fill"></i><i
+                                        class="icon-star-fill fill"></i><i class="icon-star-fill fill"></i></div>
+                                <div class="prd-tag"><a href="#">{{ product.name }}</a></div>
+                                <h2 class="prd-title"><a href="product.html">{{ product.category.name }}</a></h2>
+
+                            </div>
+                            <div class="prd-hovers">
+                                <div class="prd-price">
+                                    <div class="price-new">${{ product.price }}</div>
+                                </div>
+                                <div class="prd-action">
+                                    <div class="prd-action-left">
+                                        <form action="#">
+                                            <button class="btn js-prd-addtocart"
+                                                data-product='{"name": "Oversized Cotton Blouse", "path":"images/skins/fashion/products/product-03-1.webp", "url":"product.html", "aspect_ratio":0.778}'>Add
+                                                To Cart</button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+{% endblock %}
