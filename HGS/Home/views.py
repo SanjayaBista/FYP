@@ -18,10 +18,10 @@ def categoryItem(request,id,slug=None):
     context = {'category':category,'products':products}
     return render(request, 'national.html', context)
 
-
 def productDetail(request,id,slug):
     category = Category.objects.all()
     product = Product.objects.get(pk = id)
-    context = {'category':category, 'product':product}
+    latest_product = Product.objects.all().order_by('-id')[:4]
+    context = {'category':category, 'product':product,'latest_product':latest_product}
     return render(request, 'prodDetail.html',context)
 

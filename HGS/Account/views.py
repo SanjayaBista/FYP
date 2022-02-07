@@ -26,6 +26,8 @@ def userLogout(request):
     return  redirect('home:home')
 
 def userRegister(request):
+    category = Category.objects.all()
+    context = {'category':category}
     if request.method == 'POST':
         firstName = request.POST['firstName']
         lastName = request.POST['lastName']
@@ -38,7 +40,7 @@ def userRegister(request):
         customer.save()
         return redirect('home:home')
     else:
-     return render(request, 'accountCreate.html')
+     return render(request, 'accountCreate.html',context)
 
 
 # def userRegister(request):
