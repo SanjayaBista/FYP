@@ -1,7 +1,10 @@
+from operator import mod
+from re import T
 from django.db import models
 from django.db import models
 from mptt.models import MPTTModel, TreeForeignKey
 from django.urls import reverse
+from django.contrib.auth.models import User
 # Create your models here.
 
 class Category(MPTTModel):
@@ -54,3 +57,10 @@ class Product(models.Model):
 
     def get_absolute_url(self):
         return reverse('home:productDetail',args=[self.id, self.slug])
+
+class Comment(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    product = models.ForeignKey(Product, on_delete=models.CASCADE)
+    title = models.CharField(max_length=100, blank=True)
+    review = models.CharField(max_length=300, blank=True)
+    rating = models.IntegerField(default=1)

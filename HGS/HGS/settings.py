@@ -85,7 +85,7 @@ WSGI_APPLICATION = 'HGS.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'FYPDB',
+        'NAME': 'FYPDatabase',
         'USER': 'postgres',
         'PASSWORD': 'Sanjay',
         'HOST': '127.0.0.1',
