@@ -15,6 +15,8 @@
     <link href="{% static "css/vendor.min.css" %}" rel="stylesheet">
     <link href="{% static "css/style.css" %}" rel="stylesheet">
     <link href="{% static "fonts/icomoon/icons.css" %}" rel="stylesheet">
+    
+    <link href="{% static "css/custom.css" %}" rel="stylesheet">
     <link rel="shortcut icon" type="image/x-icon" href="{% static 'images/hgs.png' %}"/>  
   
     <link
@@ -24,6 +26,7 @@
         href="https://fonts.googleapis.com/css2?family=Open%20Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
         rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css">
 </head>
 
 <body class="has-smround-btns has-loader-bg equal-height">
@@ -63,7 +66,7 @@
                                 </div>
                             </div>
                             <div class="dropdn dropdn_wishlist">
-                                <a href="account-wishlist.html" class="dropdn-link only-icon wishlist-link ">
+                                <a href="{% url 'account:wishlist' %}" class="dropdn-link only-icon wishlist-link ">
                                     <i class="icon-heart"></i><span class="dropdn-link-txt">Wishlist</span><span
                                         class="wishlist-qty">5</span>
                                 </a>
@@ -198,7 +201,7 @@
                                     </div>
                                 </div>
                                 <div class="dropdn dropdn_wishlist">
-                                    <a href="account-wishlist.html" class="dropdn-link only-icon wishlist-link ">
+                                    <a href="{% url 'account:wishlist' %}" class="dropdn-link only-icon wishlist-link ">
                                         <i class="icon-heart"></i><span class="dropdn-link-txt">Wishlist</span><span
                                             class="wishlist-qty">3</span>
                                     </a>
@@ -422,10 +425,15 @@
             <div class="dropdn-content-block">
                 <div class="dropdn-close"><span class="js-dropdn-close">Close</span></div>
                 <ul>
-                    <li><a href="{% url 'account:login' %}"><span>Log In</span><i class="icon-login"></i></a></li>
+                    {% if user.is_authenticated %} 
+                    <li><a href="{% url 'account:profile' %}"><span>My Profile</span><i class="icon-user2"></i></a></li>
+                    {% endif %}
+                    
+                   
                     {% if user.is_authenticated %} 
                     <li><a href="{% url 'account:logout' %}"><span>Log Out</span><i class="icon-login"></i></a></li>
                     {% else %} 
+                    <li><a href="{% url 'account:login' %}"><span>Log In</span><i class="icon-login"></i></a></li>
                     <li><a href="{% url 'account:register' %}"><span>Register</span><i class="icon-user2"></i></a></li>
                     {% endif %}
                     <li><a href="checkout-2.html"><span>Checkout</span><i class="icon-card"></i></a></li>
@@ -651,11 +659,11 @@
                             </div>
                             <div class="collapsed-content">
                                 <ul>
-                                    <li><a href="about.html">About Us</a></li>
-                                    <li><a href="contact.html">Contact Us</a></li>
-                                    <li><a href="typography.html">Terms & Conditions</a></li>
-                                    <li><a href="typography.html">Returns & Exchanges</a></li>
-                                    <li><a href="typography.html">Shipping & Delivery</a></li>
+                                    <li><a href="{% url 'home:aboutUs' %}">About Us</a></li>
+                                    <li><a href="{% url 'home:contactUs' %}">Contact Us</a></li>
+                                    <li><a href="{% url 'home:condition' %}">Terms & Conditions</a></li>
+                                    <li><a href="{% url 'home:exchange' %}">Returns & Exchanges</a></li>
+                                    <li><a href="{% url 'home:shipping' %}">Shipping & Delivery</a></li>
                                 </ul>
                             </div>
                         </div>
@@ -668,11 +676,11 @@
                             </div>
                             <div class="collapsed-content">
                                 <ul>
-                                    <li><a href="account-details.html">My Account</a></li>
+                                    <li><a href="{% url 'account:profile' %}">My Account</a></li>
                                     <li><a href="cart.html">View Cart</a></li>
-                                    <li><a href="account-wishlist.html">My Wishlist</a></li>
-                                    <li><a href="account-history.html">Order Status</a></li>
-                                    <li><a href="account-history.html">Track My Order</a></li>
+                                    <li><a href="{% url 'account:wishlist' %}">My Wishlist</a></li>
+                                    <li><a href="{% url 'account:history' %}">Order History</a></li>
+                                    
                                 </ul>
                             </div>
                         </div>

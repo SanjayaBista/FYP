@@ -4,7 +4,8 @@ from django.db import models
 from django.db import models
 from mptt.models import MPTTModel, TreeForeignKey
 from django.urls import reverse
-from django.contrib.auth.models import User
+from django.conf import settings
+User = settings.AUTH_USER_MODEL
 # Create your models here.
 
 class Category(MPTTModel):
@@ -64,3 +65,12 @@ class Comment(models.Model):
     title = models.CharField(max_length=100, blank=True)
     review = models.CharField(max_length=300, blank=True)
     rating = models.IntegerField(default=1)
+    created = models.DateTimeField(auto_now_add=True)
+    updated = models.DateTimeField(auto_now=True)
+    active = models.BooleanField(default=True)
+
+    class Meta:
+        ordering = ('created',)
+
+    def __str__(self):
+        return self.title

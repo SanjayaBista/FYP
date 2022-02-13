@@ -25,9 +25,13 @@ SECRET_KEY = 'django-insecure-bda!r(q0d(e!62@hhqot)!=^+7gz!um-y69a2f4s0lv@ex5wmn
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
-
-
+ALLOWED_HOSTS = ['mysite.com', 'localhost', '127.0.0.1']
+AUTH_USER_MODEL = "Account.Customer"
+AUTHENTICATION_BACKENDS = [
+    
+    'django.contrib.auth.backends.AllowAllUsersModelBackend',
+    'Account.backends.CaseInsensitiveModelBackend'
+]
 # Application definition
 
 INSTALLED_APPS = [
@@ -39,7 +43,10 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'Home',
     'Account',
+    'Cart',
+    'Order',
     'mptt',
+    'social_django',
 ]
 
 MIDDLEWARE = [

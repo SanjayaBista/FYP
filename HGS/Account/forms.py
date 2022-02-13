@@ -1,21 +1,35 @@
-from dataclasses import field
-from tkinter import W
 from django import forms
 from .models import Customer
 
 
 class RegisterForm(forms.ModelForm):
 
-    phoneNumber = forms.CharField(widget=forms.TextInput())
-    password = forms.CharField(widget=forms.PasswordInput())
-    password2 = forms.CharField(widget=forms.PasswordInput())
-
+    password = forms.CharField(label='password', widget=forms.PasswordInput(attrs={'class':'form-control','placeholder':'Password'}), min_length=6)
+    confirmPassword = forms.CharField(label='confirmPassword',widget=forms.PasswordInput(attrs={'class':'form-control','placeholder':'Confirm Password'}), min_length=6)
+    condition  = forms.BooleanField(required=True)
     class Meta:
         model = Customer
-        fields = ['first_name','last_name', 'email']
+        fields = ['first_name','last_name', 'email','phone_number','password','username']
     
-    def clean_password2(self):
-        cd = self.cleaned_data
-        if cd['password'] != cd['password2']:
+    def clean(self):
+        cleaned_data = super(RegisterForm, self).clean()
+        password = cleaned_data.get('password')
+        confirmPassword = cleaned_data.get('confirmPassword')
+        if password != confirmPassword:
             raise forms.ValidationError('Passwords don\'t match')
-        return cd['password2']
+        email = self.cleaned_data.get('email')
+        try:
+            Customer.objects.get(email=email)
+            raise forms.ValidationError(
+                'Email already exists'
+            )
+        except Customer.DoesNotExist:
+            pass
+    def __init__(self, *args, **kargs):
+        super(RegisterForm, self).__init__(*args, **kargs)
+        self.fields['first_name'].widget.attrs.update({'class': 'form-control', 'placeholder': 'First name'})
+        self.fields['last_name'].widget.attrs.update({'class': 'form-control', 'placeholder': 'Last name'})
+        self.fields['username'].widget.attrs.update({'class': 'form-control', 'placeholder': 'User Name'})
+        self.fields['email'].widget.attrs.update({'class': 'form-control', 'placeholder': 'Email'})
+        self.fields['phone_number'].widget.attrs.update({'class': 'form-control', 'placeholder': 'Phone Number'})
+        self.fields['condition'].widget.attrs.update({'id': 'checkbox1'})

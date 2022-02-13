@@ -15,7 +15,7 @@
 			<ul class="breadcrumbs">
 				<li><a href="{% url 'home:home' %}">Home</a></li>
 				<li><a href="{% url 'home:categoryItem' product.category.id product.category.slug  %}">
-					{{ product.category.name }}</a></li>
+						{{ product.category.name }}</a></li>
 				<li><span>{{ product.name }}</span></li>
 			</ul>
 		</div>
@@ -27,16 +27,25 @@
 					<div class="js-prd-d-holder">
 						<div class="prd-block_title-wrap">
 							<div class="prd-block_reviews" data-toggle="tooltip" data-placement="top"
-								title="Click to see reviews"><i class="icon-star-fill fill"></i><i
-									class="icon-star-fill fill"></i><i class="icon-star-fill fill"></i><i
-									class="icon-star-fill fill"></i><i class="icon-star"></i>
-								<span class="reviews-link"><a href="#" class="js-reviews-link"> (17 reviews)</a></span>
+								title="Click to see reviews">
+								<i class="icon-star-fill fill"></i>
+								<i class="icon-star-fill fill"></i>
+								<i class="icon-star-fill fill"></i>
+								<i class="icon-star-fill fill"></i>
+								<i class="icon-star"></i>
+								<span class="reviews-link"><a href="#" class="js-reviews-link">
+									{% with review.count as total_review %}
+									<h2>
+									{{ total_review }} {{ total_review|pluralize }}
+									</h2>
+									{% endwith %}
+								</a></span>
 							</div>
 							<h1 class="prd-block_title">{{ product.name }}</h1>
 						</div>
 					</div>
 				</div>
-				<div class="col-md-auto prd-block-prevnext-wrap">
+				<!-- <div class="col-md-auto prd-block-prevnext-wrap">
 					<div class="prd-block-prevnext">
 						<a href="#"><span class="prd-img"><img class="lazyload fade-up"
 									src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="
@@ -50,7 +59,7 @@
 									data-src="images/skins/fashion/products/product-15-1.webp" alt=""><i
 									class="icon-arrow-right"></i></span></a>
 					</div>
-				</div>
+				</div> -->
 			</div>
 			<div class="row prd-block prd-block--prv-bottom">
 				<div class="col-md-8 col-lg-8 col-xl-8 aside--sticky js-sticky-collision">
@@ -110,6 +119,7 @@
 
 							</div>
 						</div>
+						<h3>Availability : {{ product.availibility }}</h3>
 						<div class="prd-block_description prd-block_info_item ">
 							<h3>Short description</h3>
 							<p>{{ product.description }}</p>
@@ -381,43 +391,69 @@
 							<div class="col">
 								<h2>CUSTOMER REVIEWS</h2>
 							</div>
-							<div  class="col-18 col-md-auto mb-3 mb-md-0"><a href="#" class="review-write-link"></a>
-										<button type="button" class="icon-pencil"  data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo">Write Reviews</button>
-										
-										<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-										  <div class="modal-dialog" role="document">
+							<div class="container">
+								<div class="col-18 col-md-auto mb-3 mb-md-0"><a href="#" class="review-write-link"></a>
+									<button type="button" class="icon-pencil" data-toggle="modal"
+										data-target="#exampleModal" data-whatever="@mdo">Write Reviews</button>
+									<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog"
+										aria-labelledby="exampleModalLabel" aria-hidden="true">
+										<div class="modal-dialog" role="document">
 											<div class="modal-content">
-											  <div class="modal-header">
-												<h3 class="modal-title" id="exampleModalLabel">Review: </h3>	
-												</button>
-											  </div>
-											  <div class="modal-body">
-												<form>
-												  <div class="form-group">
-													<label for="recipient-name" class="col-form-label">Enter Your title</label>
-													<input type="text" class="form-control" id="recipient-name">
-												  </div>
-												  <div class="form-group">
-													<label for="message-text" class="col-form-label">Your Review</label>
-													<textarea class="form-control" id="message-text"></textarea>
-												  </div>
-												  <div class="form-group">
-													<label for="message-text" class="col-form-label">Your Review</label>
-													<textarea class="form-control" id="message-text"></textarea>
-												  </div>
-												</form>
-											  </div>
-											  <div class="modal-footer">
-												<button type="button" class="btn btn-primary" data-dismiss="modal">Cancel</button>
-												<button type="button" class="btn btn-primary">Submit</button>
-											  </div>
+												<div class="modal-header">
+													<h3 class="modal-title" id="exampleModalLabel">Review: </h3>
+													</button>
+												</div>
+												<div class="modal-body">
+													<form action="{% url 'home:addComment' product.id %}" method="post">
+														{% csrf_token %}
+														<div class="form-group">
+															<label for="recipient-name" class="col-form-label">Enter
+																Your title</label>
+															<input type="text" name="title" class="form-control" id="recipient-name" required>
+														</div>
+														<div class="form-group">
+															<label for="message-text" class="col-form-label">Your
+																Review</label>
+															<textarea class="form-control" name="review" id="message-text" required></textarea>
+														</div>
+														<div class="form-group">
+															<label for="message-text" class="col-form-label">Provide
+																Rating : </label>
+															<div class="prd-block_reviews" data-toggle="tooltip"
+																data-placement="top">
+																
+																<i name="rating" value="5" class="icon-star-fill fill"></i>
+																<i name="rating" value="4" class="icon-star-fill fill"></i>
+																<i name="rating" value="3" class="icon-star-fill fill"></i>
+																<i name="rating" value="2" class="icon-star-fill fill"></i>
+																<i name="rating" value="1" class="icon-star-fill fill"></i>
+															
+
+															</div>
+														</div>
+														<div class="modal-footer">
+															{% if user.id is not None %}
+															<button type="button" class="btn btn-primary"data-dismiss="modal">Cancel</button>
+															<input class="btn btn-primary" type="submit" value="Submit">
+														
+															{% else %}
+															<h2 style="color:Tomato;">Login to provide review <a style="color:steelblue" href="{% url 'account:login' %}">Login</a></h2>
+															{% endif %}
+														</div>
+													</form>
+												</div>
+												
 											</div>
-										  </div>
 										</div>
 									</div>
-									
+								</div>
+							</div>
+
 						</div>
+						<hr>
+						<!--  -->
 						<div id="productReviewsBottom">
+							{% for com in comment %}
 							<div class="review-item">
 								<div class="review-item_rating">
 									<i class="icon-star-fill fill"></i><i class="icon-star-fill fill"></i><i
@@ -426,22 +462,20 @@
 								</div>
 								<div class="review-item_top row align-items-center">
 									<div class="col">
-										<h5 class="review-item_author">Jaden Ngo on May 25, 2018</h5>
+										<h5 class="review-item_author">{{ com.user.username }} on {{ com.created }}</h5>
 									</div>
-									
+
 								</div>
 								<div class="review-item_content">
-									<h4>Good ball and company</h4>
-									<p>I recently bought this ball and this is the first ball that I actually buy based
-										on quality and material, I always been playing my friend ball and one of them
-										recommended me this, read some review online and decided to buy it, the ball
-										feel sticky at first but quality is nice and the hand wrote letter was awesome
-										because it shows how much season creator actually care about their customers.
+									<h4>{{ com.title}}</h4>
+									<p>
+										{{ com.review }}
 									</p>
 								</div>
 							</div>
-							
+							<hr>
 						</div>
+						{% endfor %}
 					</div>
 				</div>
 			</div>
@@ -456,17 +490,19 @@
 				<div class="prd-grid-wrap position-relative">
 					<div class="prd-grid data-to-show-4 data-to-show-lg-4 data-to-show-md-3 data-to-show-sm-2 data-to-show-xs-2 js-category-grid"
 						data-grid-tab-content>
-		
+
 						{% for product in latest_product %}
 						<div class="prd prd--style2 prd-labels--max prd-labels-shadow ">
 							<div class="prd-inside">
 								<div class="prd-img-area">
-									<a href="{{ product.get_absolute_url }}" class="prd-img image-hover-scale image-container">
+									<a href="{{ product.get_absolute_url }}"
+										class="prd-img image-hover-scale image-container">
 										<img src="{% if product.image %} {{ product.image.url }} {% else %} {% static 'images/NoImage.png' %}{% endif %}"
-											data-src="" alt=""  class="js-prd-img lazyload fade-up">
-									  </a>
+											data-src="" alt="" class="js-prd-img lazyload fade-up">
+									</a>
 									<div class="prd-circle-labels">
-										<a href="#" class="circle-label-compare circle-label-wishlist--add js-add-wishlist mt-0"
+										<a href="#"
+											class="circle-label-compare circle-label-wishlist--add js-add-wishlist mt-0"
 											title="Add To Wishlist"><i class="icon-heart-stroke"></i></a><a href="#"
 											class="circle-label-compare circle-label-wishlist--off js-remove-wishlist mt-0"
 											title="Remove From Wishlist"><i class="icon-heart-hover"></i></a>
@@ -474,12 +510,14 @@
 								</div>
 								<div class="prd-info">
 									<div class="prd-info-wrap">
-										<div class="prd-rating justify-content-center"><i class="icon-star-fill fill"></i><i
+										<div class="prd-rating justify-content-center"><i
 												class="icon-star-fill fill"></i><i class="icon-star-fill fill"></i><i
-												class="icon-star-fill fill"></i><i class="icon-star-fill fill"></i></div>
+												class="icon-star-fill fill"></i><i class="icon-star-fill fill"></i><i
+												class="icon-star-fill fill"></i></div>
 										<div class="prd-tag"><a href="#">{{ product.name }}</a></div>
-										<h2 class="prd-title"><a href="product.html">{{ product.category.name }}</a></h2>
-		
+										<h2 class="prd-title"><a href="product.html">{{ product.category.name }}</a>
+										</h2>
+
 									</div>
 									<div class="prd-hovers">
 										<div class="prd-price">
@@ -499,7 +537,7 @@
 							</div>
 						</div>
 						{% endfor %}
-		
+
 					</div>
 				</div>
 			</div>

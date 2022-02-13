@@ -25,47 +25,47 @@ def userLogout(request):
     logout(request)
     return  redirect('home:home')
 
+
 def userRegister(request):
     category = Category.objects.all()
-    context = {'category':category}
     if request.method == 'POST':
-        firstName = request.POST['firstName']
-        lastName = request.POST['lastName']
-        email = request.POST['email']
-        phoneNumber = request.POST['phoneNumber']
-        password = request.POST['password']
-        confirmPassword = request.POST['confirmPassword']
-
-        customer = Customer.objects.create(firstName=firstName,lastName =lastName,email =email,phone =phoneNumber,password=password,confirmPassword=confirmPassword)
-        customer.save()
-        return redirect('home:home')
+        user_form = RegisterForm(request.POST)
+        if user_form.is_valid():
+            first_name = user_form.cleaned_data['first_name']
+            last_name = user_form.cleaned_data['last_name']
+            email = user_form.cleaned_data['email']
+            phone_number = user_form.cleaned_data['phone_number']
+            password = user_form.cleaned_data['password']
+            username = user_form.cleaned_data['username']
+            customer = Customer.objects.create_user(first_name=first_name,last_name=last_name,email=email,phone_number=phone_number,password=password,username = username)
+            customer.save()
+            return redirect('account:login')
     else:
-     return render(request, 'accountCreate.html',context)
-
-
-# def userRegister(request):
-#     if request.method == 'POST':
-#         user_form = RegisterForm(request.POST)
-#         if user_form.is_valid():
-#             #creates new user object but doesnt save yet
-#             new_user = user_form.save(commit=False)
-#             #set chosen password
-#             new_user.set_password(user_form.cleaned_data['password'])
-#             #save user object
-#             new_user.save()
-#             #create the user Profile
-#             Customer.objects.create(user=new_user)
-#             return render(request,'home:home',{'new_user':new_user})
-#     else:
-#         user_form = RegisterForm()
-#     return render(request,'accountCreate.html',{'user_form':user_form})
-
-
-
-# class RegisterView(CreateView):
-#     template_name = "accountCreate.html"
-#     form_class = RegisterForm
-#     success_url = reverse_lazy('"home:home"')
+        user_form = RegisterForm()
+    context = {'user_form':user_form,'category':category}
+    return render(request,'accountCreate.html',context)
 
 def forgetPassword(request):
-    return render(request,'resetpassword.html')
+    category = Category.objects.all()
+    context = {'category':category}
+    return render(request,'resetpassword.html',context)
+
+def profile(request):
+    category = Category.objects.all()
+    context = {'category':category}
+    return render(request,'profile.html',context)
+
+def address(request):
+    category = Category.objects.all()
+    context = {'category':category}
+    return render(request,'myaddress.html',context)
+
+def wishlist(request):
+    category = Category.objects.all()
+    context = {'category':category}
+    return render(request,'wishlist.html',context)
+
+def history(request):
+    category = Category.objects.all()
+    context = {'category':category}
+    return render(request,'history.html',context)
