@@ -27,11 +27,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['mysite.com', 'localhost', '127.0.0.1']
 AUTH_USER_MODEL = "Account.Customer"
-AUTHENTICATION_BACKENDS = [
-    
-    'django.contrib.auth.backends.AllowAllUsersModelBackend',
-    'Account.backends.CaseInsensitiveModelBackend'
-]
+
 # Application definition
 
 INSTALLED_APPS = [
@@ -46,8 +42,15 @@ INSTALLED_APPS = [
     'Cart',
     'Order',
     'mptt',
-    'social_django',
+    'django.contrib.sites',
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    'allauth.socialaccount.providers.google',
+
 ]
+
+SITE_ID = 1
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -147,3 +150,29 @@ MEDIA_ROOT = BASE_DIR / 'media'
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+AUTHENTICATION_BACKENDS = [
+    
+    'django.contrib.auth.backends.AllowAllUsersModelBackend',
+    'Account.backends.CaseInsensitiveModelBackend',
+    'django.contrib.auth.backends.ModelBackend',
+    'allauth.account.auth_backends.AuthenticationBackend',
+]
+
+
+from django.contrib.messages import constants as messages
+MESSAGE_TAGS = {
+    messages.ERROR: 'danger',
+    
+}
+
+
+LOGIN_REDIRECT_URL = '/'
+LOGIN_URL = 'login'
+LOGOUT_URL = 'logout'
+
+
+CART_SESSION_ID = 'Cart'
+# SESSION_COOKIE_AGE = 10 # for 60 seconds timestamp   
+# SESSION_EXPIRE_SECONDS = 30
+# SESSION_EXPIRE_AFTER_LAST_ACTIVITY = True   

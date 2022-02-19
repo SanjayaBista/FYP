@@ -6,6 +6,7 @@ from django.views.generic.edit import CreateView
 from .models import Customer
 from .forms import RegisterForm
 from Home.models import Category
+from django.contrib import messages
 # Create your views here.
 def userLogin(request):
     category = Category.objects.all()
@@ -18,6 +19,8 @@ def userLogin(request):
         if user is not None:
             login(request, user)
             return redirect('home:home')
+        else:
+            messages.error(request, "Incorrect Username or Password ")
 
     return render(request,'login.html',context)
 
@@ -40,6 +43,8 @@ def userRegister(request):
             customer = Customer.objects.create_user(first_name=first_name,last_name=last_name,email=email,phone_number=phone_number,password=password,username = username)
             customer.save()
             return redirect('account:login')
+        else:
+            messages.error(request, "Password did not match. ")
     else:
         user_form = RegisterForm()
     context = {'user_form':user_form,'category':category}

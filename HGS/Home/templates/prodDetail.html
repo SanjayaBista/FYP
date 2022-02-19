@@ -2,7 +2,7 @@
 {% load static %}
 
 {% block title %}
-{{ ProductsDetail }}
+{{ product.category.name }}
 {% endblock %}
 
 {% block content %}
@@ -127,36 +127,34 @@
 						</div>
 
 
-
-
 						<div class="order-0 order-md-100">
 							<form method="post" action="#">
 								<div class="prd-block_options">
 
 									<div class="prd-size swatches">
+										
 										<div class="option-label">Size:</div>
+										{% if product.variation_set.all %}
 										<select class="form-control hidden single-option-selector-modalQuickView"
 											id="SingleOptionSelector-1" data-index="option2">
-											<option value="Small" selected="selected">Small</option>
-											<option value="Medium">Medium</option>
-											<option value="Large">Large</option>
+											{% for item in product.variation_set.all %}
+											<option value="{{ item.title|lower }}" selected="selected">{{ item.title|capfirst}}</option>
+											{% endfor  %}
 										</select>
+										{% endif %}
 										<ul class="size-list js-size-list" data-select-id="SingleOptionSelector-1">
-											<li class="active"><a href="#" data-value="Small"><span
-														class="value">Small</span></a></li>
-											<li><a href="#" data-value="Medium"><span class="value">Medium</span></a>
-											</li>
+											<li class="active"><a href="#" data-value="Small"><span class="value">Small</span></a></li>
+											<li><a href="#" data-value="Medium"><span class="value">Medium</span></a> </li>
 											<li><a href="#" data-value="Large"><span class="value">Large</span></a></li>
-											<li><a href="#" data-value="Large"><span class="value">XL</span></a></li>
-											<li><a href="#" data-value="Large"><span class="value">XXL</span></a></li>
 										</ul>
+										
 									</div>
 								</div>
 								<div class="prd-block_actions prd-block_actions--wishlist">
 									<div class="prd-block_qty">
 										<div class="qty qty-changer">
 											<button class="decrease js-qty-button"></button>
-											<input type="number" class="qty-input" name="quantity" value="1"
+											<input type="number" class="qty-input"  class="form-control" name="quantity" value="1"
 												data-min="1" data-max="1000">
 											<button class="increase js-qty-button"></button>
 										</div>

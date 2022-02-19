@@ -68,7 +68,7 @@
                             <div class="dropdn dropdn_wishlist">
                                 <a href="{% url 'account:wishlist' %}" class="dropdn-link only-icon wishlist-link ">
                                     <i class="icon-heart"></i><span class="dropdn-link-txt">Wishlist</span><span
-                                        class="wishlist-qty">5</span>
+                                        class="wishlist-qty">1</span>
                                 </a>
                             </div>
                             <div class="dropdn dropdn_account dropdn_fullheight">
@@ -80,7 +80,7 @@
                                 <a href="#" class="dropdn-link js-dropdn-link minicart-link only-icon"
                                     data-panel="#dropdnMinicart">
                                     <i class="icon-basket"></i>
-                                    <span class="minicart-qty">10</span>
+                                    <span class="minicart-qty">1</span>
                                     <span class="minicart-total hide-mobile">$120.00</span>
                                 </a>
                             </div>
@@ -540,7 +540,7 @@
                         <div class="minicart-drop-total-price col" data-header-cart-total="">$340</div>
                     </div>
                     <div class="minicart-drop-actions">
-                        <a href="cart.html" class="btn btn--md btn--grey"><i class="icon-basket"></i><span>Cart
+                        <a href="{% url 'cart:detail' %}" class="btn btn--md btn--grey"><i class="icon-basket"></i><span>Cart
                                 Page</span></a>
                         <a href="checkout-2.html" class="btn btn--md"><i class="icon-checkout"></i><span>Check
                                 out</span></a>

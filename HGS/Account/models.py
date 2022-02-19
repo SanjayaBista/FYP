@@ -39,8 +39,6 @@ class AccountManager(BaseUserManager):
         return user
 
 
-
-
 # Create your models here.
 class Customer(AbstractBaseUser):
     email = models.EmailField(verbose_name='email', max_length=100, unique=True)
@@ -62,7 +60,7 @@ class Customer(AbstractBaseUser):
     REQUIRED_FIELDS = ['username','first_name','last_name','phone_number']
 
     def __str__(self):
-        return self.first_name
+        return str(self.first_name)
 
     def has_perm(self, perm, obj=None):
         return self.is_admin

@@ -5,7 +5,7 @@ from django.http import HttpResponse, HttpResponseNotAllowed, HttpResponseNotFou
 from django.shortcuts import redirect, render
 from django.shortcuts import get_object_or_404
 from .forms import FormComment
-from .models import Category , Product, Comment
+from .models import Category, Contact , Product, Comment
 
 # Create your views here.
 def home(request):
@@ -47,46 +47,31 @@ def addComment(request,id):
             form = FormComment
     return HttpResponseRedirect(url)
 
-
-
-# def addComment(request, id):
-#     category = Category.objects.all()
-#     if request.method == 'POST':
-#         if request.POST.get('title') and request.POST.get('review') and request.POST.get('rating'):
-#             comment=Comment()
-#             comment.title= request.POST.get('title')
-#             comment.review= request.POST.get('review')
-#             comment.rating= request.POST.get('rating')
-#             comment.save()
-                
-#             return render(request, 'prodDetail.html')  
-
-#         else:
-#             return render(request, 'prodDetail.html', {'category':category})
-
-
-
-# def addComment(request, id):
-#     if request.method == 'POST':
-#         comment = Comment()
-#         title = request.POST.get('title')
-#         review = request.POST.get('review')
-#         rating = request.POST.get('rating')
-#         comment.title = title
-#         comment.review = review
-#         comment.rating = rating
-#         comment.save()
-#         return redirect('/')
-    
-#     return render(request,'prodDetail.html')
 def aboutUs(request):
     category = Category.objects.all()
     context = {'category':category}
+
     return render(request,'about.html',context)
 
 def contactUs(request):
     category = Category.objects.all()
     context = {'category':category}
+   
+    if request.method == "POST":
+        contact = Contact()
+        firstName = request.POST.get('firstName')
+        lastName = request.POST.get('lastName')
+        email  = request.POST.get('email')
+        phoneNumber = request.POST.get('phone')
+        message = request.POST.get('message')
+        contact.firstName = firstName
+        contact.lastName = lastName
+        contact.email = email
+        contact.phoneNumber = phoneNumber
+        contact.message = message
+        contact.save()
+        return redirect ('home:contactUs')
+        
     return render(request,'contact.html',context)
 
 def conditon(request):
