@@ -1,10 +1,11 @@
+from unicodedata import name
 from django.urls import path
 from .import views
-from .views import addCart, removeCart, detail
+
 app_name = 'cart'
 
 urlpatterns = [
-    path('',views.detail,name='detail'),
-    path('add/<int:product_id>/', views.addCart, name='addCart'),
-    path('remove/<int:product_id>/',views.removeCart,name='cartRemove'),
+    path('',views.cart_detail, name='cart_detail'),
+    path('add/<int:product_id>/',views.cart_add, name='cart_add'),
+    path('remove/<int:product_id>/',views.cart_remove, name='cart_remove'),
 ]

@@ -5,9 +5,14 @@ from django.db import models
 from mptt.models import MPTTModel, TreeForeignKey
 from django.urls import reverse
 from django.conf import settings
+
+from Account.models import Customer
 User = settings.AUTH_USER_MODEL
 # Create your models here.
 
+choices = {
+    ''
+}
 class Category(MPTTModel):
     name = models.CharField(max_length=200, db_index=True)
     parent = TreeForeignKey('self', on_delete=models.CASCADE, null=True, blank=True, related_name='children')
@@ -51,6 +56,8 @@ class Product(models.Model):
 
     def __str__(self):
         return self.name
+    # def get_category(self):
+    #     return ",".join([str(p) for p in self.category.all()])
 
     def get_absolute_url(self):
         return reverse('home:productDetail',args=[self.id, self.slug])
@@ -67,7 +74,7 @@ class Variation(models.Model):
 
 
 class Comment(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    user = models.ForeignKey(Customer, on_delete=models.CASCADE)
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
     title = models.CharField(max_length=100, blank=True)
     review = models.CharField(max_length=300, blank=True)

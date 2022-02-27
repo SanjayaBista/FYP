@@ -34,37 +34,40 @@ Cart Page
                             </div>
                             <div class="cart-table-prd-content-wrap">
                                 <div class="cart-table-prd-info">Name</div>
-                                <div class="cart-table-prd-qty">Qty</div>
-                                <div class="cart-table-prd-price">Price</div>
+                                <div class="cart-table-prd-qty">Price</div>
+                                <div class="cart-table-prd-qty">Quantity</div>
+                                <div class="cart-table-prd-price"> Total Price</div>
                                 <div class="cart-table-prd-action">&nbsp;</div>
                             </div>
                         </div>
                       
-                        
+                        {% for item in cart %}
+                            {% with product=item.product %}
                         <div class="cart-table-prd">
-                           
                             <div class="cart-table-prd-image">
-                                <a href="{{ product.get_absolute_url }}" class="prd-img"><img class="lazyload fade-up"
-                                        src="{% if product.image %} {{ product.image.url }} {% else %} {% static 'images/NoImage.png' %}{% endif %}"
-                                        data-src="" alt=""></a>
+                                <a href="{{ product.get_absolute_url }}" class="prd-img"><img class="lazyload fade-up" src="{% if product.image %} {{ product.image.url }} {% else %} {% static 'images/NoImage.png' %}{% endif %}"
+                                        data-src="{% if product.image %} {{ product.image.url }} {% else %} {% static 'images/NoImage.png' %}{% endif %}" alt=""></a>
                             </div>
                             <div class="cart-table-prd-content-wrap">
                                 <div class="cart-table-prd-info">
                                     <div class="cart-table-prd-price">
-
-                                        <div class="price-new">${{ product.price }}</div>
+                                        <h1 class="cart-table-prd-name"><a href="{{ product.get_absolute_url }}">{{ product.name }}</a></h1>
+                                       
                                     </div>
-                                    <h2 class="cart-table-prd-name"><a href="{{ product.get_absolute_url }}">{{ product.name }}</a></h2>
+                                    
+                                </div>
+                                <div class="cart-table-prd-price-total">
+                                    ${{  item.price }}
                                 </div>
                                 <div class="cart-table-prd-qty">
                                     <div class="qty qty-changer">
                                         <button class="decrease"></button>
-                                        <input type="text" class="qty-input" value="2" data-min="0" data-max="1000">
+                                        <input type="text" class="qty-input" value="{{ item.quantity }}" data-min="0" data-max="1000">
                                         <button class="increase"></button>
                                     </div>
                                 </div>
                                 <div class="cart-table-prd-price-total">
-                                    ${{ product.total_price }}
+                                    ${{ item.total_price }}
                                 </div>
                             </div>
                             <div class="cart-table-prd-action">
@@ -74,8 +77,10 @@ Cart Page
                                 </form>
                                 
                             </div>
-                             
+
                         </div>
+                            {% endwith %}
+                            {% endfor %}
 
                     </div>
 
@@ -89,7 +94,7 @@ Cart Page
                                 </div>
                                 <div class="prd-grid prd-carousel js-prd-carousel slick-arrows-aside-simple slick-arrows-mobile-lg data-to-show-4 data-to-show-md-3 data-to-show-sm-3 data-to-show-xs-2"
                                     data-slick='{"slidesToShow": 4, "slidesToScroll": 2, "responsive": [{"breakpoint": 992,"settings": {"slidesToShow": 3, "slidesToScroll": 1}},{"breakpoint": 768,"settings": {"slidesToShow": 2, "slidesToScroll": 1}},{"breakpoint": 480,"settings": {"slidesToShow": 2, "slidesToScroll": 1}}]}'>
-                                    <!-- start -->
+                                    
                                     <div class="prd prd--style2 prd-labels--max prd-labels-shadow ">
                                         <div class="prd-inside">
                                             <div class="prd-img-area">
@@ -309,3 +314,4 @@ Cart Page
 </div>
 
 {% endblock %}
+

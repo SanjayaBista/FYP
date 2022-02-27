@@ -1,3 +1,4 @@
+from ast import Pass
 from email import message
 from tkinter.tix import Form
 from unicodedata import category
@@ -6,7 +7,7 @@ from django.shortcuts import redirect, render
 from django.shortcuts import get_object_or_404
 from .forms import FormComment
 from .models import Category, Contact , Product, Comment
-
+from cart.forms import CartAddProductForm
 # Create your views here.
 def home(request):
     category = Category.objects.all()
@@ -25,7 +26,8 @@ def productDetail(request,id,slug):
     product = Product.objects.get(pk = id)
     latest_product = Product.objects.all().order_by('-id')[:4]
     comment = Comment.objects.filter(product_id = id, active = True)
-    context = {'category':category, 'product':product,'latest_product':latest_product, 'comment':comment}
+    cart_product_form = CartAddProductForm()
+    context = {'category':category, 'product':product,'latest_product':latest_product, 'comment':comment,'cart_product_form':cart_product_form}
     return render(request, 'prodDetail.html',context)
 
 def addComment(request,id):
@@ -46,6 +48,10 @@ def addComment(request,id):
         else:
             form = FormComment
     return HttpResponseRedirect(url)
+
+
+# def addComment(request):
+#     Pass
 
 def aboutUs(request):
     category = Category.objects.all()

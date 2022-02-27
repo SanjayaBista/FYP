@@ -35,10 +35,10 @@ My Profile
                         <div class="card">
                             <div class="card-body">
                                 <h3>Personal Info</h3>
-                                <p><b>First Name:</b> Jenny<br>
-                                    <b>Last Name:</b> Raider<br>
+                                <p><b>First Name:</b> {{ request.user.first_name }}<br>
+                                    <b>Last Name:</b> {{ request.user.last_name}}<br>
                                     <b>E-mail:</b> {{ request.user.email }} <br>
-                                    <b>Phone:</b> 876-432-4323</p>
+                                    <b>Phone:</b> {{ request.user.phone_number }}</p>
                                 <div class="mt-2 clearfix">
                                     <a href="#" class="link-icn js-show-form" data-form="#updateDetails"><i class="icon-pencil"></i>Edit</a>
                                 </div>

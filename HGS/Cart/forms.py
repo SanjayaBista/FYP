@@ -1,13 +1,6 @@
 from django import forms
+PRODUCT_QUANTITY_CHOICES = [(i, str(i)) for i in range(1,21)]
 
-Quantity_Choice = [(i, str(i)) for i in range(1, 11)]
-Size_Choice = (
-    ("S", "Small"),
-    ("M", "Medium"),
-    ("L", "Large"),
-)
-
-
-class AddProductForm(forms.ModelForm):
-    quantity = forms.TypedChoiceField(choices=Quantity_Choice,coerce=int)
-    override = forms.BooleanField(required=False,initial=False, widget=forms.HiddenInput)
+class CartAddProductForm(forms.Form):
+    quantity = forms.TypedChoiceField(choices=PRODUCT_QUANTITY_CHOICES, coerce=int)
+    override = forms.BooleanField(required=False, initial=False, widget=forms.HiddenInput)

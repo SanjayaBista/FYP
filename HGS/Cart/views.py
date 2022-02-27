@@ -1,34 +1,30 @@
-from django.shortcuts import render
-from Home.models import Category, Product
 from django.shortcuts import render, redirect, get_object_or_404
-from django.contrib.auth.decorators import login_required
+from Home.models import Product, Category
 from .cart import Cart
-from .forms import AddProductForm
-# Create your views here.
+from .forms import CartAddProductForm
+from django.contrib.auth.decorators import login_required
 
-@login_required
-def addCart(request, product_id):
-    category = Category.objects.all()
-    context = {'category':category}
+
+@login_required(login_url='account:login')
+def cart_add(request, product_id):
+    # category = Category.objects.all()
+    # context = {'category':category}
     cart = Cart(request)
     product = get_object_or_404(Product, id=product_id)
-    form = AddProductForm(request.POST)
+    form = CartAddProductForm(request.POST)
     if form.is_valid():
-        data = form.cleaned_data
-        cart.addItem(product=product,quantity=data['quantity'],override=data['override']) 
-    return redirect('cart:detail',context)
+        cd = form.cleaned_data
+        cart.add(product=product,quantity=cd['quantity'],override_quantity=cd['override'])
+    return redirect('cart:cart_detail')
 
-@login_required
-def removeCart(request, product_id):
+def cart_remove(request, product_id):
     category = Category.objects.all()
-    context = {'category':category}
     cart = Cart(request)
     product = get_object_or_404(Product, id=product_id)
-    cart.removeItem(product)
-    return redirect('cart:detail', context)
+    cart.remove(product)
+    return redirect('cart:cart_detail', {'category':category})
 
-def detail(request):
+def cart_detail(request):
     category = Category.objects.all()
     cart = Cart(request)
-    context = {'cart':cart, 'category':category}
-    return render(request, 'detail.html',context)
+    return render(request,'cart/detail.html',{'cart':cart,'category':category})

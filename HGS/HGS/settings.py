@@ -39,8 +39,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'Home',
     'Account',
-    'Cart',
     'Order',
+    'cart',
     'mptt',
     'django.contrib.sites',
     'allauth',
@@ -127,7 +127,8 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+# TIME_ZONE = 'UTC'
+TIME_ZONE = 'Asia/Katmandu'
 
 USE_I18N = True
 
@@ -158,7 +159,7 @@ AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend',
     'allauth.account.auth_backends.AuthenticationBackend',
 ]
-
+SILENCED_SYSTEM_CHECKS = ["auth.W004"]
 
 from django.contrib.messages import constants as messages
 MESSAGE_TAGS = {
@@ -172,7 +173,7 @@ LOGIN_URL = 'login'
 LOGOUT_URL = 'logout'
 
 
-CART_SESSION_ID = 'Cart'
+CART_SESSION_ID = 'cart'
 # SESSION_COOKIE_AGE = 10 # for 60 seconds timestamp   
 # SESSION_EXPIRE_SECONDS = 30
 # SESSION_EXPIRE_AFTER_LAST_ACTIVITY = True   

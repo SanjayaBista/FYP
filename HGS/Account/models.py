@@ -41,7 +41,7 @@ class AccountManager(BaseUserManager):
 
 # Create your models here.
 class Customer(AbstractBaseUser):
-    email = models.EmailField(verbose_name='email', max_length=100, unique=True)
+    email = models.EmailField(verbose_name='email', max_length=100)
     username = models.CharField(max_length=50, unique=True)
     first_name = models.CharField(max_length=200,null=True)
     last_name = models.CharField(max_length=200,null=True)
