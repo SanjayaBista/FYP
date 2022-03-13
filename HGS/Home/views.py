@@ -20,10 +20,18 @@ def home(request):
 
 def categoryItem(request,id,slug=None):
     category = Category.objects.all()
-    products = Product.objects.filter(category_id = id)
-    myFilter = ProdFilter()
 
-    context = {'category':category,'products':products,'myFilter':myFilter}
+    ATOZID = request.GET.get('ATOZ')
+    print(ATOZID)
+# error in sorting and filtering
+    if id:
+        products = Product.objects.filter(category_id = id)
+    elif ATOZID:
+        products = Product.objects.filter(category_id = id).order_by('name')
+    else:
+        products = Product.objects.filter(category_id = id)
+
+    context = {'category':category,'products':products}
     return render(request, 'national.html', context)
 
 def productDetail(request,id,slug):

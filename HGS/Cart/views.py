@@ -1,4 +1,5 @@
 from django.shortcuts import render, redirect, get_object_or_404
+from coupon.forms import CouponForm
 from Home.models import Product, Category
 from .cart import Cart
 from .forms import CartAddProductForm
@@ -38,4 +39,5 @@ def cart_detail(request):
             'quantity':item['quantity'],
             'override':True
         })
-    return render(request,'cart/detail.html',{'cart':cart,'category':category, 'latest_product':latest_product})
+    coupon_apply_form = CouponForm()
+    return render(request,'cart/detail.html',{'cart':cart,'category':category, 'latest_product':latest_product, 'coupon_apply_form':coupon_apply_form})

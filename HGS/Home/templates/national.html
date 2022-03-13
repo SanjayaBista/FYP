@@ -37,24 +37,24 @@
                     <div class="select-wrap d-none d-md-flex">
                         <div class="select-label">SORT BY:</div>
                         <div class="select-wrapper select-wrapper-xxs">
-                            <form action="" method="get">
-                                <select class="form-control input-sm">
-                                    <option value="featured">{{myFilter.form}}</option>
-                                   
-                                </select>
-                            </form>
-                          
+                            <select class="form-control input-sm">
+                                <option value="featured">All Products</option>
+                                <option value="rating">Real Madrid</option>
+                                <option value="price">Atletico Madrid</option>
+                            </select>
                         </div>
                     </div>
                     <div class="select-wrap d-none d-md-flex">
                         <div class="select-label">Filter BY:</div>
                         <div class="select-wrapper select-wrapper-xxs">
                             <select class="form-control input-sm">
+                                <option value="price">Alphabetically, Descending</option>
+                                <option value="price"><a href="/categoryItem/{% for i in products %}?ATOZ={{ i.id }} {% endfor %}">Alphabetically, Ascending</a></option>
+                                
                                 <option value="featured">Most Popular</option>
                                 <option value="rating">Price , Low to High</option>
                                 <option value="price">Price , High to Low</option>
-                                <option value="price">Alphabetically, Ascending</option>
-                                <option value="price">Alphabetically, Descending</option>
+                             
                             </select>
                         </div>
                     </div>
