@@ -8,17 +8,22 @@ from django.shortcuts import get_object_or_404
 from .forms import FormComment
 from .models import Category, Contact , Product, Comment
 from cart.forms import CartAddProductForm
+from cart.cart import Cart
+from .filters import ProdFilter
 # Create your views here.
 def home(request):
     category = Category.objects.all()
     latest_product = Product.objects.all().order_by('-id')[:4]
-    context = {'category':category, 'latest_product':latest_product}
+    cart_product_form = CartAddProductForm()
+    context = {'category':category, 'latest_product':latest_product, 'cart_product_form':cart_product_form}
     return render(request, 'home.html',context)
 
 def categoryItem(request,id,slug=None):
     category = Category.objects.all()
     products = Product.objects.filter(category_id = id)
-    context = {'category':category,'products':products}
+    myFilter = ProdFilter()
+
+    context = {'category':category,'products':products,'myFilter':myFilter}
     return render(request, 'national.html', context)
 
 def productDetail(request,id,slug):
@@ -32,18 +37,17 @@ def productDetail(request,id,slug):
 
 def addComment(request,id):
     url = request.META.get('HTTP_REFERER')
+    form = FormComment
     if request.method == 'POST':
         form = FormComment(request.POST)
         if form.is_valid():
             data = Comment()
             data.title = form.cleaned_data['title']
-            data.review = form.cleaned_data['review']
-            data.rating = form.cleaned_data['rating']
+            data.review = form.cleaned_data['review']   
             data.product_id = id
             current_user = request.user
             data.user_id = current_user.id
             data.save()
-            message.success(request,"Sent Successfully")
             return HttpResponseRedirect(url)
         else:
             form = FormComment
@@ -89,6 +93,12 @@ def exchange(request):
     category = Category.objects.all()
     context = {'category':category}
     return render(request,'exchange.html',context)
+
+def checkout(request):
+    category = Category.objects.all()
+    cart = Cart(request)
+    context = {'category':category, 'cart':cart}
+    return render(request,'checkout.html',context)
 
 def shipping(request):
     category = Category.objects.all()

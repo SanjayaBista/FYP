@@ -77,12 +77,17 @@
                                         class="dropdn-link-txt">Account</span></a>
                             </div>
                             <div class="dropdn dropdn_fullheight minicart">
-                                <a href="#" class="dropdn-link js-dropdn-link minicart-link only-icon"
-                                    data-panel="#dropdnMinicart">
-                                    <i class="icon-basket"></i>
-                                    <span class="minicart-qty">1</span>
-                                    <span class="minicart-total hide-mobile">$120.00</span>
-                                </a>
+                                {% with total_items=cart|length %}
+                                    {% if total_items >= 0 %}
+                                    <a href="#" class="dropdn-link js-dropdn-link minicart-link only-icon"
+                                        data-panel="#dropdnMinicart">
+                                        <i class="icon-basket"></i>
+                                        <span class="minicart-qty">{{ total_items }}</span>
+                                        <span class="minicart-total hide-mobile">${{ cart.get_total_price }}</span>
+                                    </a>
+                                    {% endif %}
+                            
+                                {% endwith %}
                             </div>
                         </div>
                     </div>
@@ -213,12 +218,24 @@
                                     </div>
                                 </div>
                                 <div class="dropdn dropdn_fullheight minicart">
+                                    {% with total_items=cart|length %}
+                                    {% if total_items > 0 %}
                                     <a href="#" class="dropdn-link js-dropdn-link minicart-link"
                                         data-panel="#dropdnMinicart">
                                         <i class="icon-basket"></i>
-                                        <span class="minicart-qty">5</span>
-                                        <span class="minicart-total hide-mobile">$340.00</span>
+                                        <span class="minicart-qty"> {{ total_items }}</span>
+                                        <span class="minicart-total hide-mobile">${{ cart.get_total_price }}</span>
                                     </a>
+                                    {% endif %}
+                                    {% if not total_items > 0 %}
+                                    <a href="#" class="dropdn-link js-dropdn-link minicart-link"
+                                        data-panel="#dropdnMinicart">
+                                        <i class="icon-basket"></i>
+                                        <span class="minicart-qty">0</span>
+                                        <span class="minicart-total hide-mobile">Cart Empty</span>
+                                    </a>
+                                    {% endif %}
+                                    {% endwith %}
                                 </div>
                             </div>
                         </div>
@@ -444,7 +461,7 @@
                         <div class="form-group">
                             <input type="text" class="form-control form-control--sm is-invalid"
                                 placeholder="Enter your e-mail">
-                            <div class="invalid-feedback">Can't be blank</div>
+                            <!-- <div class="invalid-feedback">Can't be blank</div> -->
                         </div>
                         <div class="form-group">
                             <input type="password" class="form-control form-control--sm"
@@ -460,47 +477,37 @@
             <div class="dropdn-content-block">
                 <div class="dropdn-close"><span class="js-dropdn-close">Close</span></div>
                 <div class="minicart-drop-content js-dropdn-content-scroll">
+                    {% for item in cart %}
+                        {% with product=item.product %}
                     <div class="minicart-prd row">
+                        
                         <div class="minicart-prd-image image-hover-scale-circle col">
-                            <a href="product.html"><img class="lazyload fade-up"
-                                    src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="
-                                    data-src="{% static 'images/product-01-1.webp' %}" alt=""></a> 
+                            <a href="{{ product.get_absolute_url }}" class="prd-img"><img class="lazyload fade-up" src="{% if product.image %} {{ product.image.url }} {% else %} {% static 'images/NoImage.png' %}{% endif %}"
+                                data-src="{% if product.image %} {{ product.image.url }} {% else %} {% static 'images/NoImage.png' %}{% endif %}" alt=""></a>
                         </div>
                         <div class="minicart-prd-info col">
-                            <div class="minicart-prd-tag">FOXic</div>
-                            <h2 class="minicart-prd-name"><a href="#">Leather Pegged Pants</a></h2>
+                            <div class="minicart-prd-tag">{{ product.category }}</div>
+                            <h2 class="minicart-prd-name"><a href="{{ product.get_absolute_url }}">{{ product.name }}</a></h2>
+                            <br>
                             <div class="minicart-prd-qty"><span class="minicart-prd-qty-label">Quantity:</span><span
-                                    class="minicart-prd-qty-value">1</span></div>
+                                    class="minicart-prd-qty-value">{{ item.quantity }}</span></div>
                             <div class="minicart-prd-price prd-price">
-                                <div class="price-old">$200.00</div>
-                                <div class="price-new">$180.00</div>
+                                <div class="price-new">Price: ${{  item.price }}</div>
                             </div>
                         </div>
                         <div class="minicart-prd-action">
-                            <a href="#" class="js-product-remove" data-line-number="1"><i class="icon-recycle"></i></a>
+                            <form action="{% url 'cart:cart_remove' product.id %}" method="POST">
+                                <input type="submit" value="X">
+                                {% csrf_token %}
+                            </form> 
                         </div>
+                        
                     </div>
-                    <div class="minicart-prd row">
-                        <div class="minicart-prd-image image-hover-scale-circle col">
-                            <a href="product.html"><img class="lazyload fade-up"
-                                    src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="
-                                    data-src="{% static 'images/product-01-1.webp' %}" alt=""></a> 
-                        </div>
-                        <div class="minicart-prd-info col">
-                            <div class="minicart-prd-tag">FOXic</div>
-                            <h2 class="minicart-prd-name"><a href="#">Cascade Casual Shirt</a></h2>
-                            <div class="minicart-prd-qty"><span class="minicart-prd-qty-label">Quantity:</span><span
-                                    class="minicart-prd-qty-value">1</span></div>
-                            <div class="minicart-prd-price prd-price">
-                                <div class="price-old">$200.00</div>
-                                <div class="price-new">$180.00</div>
-                            </div>
-                        </div>
-                        <div class="minicart-prd-action">
-                            <a href="#" class="js-product-remove" data-line-number="2"><i class="icon-recycle"></i></a>
-                        </div>
-                    </div>
-                    <div class="minicart-empty js-minicart-empty d-none">
+                    <hr>
+                    {% endwith %}
+                        {% endfor %}
+                   
+                    <!-- <div class="minicart-empty js-minicart-empty d-none">
                         <div class="minicart-empty-text">Your cart is empty</div>
                         <div class="minicart-empty-icon">
                             <i class="icon-shopping-bag"></i>
@@ -510,34 +517,15 @@
                                     d="M78.1,59.5c0,0-37.3,22-26.7,85s59.7,237,142.7,283s193,56,313-84s21-206-69-240s-249.4-67-309-60C94.6,47.6,78.1,59.5,78.1,59.5z" />
                             </svg>
                         </div>
-                    </div>
-                    <a href="#" class="minicart-drop-countdown mt-3">
-                        <div class="countdown-box-full">
-                            <div class="row no-gutters align-items-center">
-                                <div class="col-auto"><i class="icon-gift icon--giftAnimate"></i></div>
-                                <div class="col">
-                                    <div class="countdown-txt">WHEN BUYING TWO
-                                        THINGS A THIRD AS A GIFT
-                                    </div>
-                                    <div class="countdown js-countdown" data-countdown="2021/07/01"></div>
-                                </div>
-                            </div>
-                        </div>
-                    </a>
-                    <div class="minicart-drop-info d-none d-md-block">
-                        <div class="shop-feature-single row no-gutters align-items-center">
-                            <div class="shop-feature-icon col-auto"><i class="icon-truck"></i></div>
-                            <div class="shop-feature-text col"><b>SHIPPING!</b> Continue shopping to add more products
-                                and receive free shipping</div>
-                        </div>
-                    </div>
+                    </div> -->
+                  
                 </div>
                 <div class="minicart-drop-fixed js-hide-empty">
                     <div class="loader-horizontal-sm js-loader-horizontal-sm" data-loader-horizontal=""><span></span>
                     </div>
                     <div class="minicart-drop-total js-minicart-drop-total row no-gutters align-items-center">
                         <div class="minicart-drop-total-txt col-auto heading-font">Subtotal</div>
-                        <div class="minicart-drop-total-price col" data-header-cart-total="">$340</div>
+                        <div class="minicart-drop-total-price col" data-header-cart-total="">${{ cart.get_total_price|floatformat:2 }}</div>
                     </div>
                     <div class="minicart-drop-actions">
                         <a href="{% url 'cart:cart_detail' %}" class="btn btn--md btn--grey"><i class="icon-basket"></i><span>Cart
@@ -618,7 +606,7 @@
                     <div class="col-lg col-xl last-mobile">
                         <div class="footer-block">
                             <div class="footer-logo">
-                                <a href="index.html"><img class="lazyload fade-up" src="{'static/images/hgsd.png'}"
+                                <a href="index.html"><img class="lazyload fade-up" src=""
                                         data-srcset="{% static 'images/hgsd.png' %}"alt="Logo"></a> 
                             </div>
                             <div class="collapsed-content">
@@ -677,7 +665,7 @@
                             <div class="collapsed-content">
                                 <ul>
                                     <li><a href="{% url 'account:profile' %}">My Account</a></li>
-                                    <li><a href="cart.html">View Cart</a></li>
+                                    <li><a href="{% url 'cart:cart_detail' %}">View Cart</a></li>
                                     <li><a href="{% url 'account:wishlist' %}">My Wishlist</a></li>
                                     <li><a href="{% url 'account:history' %}">Order History</a></li>
                                     
@@ -712,7 +700,7 @@
             </div>
         </div>
     </footer>
-    <div class="footer-sticky">
+    <!-- <div class="footer-sticky">
         <div class="sticky-addcart js-stickyAddToCart closed">
             <div class="container">
                 <div class="row">
@@ -751,8 +739,8 @@
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="popup-addedtocart js-popupAddToCart closed" data-close="50000">
+        </div> -->
+        <!-- <div class="popup-addedtocart js-popupAddToCart closed" data-close="50000">
             <div class="container">
                 <div class="row">
                     <div class="popup-addedtocart-close js-popupAddToCart-close"><i class="icon-close"></i></div>
@@ -785,8 +773,8 @@
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="sticky-addcart popup-selectoptions js-popupSelectOptions closed" data-close="500000">
+        </div> -->
+        <!-- <div class="sticky-addcart popup-selectoptions js-popupSelectOptions closed" data-close="500000">
             <div class="container">
                 <div class="row">
                     <div class="popup-selectoptions-close js-popupSelectOptions-close"><i class="icon-close"></i></div>
@@ -835,7 +823,7 @@
                 <div class="progress-bar progress-bar-striped progress-bar-animated" style="width: 100%"></div>
             </div>
         </div>
-    </div>
+    </div> -->
 
     <script src="{% static 'js/vendor-special/lazysizes.min.js' %}"></script>  
     <script src="{% static 'js/vendor-special/ls.bgset.min.js' %}"></script>  

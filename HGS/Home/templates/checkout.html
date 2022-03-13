@@ -1,0 +1,253 @@
+{% extends 'base.html '%}
+{% load static %}
+
+{% block title %}
+{{ product.category.name }}
+{% endblock %}
+
+{% block content %}
+
+
+<div class="page-content">
+    <div class="holder breadcrumbs-wrap mt-0">
+        <div class="container">
+            <ul class="breadcrumbs">
+                <li><a href="index.html">Home</a></li>
+                <li><span>Checkout</span></li>
+            </ul>
+        </div>
+    </div>
+    <div class="holder">
+        <div class="container">
+            <h1 class="text-center">Checkout accordion</h1>
+            <div class="row">
+                <div class="col-md-8">
+                    <div class="panel-group panel-group--style1" id="checkoutAccordion">
+                        <div class="panel">
+                            <div class="panel-heading active">
+                                <h4 class="panel-title">
+                                    <a data-toggle="collapse" href="#step1"> Shipping Address</a>
+                                    <span class="toggle-arrow"><span></span><span></span></span>
+                                </h4>
+                            </div>
+                            <div id="step1" data-parent="#checkoutAccordion" class="panel-collapse collapse show">
+                                <div class="panel-body">
+                                    <div class="panel-body-inside">
+
+                                        <div class="row mt-2">
+                                            <div class="col-sm-9">
+                                                <label>First Name:</label>
+                                                <div class="form-group">
+                                                    <input type="text" class="form-control form-control--sm">
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-9">
+                                                <label>Last Name:</label>
+                                                <div class="form-group">
+                                                    <input type="text" class="form-control form-control--sm">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="mt-2"></div>
+                                        <label>State:</label>
+                                        <div class="form-group select-wrapper">
+                                            <select class="form-control form-control--sm">
+                                                <option value="United States">United States</option>
+                                                <option value="Canada">Canada</option>
+                                                <option value="China">China</option>
+                                                <option value="India">India</option>
+                                                <option value="Italy">Italy</option>
+                                                <option value="Mexico">Mexico</option>
+                                            </select>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-sm-9">
+                                                <label>District:</label>
+                                                <div class="form-group select-wrapper">
+                                                    <select class="form-control form-control--sm">
+                                                        <option value="AL">Alabama</option>
+                                                        <option value="AK">Alaska</option>
+                                                        <option value="AZ">Arizona</option>
+                                                        <option value="AR">Arkansas</option>
+                                                        <option value="CA">California</option>
+                                                        <option value="CO">Colorado</option>
+                                                        <option value="CT">Connecticut</option>
+                                                        <option value="DE">Delaware</option>
+                                                        <option value="DC">District Of Columbia</option>
+                                                        <option value="FL">Florida</option>
+                                                        <option value="GA">Georgia</option>
+                                                        <option value="HI">Hawaii</option>
+                                                        <option value="ID">Idaho</option>
+                                                        <option value="IL">Illinois</option>
+                                                        <option value="IN">Indiana</option>
+                                                        <option value="IA">Iowa</option>
+                                                        <option value="KS">Kansas</option>
+                                                        <option value="KY">Kentucky</option>
+                                                        <option value="LA">Louisiana</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-9">
+                                                <label>zip/postal code:</label>
+                                                <div class="form-group">
+                                                    <input type="text" class="form-control form-control--sm">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="mt-2"></div>
+                                        <label>Address :</label>
+                                        <div class="form-group">
+                                            <input type="text" class="form-control form-control--sm">
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="panel">
+                            <div class="panel-heading">
+                                <h4 class="panel-title">
+                                    <a data-toggle="collapse" href="#step4"> Payment Method</a>
+                                    <span class="toggle-arrow"><span></span><span></span></span>
+                                </h4>
+                            </div>
+                            <div id="step4" data-parent="#checkoutAccordion" class="panel-collapse collapse">
+                                <div class="panel-body">
+                                    <div class="panel-body-inside">
+                                        <div class="clearfix">
+                                            <input id="formcheckoutRadio4" value="" name="radio2" type="radio"
+                                                class="radio" checked="checked">
+                                            <label for="formcheckoutRadio4">Credit Card</label>
+                                        </div>
+                                        <div class="clearfix">
+                                            <input id="formcheckoutRadio5" value="" name="radio2" type="radio"
+                                                class="radio">
+                                            <label for="formcheckoutRadio5">Paypal</label>
+                                        </div>
+                                        <div class="mt-2"></div>
+                                        <label>Cart Number</label>
+                                        <div class="form-group">
+                                            <input type="text" class="form-control form-control--sm">
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-sm-9">
+                                                <label>Month:</label>
+                                                <div class="form-group select-wrapper">
+                                                    <select class="form-control form-control--sm">
+                                                        <option selected value='1'>January</option>
+                                                        <option value='2'>February</option>
+                                                        <option value='3'>March</option>
+                                                        <option value='4'>April</option>
+                                                        <option value='5'>May</option>
+                                                        <option value='6'>June</option>
+                                                        <option value='7'>July</option>
+                                                        <option value='8'>August</option>
+                                                        <option value='9'>September</option>
+                                                        <option value='10'>October</option>
+                                                        <option value='11'>November</option>
+                                                        <option value='12'>December</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-9">
+                                                <label>Year:</label>
+                                                <div class="form-group select-wrapper">
+                                                    <select class="form-control form-control--sm">
+                                                        <option value="2019">2019</option>
+                                                        <option value="2020">2020</option>
+                                                        <option value="2021">2021</option>
+                                                        <option value="2022">2022</option>
+                                                        <option value="2023">2023</option>
+                                                        <option value="2024">2024</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="mt-2">
+                                            <label>CVV Code</label>
+                                            <div class="form-group">
+                                                <input type="text" class="form-control form-control--sm">
+                                            </div>
+                                        </div>
+                                        <div class="clearfix mt-2">
+                                            <button type="submit" class="btn btn--lg w-100">Place Order</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-10 pl-lg-8 mt-2 mt-md-0">
+                    <h2 class="custom-color">Order Summary</h2>
+
+                    
+                    <div class="cart-table cart-table--sm pt-3 pt-md-0">
+                        <div class="cart-table-prd cart-table-prd--head py-1 d-none d-md-flex">
+                            <div class="cart-table-prd-image text-center">
+                                Image
+                            </div>
+                            <div class="cart-table-prd-content-wrap">
+                                <div class="cart-table-prd-info">Name</div>
+                                <div class="cart-table-prd-price">Price</div>
+                                <div class="cart-table-prd-qty">Qty</div>
+                                <div class="cart-table-prd-price"> Total Price</div>
+                            </div>
+                        </div>
+                        {% for item in cart %}
+                        {% with product=item.product %}
+                        <div class="cart-table-prd">
+                            <div class="cart-table-prd-image">
+                                <a href="{{ product.get_absolute_url }}" class="prd-img"><img class="lazyload fade-up" src="{% if product.image %} {{ product.image.url }} {% else %} {% static 'images/NoImage.png' %}{% endif %}"
+                                    data-src="{% if product.image %} {{ product.image.url }} {% else %} {% static 'images/NoImage.png' %}{% endif %}" alt=""></a>
+                            </div>
+                            <div class="cart-table-prd-content-wrap">
+                                <div class="cart-table-prd-info">
+                                    <h2 class="cart-table-prd-name"><a href="{{ product.get_absolute_url }}">{{ product.name }}</a></h2>
+                                </div>
+                                
+                                <div class="cart-table-prd-price-total">
+                                    ${{  item.price }}
+                                </div>
+                                <div class="cart-table-prd-qty">
+                                    <div class="qty qty-changer">
+                                        <input type="text" class="qty-input disabled" value="{{ item.quantity }}" data-min="0"
+                                            data-max="1000">
+                                    </div>
+                                </div>
+                                <div class="cart-table-prd-price-total">
+                                    ${{ item.total_price }}
+                                </div>
+                            </div>
+                        </div>
+                        {% endwith %}
+                        {% endfor %}
+                    </div>
+                    
+                    <div class="mt-2"></div>
+                    <div class="card">
+                        <div class="card-body">
+                            <h3>Apply Discount Code </h3>
+                            <p>Get discount with your discount code </p>
+                            <div class="form-inline mt-2">
+                                <input type="text" class="form-control form-control--sm"
+                                    placeholder="Promotion/Discount Code">
+                                <button type="submit" class="btn">Apply</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mt-2"></div>
+                    <div class="cart-total-sm">
+                        <span>Total</span>
+                        <span class="card-total-price">${{ cart.get_total_price|floatformat:2 }}</span>
+                    </div>
+                    <div class="mt-2"></div>
+                   
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock content %}

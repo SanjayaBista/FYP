@@ -47,7 +47,8 @@ INSTALLED_APPS = [
     'allauth.account',
     'allauth.socialaccount',
     'allauth.socialaccount.providers.google',
-
+    'coupon',
+    'django_filters',
 ]
 
 SITE_ID = 1
@@ -75,6 +76,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'cart.context_processors.cart',
             ],
         },
     },
@@ -95,7 +97,7 @@ WSGI_APPLICATION = 'HGS.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'FYPDatabase',
+        'NAME': 'FYPDB',
         'USER': 'postgres',
         'PASSWORD': 'Sanjay',
         'HOST': '127.0.0.1',

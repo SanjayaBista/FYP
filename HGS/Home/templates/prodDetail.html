@@ -71,16 +71,22 @@
 									<div data-value="Beige"><span class="prd-img"><img
 												src="{% if product.image %} {{ product.image.url }} {% else %} {% static 'images/NoImage.png' %}{% endif %}"
 												alt=""
-												data-zoom-image="images/skins/fashion/product-page/product-01.webp" /></span>
+												data-zoom-image="" /></span>
 									</div>
+									{% if product.image2 %}
 									<div data-value="Beige"><span class="prd-img"><img
-												src="{% if product.image %} {{ product.image.url }} {% else %} {% static 'images/NoImage.png' %}{% endif %}"
+												src="{% if product.image %} {{ product.image2.url }} {% else %} {% static 'images/NoImage.png' %}{% endif %}"
 												alt=""
-												data-zoom-image="images/skins/fashion/product-page/product-02.webp" /></span>
+												data-zoom-image="" /></span>
 									</div>
-
+									{% endif %}
 								</div>
-
+								{% comment %} <div class="product-previews-wrapper">
+									<div class="product-previews-carousel js-product-previews-carousel">
+										<a href="#" data-value="Beige"><span class="prd-img"><img src="{% static 'images/Arsenal.png' %}" data-src="{% static 'images/Arsenal.png' %}" class="lazyload fade-up" alt=""/></span></a>
+	
+									</div>
+								</div> {% endcomment %}
 							</div>
 
 						</div>
@@ -93,16 +99,17 @@
 						<div class="hdr-line-separate">
 							<ul class="social-list list-unstyled">
 								<li>
-									<a href="#"><i class="icon-facebook"></i></a>
+									
+									<a href="#"><i class="icon-facebook" style="font-size:28px"></i></a>
 								</li>
 								<li>
-									<a href="#"><i class="icon-twitter"></i></a>
+									<a href="#"><i class="icon-twitter" style="font-size:28px"></i></a>
 								</li>
 								<li>
-									<a href="#"><i class="icon-google"></i></a>
+									<a href="#"><i class="icon-google" style="font-size:28px"></i></a>
 								</li>
 								<li>
-									<a href="#"><i class="icon-instagram"></i></a>
+									<a href="#"><i class="icon-instagram" style="font-size:28px"></i></a>
 								</li>
 							</ul>
 						</div>
@@ -112,7 +119,7 @@
 						<div class="prd-block_info-top prd-block_info_item order-0 order-md-2">
 
 							<div class="prd-block_price prd-block_price--style2">
-								<h2>Price <div class="prd-block_price--actual">${{ product.price }}</div>
+								<h2>Price <div class="prd-block_price--actual"> <h2>${{ product.price }}</h2></div>
 								</h2>
 							</div>
 							<div class="prd-block_viewed-wrap d-none d-md-flex">
@@ -155,8 +162,11 @@
 										
 									</div>
 								</div>
+								<br>
+								{{ cart_product_form }}
+								<br>
 								<div class="prd-block_actions prd-block_actions--wishlist">
-									{{ cart_product_form }}
+							
 									<div class="btn-wrap">
 										<button  class="btn btn--add-to-cart js-trigger-addtocart js-prd-addtocart">Add to cart</button>
 											
@@ -273,12 +283,12 @@
 
 						</div>
 						<div class="prd-block_info_item">
-							<img class="img-responsive lazyload d-none d-sm-block"
+							{% comment %} <img class="img-responsive lazyload d-none d-sm-block"
 								src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="
 								data-src="images/payment/safecheckout.webp" alt="">
 							<img class="img-responsive lazyload d-sm-none"
 								src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="
-								data-src="images/payment/safecheckout-m.webp" alt="">
+								data-src="images/payment/safecheckout-m.webp" alt=""> {% endcomment %}
 						</div>
 					</div>
 				</div>
@@ -304,7 +314,7 @@
 					<h4 class="mb-15">Product Description</h4>
 					<div class="row">
 						<div class="col-18 mb-2">
-							<p>{{ product.description }}</p>
+							<p>{{ product.long_description }}</p>
 						</div>
 					</div>
 
@@ -390,7 +400,7 @@
 								<div class="col-18 col-md-auto mb-3 mb-md-0"><a href="#" class="review-write-link"></a>
 									<button type="button" class="icon-pencil" data-toggle="modal"
 										data-target="#exampleModal" data-whatever="@mdo">Write Reviews</button>
-									<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog"
+									<div class="modal-dialog" id="exampleModal" tabindex="-1" role="dialog"
 										aria-labelledby="exampleModalLabel" aria-hidden="true">
 										<div class="modal-dialog" role="document">
 											<div class="modal-content">
@@ -401,6 +411,7 @@
 												<div class="modal-body">
 													<form action="{% url 'home:addComment' product.id %}" method="post">
 														{% csrf_token %}
+													
 														<div class="form-group">
 															<label for="recipient-name" class="col-form-label">Enter
 																Your title</label>
@@ -426,10 +437,13 @@
 
 															</div>
 														</div>
+
+
 														<div class="modal-footer">
 															{% if user.id is not None %}
-															<button type="button" class="btn btn-primary"data-dismiss="modal">Cancel</button>
+															
 															<input class="btn btn-primary" type="submit" value="Submit">
+															
 														
 															{% else %}
 															<h2 style="color:Tomato;">Login to provide review <a style="color:steelblue" href="{% url 'account:login' %}">Login</a></h2>
@@ -448,6 +462,7 @@
 						<hr>
 						<!--  -->
 						<div id="productReviewsBottom">
+							{% if comment %}
 							{% for com in comment %}
 							<div class="review-item">
 								<div class="review-item_rating">
@@ -469,8 +484,12 @@
 								</div>
 							</div>
 							<hr>
+							{% endfor %}
+							{% else %}
+							<h2>No Comments. Be the first one to comment. </h2>
+							{% endif %}
 						</div>
-						{% endfor %}
+						
 					</div>
 				</div>
 			</div>

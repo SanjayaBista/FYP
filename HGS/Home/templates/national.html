@@ -35,22 +35,26 @@
                 <div class="row">
                     <div class="items-count">35 item(s)</div>
                     <div class="select-wrap d-none d-md-flex">
-                        <div class="select-label">SORT:</div>
+                        <div class="select-label">SORT BY:</div>
                         <div class="select-wrapper select-wrapper-xxs">
-                            <select class="form-control input-sm">
-                                <option value="featured">Featured</option>
-                                <option value="rating">Rating</option>
-                                <option value="price">Price</option>
-                            </select>
+                            <form action="" method="get">
+                                <select class="form-control input-sm">
+                                    <option value="featured">{{myFilter.form}}</option>
+                                   
+                                </select>
+                            </form>
+                          
                         </div>
                     </div>
                     <div class="select-wrap d-none d-md-flex">
-                        <div class="select-label">Filter By:</div>
+                        <div class="select-label">Filter BY:</div>
                         <div class="select-wrapper select-wrapper-xxs">
                             <select class="form-control input-sm">
-                                <option value="featured">Club</option>
-                                <option value="rating">Player</option>
-                                <option value="price">Most Selling</option>
+                                <option value="featured">Most Popular</option>
+                                <option value="rating">Price , Low to High</option>
+                                <option value="price">Price , High to Low</option>
+                                <option value="price">Alphabetically, Ascending</option>
+                                <option value="price">Alphabetically, Descending</option>
                             </select>
                         </div>
                     </div>
@@ -166,10 +170,10 @@
                                             </div>
                                             <div class="prd-action">
                                                 <div class="prd-action-left">
-                                                    <form action="#">
+                                                    <form method="post" action="{{ product.get_absolute_url }}">
+                                                        {% csrf_token %}
                                                         <button class="btn js-prd-addtocart"
-                                                            data-product='{"name": "Oversized Cotton Blouse", "path":"images/skins/fashion/products/product-03-1.webp", "url":"product.html", "aspect_ratio":0.778}'>Add
-                                                            To Cart</button>
+                                                           >View Product</button>
                                                     </form>
                                                 </div>
                                             </div>

@@ -22,9 +22,20 @@ def cart_remove(request, product_id):
     cart = Cart(request)
     product = get_object_or_404(Product, id=product_id)
     cart.remove(product)
-    return redirect('cart:cart_detail', {'category':category})
+    if cart:
+        return redirect('cart:cart_detail')
+    return redirect('/', {'category':category})
+
+ 
+    
 
 def cart_detail(request):
     category = Category.objects.all()
+    latest_product = Product.objects.all().order_by('-id')[:5]
     cart = Cart(request)
-    return render(request,'cart/detail.html',{'cart':cart,'category':category})
+    for item in cart:
+        item['update_quantity_form'] = CartAddProductForm(initial={
+            'quantity':item['quantity'],
+            'override':True
+        })
+    return render(request,'cart/detail.html',{'cart':cart,'category':category, 'latest_product':latest_product})
