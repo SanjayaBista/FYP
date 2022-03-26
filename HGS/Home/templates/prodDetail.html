@@ -142,25 +142,23 @@
 							<form method="post" action="{% url 'cart:cart_add' product.id  %}">
 								{% csrf_token %}
 								<div class="prd-block_options">
-
+				
 									<div class="prd-size swatches">
-										
 										<div class="option-label">Size:</div>
-										{% if product.variation_set.all %}
-										<select class="form-control hidden single-option-selector-modalQuickView"
-											id="SingleOptionSelector-1" data-index="option2">
-											{% for item in product.variation_set.all %}
-											<option value="{{ item.title|lower }}" selected="selected">{{ item.title|capfirst}}</option>
-											{% endfor  %}
-										</select>
-										{% endif %}
+										 <select class="form-control hidden single-option-selector-modalQuickView" id="SingleOptionSelector-1" data-index="option2">
+											<option value="Small" selected="selected">Small</option>
+											<option value="Medium">Medium</option>
+											<option value="Large">Large</option>
+										</select> 
+										{% for attr in product.productattribute_set.all %}
 										<ul class="size-list js-size-list" data-select-id="SingleOptionSelector-1">
-											<li class="active"><a href="#" data-value="Small"><span class="value">Small</span></a></li>
-											<li><a href="#" data-value="Medium"><span class="value">Medium</span></a> </li>
-											<li><a href="#" data-value="Large"><span class="value">Large</span></a></li>
-										</ul>
+											
+											<li><a href="#" data-value="Large"><span class="value">{{ attr.size.title }}</span></a></li>
 										
+										</ul>
+										{% endfor %}
 									</div>
+									
 								</div>
 								<br>
 								{{ cart_product_form }}
@@ -172,9 +170,10 @@
 											
 									</div>
 									<div class="btn-wishlist-wrap">
+										
 										<a href="#"
 											class="btn-add-to-wishlist ml-auto btn-add-to-wishlist--add js-add-wishlist"
-											title="Add To Wishlist"><i class="icon-heart-stroke"></i></a>
+											data-product="{{product.id}}"  title="Add To Wishlist"><i class="icon-heart-stroke"></i></a>
 										<a href="#"
 											class="btn-add-to-wishlist ml-auto btn-add-to-wishlist--off js-remove-wishlist"
 											title="Remove From Wishlist"><i class="icon-heart-hover"></i></a>
@@ -425,7 +424,8 @@
 														<div class="form-group">
 															<label for="message-text" class="col-form-label">Provide
 																Rating : </label>
-															<div class="prd-block_reviews" data-toggle="tooltip"
+																<!-- mycode -->
+															<!-- <div class="prd-block_reviews" data-toggle="tooltip"
 																data-placement="top">
 																
 																<i name="rating" value="5" class="icon-star-fill fill"></i>
@@ -433,9 +433,22 @@
 																<i name="rating" value="3" class="icon-star-fill fill"></i>
 																<i name="rating" value="2" class="icon-star-fill fill"></i>
 																<i name="rating" value="1" class="icon-star-fill fill"></i>
+															</div> -->
+															<!-- endcode -->
+															<!-- democode -->
 															
+																<div class="ratePro">
+																	
+																	<input type="radio" name="rating" id="rating5" value="5" required /> <label for="rating5" title="5"></label>
+																	<input type="radio" name="rating" id="rating4" value="4" required /> <label for="rating4" title="4"></label>
+																	<input type="radio" name="rating" id="rating3" value="3" required /> <label for="rating3" title="3"></label>
+																	<input type="radio" name="rating" id="rating2" value="2" required /> <label for="rating2" title="2"></label>	
+																	<input type="radio" name="rating" id="rating1" value="1" required /> <label for="rating1" title="1"></label>
 
-															</div>
+																</div>
+														
+												
+															<!-- endcodeDemo -->
 														</div>
 
 
@@ -466,10 +479,13 @@
 							{% for com in comment %}
 							<div class="review-item">
 								<div class="review-item_rating">
-									<i class="icon-star-fill fill"></i><i class="icon-star-fill fill"></i><i
-										class="icon-star-fill fill"></i><i class="icon-star-fill fill"></i><i
-										class="icon-star-fill fill"></i>
-								</div>
+									
+								<i class="icon-star-fill fill{% if com.rating < 1 %}-fill fill{% endif %}"></i>
+								<i class="icon-star-fill fill{% if com.rating < 2 %}-fill fill{% endif %}"></i>
+								<i class="icon-star-fill fill{% if com.rating < 3 %}-fill fill{% endif %}"></i>
+								<i class="icon-star-fill fill{% if com.rating < 4 %}-fill fill{% endif %}"></i>
+								<i class="icon-star-fill fill{% if com.rating < 5 %}-fill fill{% endif %}"></i>
+							</div>
 								<div class="review-item_top row align-items-center">
 									<div class="col">
 										<h5 class="review-item_author">{{ com.user.username }} on {{ com.created }}</h5>

@@ -9,14 +9,17 @@
     <meta name="description" content="">
     <meta name="author" content="">
     <title>{% block title %}Halgada Jersey Store{% endblock %}</title>
-      
-
+    <link href="{% static "css/star.css" %}" rel="stylesheet">
+    <link href="{% static "css/custom.css" %}" rel="stylesheet">
+    
     <link href="{% static "css/bootstrap.min.css" %}" rel="stylesheet">
     <link href="{% static "css/vendor.min.css" %}" rel="stylesheet">
     <link href="{% static "css/style.css" %}" rel="stylesheet">
     <link href="{% static "fonts/icomoon/icons.css" %}" rel="stylesheet">
-    <script src="https://kit.fontawesome.com/f36dde02bd.js" crossorigin="anonymous"></script>
-    <link href="{% static "css/custom.css" %}" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/f2be6d220c.js" crossorigin="anonymous"></script>
+    {% comment %} <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"> {% endcomment %}
+   
+     
     <link rel="shortcut icon" type="image/x-icon" href="{% static 'images/hgs.png' %}"/>  
   
     <link
@@ -66,10 +69,20 @@
                                 </div>
                             </div>
                             <div class="dropdn dropdn_wishlist">
+                                
+                                <a href="{% url 'account:wishlist' %}" class="dropdn-link only-icon wishlist-link ">
+                                    <i class="icon-heart"></i><span class="dropdn-link-txt">Wishlist</span>
+                                    {% if request.user.is_authenticated %}  
+                                    <span class="wishlist-qty">{{ count_item  }}</span>
+                                        {% else %}
+                                </a>
+                               
                                 <a href="{% url 'account:wishlist' %}" class="dropdn-link only-icon wishlist-link ">
                                     <i class="icon-heart"></i><span class="dropdn-link-txt">Wishlist</span><span
-                                        class="wishlist-qty">1</span>
+                                        class="wishlist-qty">0</span>
                                 </a>
+                                {% endif %}
+
                             </div>
                             <div class="dropdn dropdn_account dropdn_fullheight">
                                 <a href="#" class="dropdn-link js-dropdn-link js-dropdn-link only-icon"
@@ -206,10 +219,17 @@
                                     </div>
                                 </div>
                                 <div class="dropdn dropdn_wishlist">
+                                    {% if request.user.is_authenticated %}   
                                     <a href="{% url 'account:wishlist' %}" class="dropdn-link only-icon wishlist-link ">
                                         <i class="icon-heart"></i><span class="dropdn-link-txt">Wishlist</span><span
-                                            class="wishlist-qty">3</span>
+                                            class="wishlist-qty">{{ count_item  }}</span>
                                     </a>
+                                    {% else %}
+                                    <a href="{% url 'account:wishlist' %}" class="dropdn-link only-icon wishlist-link ">
+                                        <i class="icon-heart"></i><span class="dropdn-link-txt">Wishlist</span><span
+                                            class="wishlist-qty">0</span>
+                                    </a>
+                                    {% endif %}
                                 </div>
                                 <div class="hdr_container_mobile show-mobile">
                                     <div class="dropdn dropdn_account dropdn_fullheight">
@@ -824,15 +844,16 @@
             </div>
         </div>
     </div> -->
-
+ 
+    <script src="{% static 'js/vendor-special/jquery.min.js' %}"></script> 
+    <script src="{% static 'js/custom.js' %}"></script>  
+    <script src="{% static 'js/vendor-special/jquery.ez-plus.js' %}"></script> 
     <script src="{% static 'js/vendor-special/lazysizes.min.js' %}"></script>  
     <script src="{% static 'js/vendor-special/ls.bgset.min.js' %}"></script>  
     <script src="{% static 'js/vendor-special/ls.aspectratio.min.js' %}"></script> 
-    <script src="{% static 'js/vendor-special/jquery.min.js' %}"></script> 
-    <script src="{% static 'js/vendor-special/jquery.ez-plus.js' %}"></script> 
     <script src="{% static 'js/vendor/vendor.min.js' %}"></script> 
     <script src="{% static 'js/app-html.js' %}"></script> 
-
+ 
     </body>
 
 </html>

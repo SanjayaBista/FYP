@@ -12,3 +12,31 @@
         margin: 10px 10px;
         cursor: pointer;
         }
+
+.ratePro{
+    display: inline-block;
+    border: 0;
+}
+.ratePro > input{
+    display: none;
+}
+.ratePro > label{
+    float: right;
+
+}
+.ratePro > label:before{
+    display: inline-block;
+    font-size: 1.1em;
+    font-family: FontAwesome;
+    content: "\f005";
+    margin: 0;
+    padding: 0.3em 0.2em;
+    cursor: pointer;
+}
+.ratePro input:not(:checked) ~ label:hover, 
+.ratePro input:not(:checked) ~ label:hover ~label{
+    color: #EFA600;
+}
+.ratePro input:checked ~ label{
+    color: #EFA600;
+}

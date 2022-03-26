@@ -176,6 +176,8 @@ LOGOUT_URL = 'logout'
 
 
 CART_SESSION_ID = 'cart'
-# SESSION_COOKIE_AGE = 10 # for 60 seconds timestamp   
-# SESSION_EXPIRE_SECONDS = 30
-# SESSION_EXPIRE_AFTER_LAST_ACTIVITY = True   
+# The module to store sessions data. 
+SESSION_ENGINE = 'django.contrib.sessions.backends.db'
+SESSION_COOKIE_AGE = 60 * 60 * 24 * 7 * 2 
+# Whether a user's session cookie expires when the Web browser is closed 
+SESSION_EXPIRE_AT_BROWSER_CLOSE = False 

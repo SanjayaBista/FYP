@@ -15,26 +15,15 @@
       <div class="row">
         <div class="col-md-4 aside aside--left">
           <div class="list-group">
-            <a href="{% url 'account:profile' %}" class="list-group-item "
-              >Account Details</a
-            >
-            <a href="{% url 'account:address' %}" class="list-group-item"
-              >My Addresses</a
-            >
-            <a href="{% url 'account:wishlist' %}" class="list-group-item"
-              >My Wishlist</a
-            >
-            <a href="{% url 'account:history' %}" class="list-group-item"
-              >My Order History</a
-            >
+            <a href="{% url 'account:profile' %}" class="list-group-item ">Account Details</a>
+            <a href="{% url 'account:address' %}" class="list-group-item">My Addresses</a>
+            <a href="{% url 'account:wishlist' %}" class="list-group-item">My Wishlist</a>
+            <a href="{% url 'account:history' %}" class="list-group-item">My Order History</a>
           </div>
         </div>
         <div class="col-md-14 aside">
           <h1 class="mb-3">My Wishlist</h1>
-          <div
-            class="empty-wishlist js-empty-wishlist text-center py-3 py-sm-5 d-none"
-            style="opacity: 0"
-          >
+          <div class="empty-wishlist js-empty-wishlist text-center py-3 py-sm-5 d-none" style="opacity: 0">
             <h3>Your Wishlist is empty</h3>
             <div class="mt-5">
               <a href="index.html" class="btn">Continue shopping</a>
@@ -42,38 +31,20 @@
           </div>
           <div class="prd-grid-wrap position-relative">
             <div
-              class="prd-grid prd-grid--wishlist data-to-show-3 data-to-show-lg-3 data-to-show-md-2 data-to-show-sm-2 data-to-show-xs-1"
-            >
+              class="prd-grid prd-grid--wishlist data-to-show-3 data-to-show-lg-3 data-to-show-md-2 data-to-show-sm-2 data-to-show-xs-1">
               <!-- starts -->
-              <div
-                class="prd prd--in-wishlist prd--style2 prd-labels--max prd-labels-shadow"
-              >
+              {% for w in wish %}
+              <div class="prd prd--in-wishlist prd--style2 prd-labels--max prd-labels-shadow">
                 <div class="prd-inside">
                   <div class="prd-img-area">
-                    <a
-                      href="product.html"
-                      class="prd-img image-hover-scale image-container"
-                    >
-                      <img
-                        src="images/skins/fashion/Atletico.jpeg"
-                        data-src="images/skins/fashion/Atletico.jpeg"
-                      />
-                      <div class="foxic-loader"></div>
-                      <div class="prd-big-squared-labels"></div>
+                    <a href="{{ w.product.get_absolute_url }}" class="prd-img image-hover-scale image-container">
+                      <img src="{% if w.product.image %} {{ w.product.image.url }} {% else %} {% static 'images/NoImage.png' %}{% endif %}"
+                          data-src="" alt=""  class="js-prd-img lazyload fade-up">
                     </a>
                     <div class="prd-circle-labels">
-                      <a
-                        href="#"
-                        class="circle-label-compare circle-label-wishlist--off js-remove-wishlist"
-                        title="Remove From Wishlist"
-                        ><i class="icon-recycle"></i
-                      ></a>
-                      <a
-                        href="#"
-                        class="circle-label-qview js-prd-quickview prd-hide-mobile"
-                        data-src="ajax/ajax-quickview.html"
-                        ><i class="icon-eye"></i><span>QUICK VIEW</span></a
-                      >
+                      <a href="#" class="circle-label-compare circle-label-wishlist--off js-remove-wishlist"
+                        title="Remove From Wishlist"><i class="icon-recycle"></i></a>
+                    
                     </div>
                   </div>
                   <div class="prd-info">
@@ -82,15 +53,13 @@
                         <div class="prd-tag"><a href="#">Bigsteps</a></div>
                       </div>
                       <div class="prd-rating justify-content-center">
-                        <i class="icon-star-fill fill"></i
-                        ><i class="icon-star-fill fill"></i
-                        ><i class="icon-star-fill fill"></i
-                        ><i class="icon-star-fill fill"></i
-                        ><i class="icon-star-fill fill"></i>
+                        <i class="icon-star-fill fill"></i><i class="icon-star-fill fill"></i><i
+                          class="icon-star-fill fill"></i><i class="icon-star-fill fill"></i><i
+                          class="icon-star-fill fill"></i>
                       </div>
-                      <div class="prd-tag"><a href="#">Bigsteps</a></div>
+                      <div class="prd-tag"><a href="#">{{ w.product.category.name }}</a></div>
                       <h2 class="prd-title">
-                        <a href="product.html">Suede Leather Mini Skirt</a>
+                        <a href="product.html">{{ w.product.name }}</a>
                       </h2>
                       <div class="prd-description">
                         Quisque volutpat condimentum velit. Class aptent taciti
@@ -101,322 +70,32 @@
                     <div class="prd-hovers">
                       <div class="prd-circle-labels">
                         <div>
-                          <a
-                            href="#"
-                            class="circle-label-compare circle-label-wishlist--add js-add-wishlist mt-0"
-                            title="Add To Wishlist"
-                            ><i class="icon-heart-stroke"></i></a
-                          ><a
-                            href="#"
+                          <a href="#" class="circle-label-compare circle-label-wishlist--add js-add-wishlist mt-0"
+                            title="Add To Wishlist"><i class="icon-heart-stroke"></i></a><a href="#"
                             class="circle-label-compare circle-label-wishlist--off js-remove-wishlist mt-0"
-                            title="Remove From Wishlist"
-                            ><i class="icon-heart-hover"></i
-                          ></a>
+                            title="Remove From Wishlist"><i class="icon-heart-hover"></i></a>
                         </div>
-                        <div>
-                          <a
-                            href="#"
-                            class="circle-label-qview prd-hide-mobile js-prd-quickview"
-                            data-src="ajax/ajax-quickview.html"
-                            ><i class="icon-eye"></i><span>QUICK VIEW</span></a
-                          >
-                        </div>
+                       
                       </div>
                       <div class="prd-price">
-                        <div class="price-new">$ 180</div>
+                        <div class="price-new">${{ w.product.price }}</div>
                       </div>
                       <div class="prd-action">
                         <div class="prd-action-left">
-                          <form action="#">
-                            <button class="btn">View Full Info</button>
-                          </form>
+                          <form method="post" action="{{ w.product.get_absolute_url }}">
+                            {% csrf_token %}
+                            
+                            <button  class="btn btn--add-to-cart js-trigger-addtocart js-prd-addtocart">View Product</button>
+                           
+                        </form>
                         </div>
                       </div>
                     </div>
                   </div>
                 </div>
               </div>
+              {% endfor %}
 
-              <div
-                class="prd prd--in-wishlist prd--style2 prd-labels--max prd-labels-shadow"
-              >
-                <div class="prd-inside">
-                  <div class="prd-img-area">
-                    <a
-                      href="product.html"
-                      class="prd-img image-hover-scale image-container"
-                    >
-                      <img
-                        src="static/images/Atletico.jpeg"
-                        data-src="static/images/Atletico.jpeg"
-                        alt="Stand Up Collar Shirt"
-                        class="js-prd-img lazyload fade-up"
-                      />
-                      <div class="foxic-loader"></div>
-                      <div class="prd-big-squared-labels"></div>
-                    </a>
-                    <div class="prd-circle-labels">
-                      <a
-                        href="#"
-                        class="circle-label-compare circle-label-wishlist--off js-remove-wishlist"
-                        title="Remove From Wishlist"
-                        ><i class="icon-recycle"></i
-                      ></a>
-                      <a
-                        href="#"
-                        class="circle-label-qview js-prd-quickview prd-hide-mobile"
-                        data-src="ajax/ajax-quickview.html"
-                        ><i class="icon-eye"></i><span>QUICK VIEW</span></a
-                      >
-                    </div>
-                  </div>
-                  <div class="prd-info">
-                    <div class="prd-info-wrap">
-                      <div class="prd-info-top">
-                        <div class="prd-tag"><a href="#">FOXic</a></div>
-                      </div>
-                      <div class="prd-rating justify-content-center">
-                        <i class="icon-star-fill fill"></i
-                        ><i class="icon-star-fill fill"></i
-                        ><i class="icon-star-fill fill"></i
-                        ><i class="icon-star-fill fill"></i
-                        ><i class="icon-star-fill fill"></i>
-                      </div>
-                      <div class="prd-tag"><a href="#">FOXic</a></div>
-                      <h2 class="prd-title">
-                        <a href="product.html">Stand Up Collar Shirt</a>
-                      </h2>
-                      <div class="prd-description">
-                        Quisque volutpat condimentum velit. Class aptent taciti
-                        sociosqu ad litora torquent per conubia nostra, per
-                        inceptos himenaeos. Nam nec ante sed lacinia.
-                      </div>
-                    </div>
-                    <div class="prd-hovers">
-                      <div class="prd-circle-labels">
-                        <div>
-                          <a
-                            href="#"
-                            class="circle-label-compare circle-label-wishlist--add js-add-wishlist mt-0"
-                            title="Add To Wishlist"
-                            ><i class="icon-heart-stroke"></i></a
-                          ><a
-                            href="#"
-                            class="circle-label-compare circle-label-wishlist--off js-remove-wishlist mt-0"
-                            title="Remove From Wishlist"
-                            ><i class="icon-heart-hover"></i
-                          ></a>
-                        </div>
-                        <div>
-                          <a
-                            href="#"
-                            class="circle-label-qview prd-hide-mobile js-prd-quickview"
-                            data-src="ajax/ajax-quickview.html"
-                            ><i class="icon-eye"></i><span>QUICK VIEW</span></a
-                          >
-                        </div>
-                      </div>
-                      <div class="prd-price">
-                        <div class="price-new">$ 180</div>
-                      </div>
-                      <div class="prd-action">
-                        <div class="prd-action-left">
-                          <form action="#">
-                            <button class="btn">View Full Info</button>
-                          </form>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <div
-                class="prd prd--in-wishlist prd--style2 prd-labels--max prd-labels-shadow"
-              >
-                <div class="prd-inside">
-                  <div class="prd-img-area">
-                    <a
-                      href="product.html"
-                      class="prd-img image-hover-scale image-container"
-                    >
-                      <img
-                        src="images/skins/fashion/Atletico.jpeg"
-                        data-src="images/skins/fashion/Atletico.jpeg"
-                        alt="Stand Up Collar Shirt"
-                        class="js-prd-img lazyload fade-up"
-                      />
-                      <div class="foxic-loader"></div>
-                      <div class="prd-big-squared-labels"></div>
-                    </a>
-                    <div class="prd-circle-labels">
-                      <a
-                        href="#"
-                        class="circle-label-compare circle-label-wishlist--off js-remove-wishlist"
-                        title="Remove From Wishlist"
-                        ><i class="icon-recycle"></i
-                      ></a>
-                      <a
-                        href="#"
-                        class="circle-label-qview js-prd-quickview prd-hide-mobile"
-                        data-src="ajax/ajax-quickview.html"
-                        ><i class="icon-eye"></i><span>QUICK VIEW</span></a
-                      >
-                    </div>
-                  </div>
-                  <div class="prd-info">
-                    <div class="prd-info-wrap">
-                      <div class="prd-info-top">
-                        <div class="prd-tag"><a href="#">FOXic</a></div>
-                      </div>
-                      <div class="prd-rating justify-content-center">
-                        <i class="icon-star-fill fill"></i
-                        ><i class="icon-star-fill fill"></i
-                        ><i class="icon-star-fill fill"></i
-                        ><i class="icon-star-fill fill"></i
-                        ><i class="icon-star-fill fill"></i>
-                      </div>
-                      <div class="prd-tag"><a href="#">FOXic</a></div>
-                      <h2 class="prd-title">
-                        <a href="product.html">Stand Up Collar Shirt</a>
-                      </h2>
-                      <div class="prd-description">
-                        Quisque volutpat condimentum velit. Class aptent taciti
-                        sociosqu ad litora torquent per conubia nostra, per
-                        inceptos himenaeos. Nam nec ante sed lacinia.
-                      </div>
-                    </div>
-                    <div class="prd-hovers">
-                      <div class="prd-circle-labels">
-                        <div>
-                          <a
-                            href="#"
-                            class="circle-label-compare circle-label-wishlist--add js-add-wishlist mt-0"
-                            title="Add To Wishlist"
-                            ><i class="icon-heart-stroke"></i></a
-                          ><a
-                            href="#"
-                            class="circle-label-compare circle-label-wishlist--off js-remove-wishlist mt-0"
-                            title="Remove From Wishlist"
-                            ><i class="icon-heart-hover"></i
-                          ></a>
-                        </div>
-                        <div>
-                          <a
-                            href="#"
-                            class="circle-label-qview prd-hide-mobile js-prd-quickview"
-                            data-src="ajax/ajax-quickview.html"
-                            ><i class="icon-eye"></i><span>QUICK VIEW</span></a
-                          >
-                        </div>
-                      </div>
-                      <div class="prd-price">
-                        <div class="price-new">$ 180</div>
-                      </div>
-                      <div class="prd-action">
-                        <div class="prd-action-left">
-                          <form action="#">
-                            <button class="btn">View Full Info</button>
-                          </form>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div
-                class="prd prd--in-wishlist prd--style2 prd-labels--max prd-labels-shadow"
-              >
-                <div class="prd-inside">
-                  <div class="prd-img-area">
-                    <a
-                      href="product.html"
-                      class="prd-img image-hover-scale image-container"
-                    >
-                      <img
-                        src="static/images/Atletico.jpeg"
-                        data-src="images/skins/fashion/Atletico.jpeg"
-                        alt="Stand Up Collar Shirt"
-                        class="js-prd-img lazyload fade-up"
-                      />
-                      <div class="foxic-loader"></div>
-                      <div class="prd-big-squared-labels"></div>
-                    </a>
-                    <div class="prd-circle-labels">
-                      <a
-                        href="#"
-                        class="circle-label-compare circle-label-wishlist--off js-remove-wishlist"
-                        title="Remove From Wishlist"
-                        ><i class="icon-recycle"></i
-                      ></a>
-                      <a
-                        href="#"
-                        class="circle-label-qview js-prd-quickview prd-hide-mobile"
-                        data-src="ajax/ajax-quickview.html"
-                        ><i class="icon-eye"></i><span>QUICK VIEW</span></a
-                      >
-                    </div>
-                  </div>
-                  <div class="prd-info">
-                    <div class="prd-info-wrap">
-                      <div class="prd-info-top">
-                        <div class="prd-tag"><a href="#">FOXic</a></div>
-                      </div>
-                      <div class="prd-rating justify-content-center">
-                        <i class="icon-star-fill fill"></i
-                        ><i class="icon-star-fill fill"></i
-                        ><i class="icon-star-fill fill"></i
-                        ><i class="icon-star-fill fill"></i
-                        ><i class="icon-star-fill fill"></i>
-                      </div>
-                      <div class="prd-tag"><a href="#">FOXic</a></div>
-                      <h2 class="prd-title">
-                        <a href="product.html">Stand Up Collar Shirt</a>
-                      </h2>
-                      <div class="prd-description">
-                        Quisque volutpat condimentum velit. Class aptent taciti
-                        sociosqu ad litora torquent per conubia nostra, per
-                        inceptos himenaeos. Nam nec ante sed lacinia.
-                      </div>
-                    </div>
-                    <div class="prd-hovers">
-                      <div class="prd-circle-labels">
-                        <div>
-                          <a
-                            href="#"
-                            class="circle-label-compare circle-label-wishlist--add js-add-wishlist mt-0"
-                            title="Add To Wishlist"
-                            ><i class="icon-heart-stroke"></i></a
-                          ><a
-                            href="#"
-                            class="circle-label-compare circle-label-wishlist--off js-remove-wishlist mt-0"
-                            title="Remove From Wishlist"
-                            ><i class="icon-heart-hover"></i
-                          ></a>
-                        </div>
-                        <div>
-                          <a
-                            href="#"
-                            class="circle-label-qview prd-hide-mobile js-prd-quickview"
-                            data-src="ajax/ajax-quickview.html"
-                            ><i class="icon-eye"></i><span>QUICK VIEW</span></a
-                          >
-                        </div>
-                      </div>
-                      <div class="prd-price">
-                        <div class="price-new">$ 180</div>
-                      </div>
-                      <div class="prd-action">
-                        <div class="prd-action-left">
-                          <form action="product.html">
-                            <button class="btn">View Full Info</button>
-                          </form>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
             </div>
           </div>
         </div>

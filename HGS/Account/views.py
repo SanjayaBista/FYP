@@ -5,7 +5,7 @@ from django.urls import reverse_lazy
 from django.views.generic.edit import CreateView
 from .models import Customer
 from .forms import RegisterForm
-from Home.models import Category
+from Home.models import Category, Wishlist
 from django.contrib import messages
 # Create your views here.
 def userLogin(request):
@@ -67,7 +67,9 @@ def address(request):
 
 def wishlist(request):
     category = Category.objects.all()
-    context = {'category':category}
+    wish = Wishlist.objects.filter(user=request.user).order_by('-id')
+    count_item = Wishlist.objects.filter(user=request.user).count()
+    context = {'category':category,'wish':wish, 'count_item':count_item}
     return render(request,'wishlist.html',context)
 
 def history(request):

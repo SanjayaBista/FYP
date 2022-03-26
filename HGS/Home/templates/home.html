@@ -111,10 +111,13 @@
                                     data-src="" alt=""  class="js-prd-img lazyload fade-up">
                               </a>
                             <div class="prd-circle-labels">
-                                <a href="#" class="circle-label-compare circle-label-wishlist--add js-add-wishlist mt-0"
-                                    title="Add To Wishlist"><i class="icon-heart-stroke"></i></a><a href="#"
-                                    class="circle-label-compare circle-label-wishlist--off js-remove-wishlist mt-0"
-                                    title="Remove From Wishlist"><i class="icon-heart-hover"></i></a>
+                                <a href="#"
+                                class="circle-label-compare circle-label-wishlist--add js-add-wishlist mt-0"
+                                 data-product="{{product.id}}"  title="Add To Wishlist"><i class="icon-heart-stroke"></i></a>
+                                <a href="#"class="circle-label-compare circle-label-wishlist--off js-remove-wishlist mt-0"
+                                    title="Remove From Wishlist">
+                                    <i class="icon-heart-hover"></i>
+                                </a>
                             </div>
                         </div>
                         <div class="prd-info">
@@ -126,6 +129,9 @@
                                 <h2 class="prd-title"><a href="product.html">{{ product.category.name }}</a></h2>
 
                             </div>
+
+
+
                             <div class="prd-hovers">
                                 <div class="prd-price">
                                     <div class="price-new">${{ product.price }}</div>

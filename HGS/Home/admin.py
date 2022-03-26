@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Category, Product, Comment ,Variation , Contact
+from .models import Category, Product, Comment , Contact, Size, ProductAttribute, Wishlist
 from mptt.admin import DraggableMPTTAdmin
 
 # Register your models here.
@@ -50,14 +50,24 @@ class AdminProduct(admin.ModelAdmin):
     list_editable = ['price','availibility']
     prepopulated_fields = {'slug':('name',)}
 
+@admin.register(Size)
+class AdminSize(admin.ModelAdmin):
+    list_display = ['title']
+
+@admin.register(ProductAttribute)
+class AdminAttribute(admin.ModelAdmin):
+    list_display = ['product','size']
+
+
 @admin.register(Comment)
 class AdminComment(admin.ModelAdmin):
-    list_display = ['user','title','review','created','updated']
+    list_display = ['user','title','review','rating','created','updated']
 
-@admin.register(Variation)
-class AdminVariation(admin.ModelAdmin):
-    list_display = ['product','title','price','availibility']
     
 @admin.register(Contact)
 class AdminContact(admin.ModelAdmin):
     list_display = ['firstName', 'email', 'phoneNumber','message']
+
+@admin.register(Wishlist)
+class AdminWishlist(admin.ModelAdmin):
+    list_display = ['user', 'product']
