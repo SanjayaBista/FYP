@@ -145,18 +145,28 @@
 				
 									<div class="prd-size swatches">
 										<div class="option-label">Size:</div>
-										 <select class="form-control hidden single-option-selector-modalQuickView" id="SingleOptionSelector-1" data-index="option2">
+										 {% comment %} <select class="form-control hidden single-option-selector-modalQuickView" id="SingleOptionSelector-1" data-index="option2">
 											<option value="Small" selected="selected">Small</option>
 											<option value="Medium">Medium</option>
 											<option value="Large">Large</option>
-										</select> 
-										{% for attr in product.productattribute_set.all %}
-										<ul class="size-list js-size-list" data-select-id="SingleOptionSelector-1">
+										</select>  {% endcomment %}
+										
+										<div class="form-group">
+                                            <select class="form-control">
+												<div class="col-xs-10">
+												{% for attr in product.productattribute_set.all %}
+                                                <option value="size"> <h3 style:color="red"> {{ attr.size.title }} </h3> </option>
+												{% endfor %}
+											</div>
+                                            </select>
+										
+                                        </div>
+										{% comment %} <ul class="size-list js-size-list" data-select-id="SingleOptionSelector-1">
 											
 											<li><a href="#" data-value="Large"><span class="value">{{ attr.size.title }}</span></a></li>
 										
-										</ul>
-										{% endfor %}
+										</ul> {% endcomment %}
+										
 									</div>
 									
 								</div>

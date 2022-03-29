@@ -37,11 +37,11 @@ My Address
                     <div class="col-sm-9">
                         <div class="card">
                             <div class="card-body">
-                                <h3>Add Address</h3>
+                                <h3> Address</h3>
                                 <p> Username: {{request.user.username }}
-                                    {% if user.is_authenticated %}
-                                    <br> State: {{ user.address.state }}
-                                    <br> District: {{ user.address.district }} 
+                                    {% if request.user.is_authenticated %}
+                                    <br> State: {{ Address.state }}
+                                    <br> District: {{ address.district }} 
                                    <br> City: {{ user.address.address }}
                                    <br> Postal Code: {{ user.address.postal }}</p>
                                     {% endif %}

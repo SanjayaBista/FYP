@@ -84,7 +84,7 @@ def address(request):
 
 def updateAddress(request):
     category = Category.objects.all()
-    context = {'category':category}
+    context = {'category':category, 'info':info}
     if request.method=="POST":
         info = Address()
         state = request.POST.get('state')

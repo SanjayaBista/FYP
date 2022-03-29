@@ -27,9 +27,6 @@ def cart_remove(request, product_id):
         return redirect('cart:cart_detail')
     return redirect('/', {'category':category})
 
- 
-    
-
 def cart_detail(request):
     category = Category.objects.all()
     latest_product = Product.objects.all().order_by('-id')[:5]
