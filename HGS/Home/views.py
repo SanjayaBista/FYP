@@ -1,21 +1,26 @@
 from ast import Pass
 from email import message
 from itertools import count
+from math import prod
 from tkinter.tix import Form
 from unicodedata import category
 from django.http import HttpResponse, HttpResponseNotAllowed, HttpResponseNotFound, HttpResponseRedirect, JsonResponse
 from django.shortcuts import redirect, render
 from django.shortcuts import get_object_or_404
-from .forms import FormComment
+from .forms import FormComment, SearchQuery
 from .models import Category, Contact , Product, Comment, Wishlist
 from cart.forms import CartAddProductForm
 from cart.cart import Cart
 from .filters import ProdFilter
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from django.contrib.postgres.search import SearchVector
+from django.db.models import Q
+
 # Create your views here.
 def home(request):
     category = Category.objects.all()
     latest_product = Product.objects.all().order_by('-id')[:4]
-    count_item = Wishlist.objects.filter(user=request.user).count()
+    count_item = Wishlist.objects.filter().count()
     cart_product_form = CartAddProductForm()
     context = {'category':category, 'latest_product':latest_product, 'cart_product_form':cart_product_form, 'count_item':count_item}
     return render(request, 'home.html',context)
@@ -23,28 +28,53 @@ def home(request):
 #prodcut page
 def categoryItem(request,id,slug=None):
     category = Category.objects.all()
-
-    # ATOZID = request.GET.get('ATOZ')
+    allProd = Product.objects.all()
+    ATOZID = request.GET.get('ATOZ')
+    ZTOAID = request.GET.get('ZTOA')
+    print(ATOZID)
     # print(ATOZID)
-    sort_by = request.GET.get("sort", "l2h") 
-    print(sort_by)
-    if id:
-        products = Product.objects.filter(category_id = id)
-    elif sort_by == "l2h":
-        products = Product.objects.filter(category_id = id).order_by('-name')
-    elif sort_by == "h2l":
-        products = Product.objects.filter(category_id = id).order_by('name')
-
-# error in sorting and filtering
+    # sort_by = request.GET.get('ATOZ') 
+    # print(sort_by)
     # if id:
     #     products = Product.objects.filter(category_id = id)
-    # elif ATOZID:
+    # elif sort_by == "l2h":
     #     products = Product.objects.filter(category_id = id).order_by('-name')
-    # else:
-    #     products = Product.objects.filter(category_id = id)
+    # elif sort_by == "h2l":
+    #     products = Product.objects.filter(category_id = id).order_by('name')
 
-    context = {'category':category,'products':products}
+# error in sorting and filtering
+    if id:
+        products = Product.objects.filter(category_id = id)
+    elif ATOZID:
+        products = Product.objects.filter(category_id = id).order_by('-name')
+       
+    elif ZTOAID:
+        products = Product.objects.filter(category_id = id).order_by('name')
+    else:
+        products = Product.objects.filter(category_id = id)
+    paginator = Paginator(products, 4)
+    page = request.GET.get('page')
+    try:
+        products = paginator.page(page)
+    except PageNotAnInteger:
+        products = paginator.page(1)
+    except EmptyPage:
+        products = paginator.page(paginator.num_pages)
+    countProd = Product.objects.filter(category_id = id).count()
+
+    context = {'category':category,'products':products,'page':page, 'countProd':countProd, 'allProd':allProd}
     return render(request, 'national.html', context)
+
+# def findProd(request):
+#     chosenProd = None
+#     products = Product.objects.all()
+#     if request.method == 'POST':
+#         chosenProd = request.POST.get('product')
+#         produts = products.filter(product=chosenProd)
+        
+
+
+
 
 #detail page
 def productDetail(request,id,slug):
@@ -89,7 +119,7 @@ def aboutUs(request):
 def contactUs(request):
     category = Category.objects.all()
     context = {'category':category}
-   
+
     if request.method == "POST":
         contact = Contact()
         firstName = request.POST.get('firstName')
@@ -150,3 +180,39 @@ def add_wishlist(request):
             'bool':True
         }
     return JsonResponse(data)
+
+
+# def search(arr, x):
+#     products = Product.objects.values_list('name',flat=True)
+#     products = list(products)
+#     l = 0
+#     r = len(arr)
+#     while (l <= r):
+#         m = l + ((r - l) // 2)
+ 
+#         res = (x == arr[m])
+ 
+#         # Check if x is present at mid
+#         if (res == 0):
+#             return m - 1
+ 
+#         # If x greater, ignore left half
+#         if (res > 0):
+#             l = m + 1
+ 
+#         # If x is smaller, ignore right half
+#         else:
+#             r = m - 1
+ 
+#     return -1
+ 
+
+def prodSearch(request):
+    category = Category.objects.all()
+    if request.method=='POST':
+        search = request.POST.get('search')
+        results = Product.objects.filter(Q(name__icontains=search))
+        context = {'category':category, 'results': results}
+        return render(request, 'search.html', context)
+    else:
+        return redirect('home:home')

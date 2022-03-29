@@ -49,6 +49,7 @@ INSTALLED_APPS = [
     'allauth.socialaccount.providers.google',
     'coupon',
     'django_filters',
+    'django.contrib.postgres',
 ]
 
 SITE_ID = 1
@@ -97,7 +98,7 @@ WSGI_APPLICATION = 'HGS.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'FYPDB',
+        'NAME': 'DatabaseFYP',
         'USER': 'postgres',
         'PASSWORD': 'Sanjay',
         'HOST': '127.0.0.1',

@@ -3,7 +3,7 @@ from django.shortcuts import redirect, render
 from django.contrib.auth import authenticate, login, logout
 from django.urls import reverse_lazy
 from django.views.generic.edit import CreateView
-from .models import Customer
+from .models import Customer , Address
 from .forms import RegisterForm
 from Home.models import Category, Wishlist
 from django.contrib import messages
@@ -58,13 +58,49 @@ def forgetPassword(request):
 def profile(request):
     category = Category.objects.all()
     context = {'category':category}
+   
     return render(request,'profile.html',context)
+
+def updateProfile(request):
+    category = Category.objects.all()
+    context = {'category':category}
+    if request.method=='POST':
+        firstName = request.POST['firstName']
+        lastName = request.POST['lastName']
+        email = request.POST['email']
+        phoneNumber = request.POST['phoneNumber']
+        customer = Customer.objects.get(id=request.user.id)
+        customer.first_name = firstName
+        customer.last_name = lastName
+        customer.email = email
+        customer.phone_number = phoneNumber
+        customer.save()
+    return render(request, 'profile.html', context)
 
 def address(request):
     category = Category.objects.all()
     context = {'category':category}
     return render(request,'myaddress.html',context)
 
+def updateAddress(request):
+    category = Category.objects.all()
+    context = {'category':category}
+    if request.method=="POST":
+        info = Address()
+        state = request.POST.get('state')
+        district = request.POST.get('district')
+        address = request.POST.get('address')
+        postal  = request.POST.get('zip')
+        info.state = state
+        info.district = district
+        info.address = address
+        info.postal = postal
+        current_user = request.user
+        info.user_id = current_user.id
+        info.save()
+        return redirect('account:address')
+
+    return render (request, 'myaddress.html', context)
 def wishlist(request):
     category = Category.objects.all()
     wish = Wishlist.objects.filter(user=request.user).order_by('-id')

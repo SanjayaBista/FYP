@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Customer
+from .models import Customer, Address
 
 # Register your models here.
 @admin.register(Customer)
@@ -8,3 +8,9 @@ class AdminCustomer(admin.ModelAdmin):
     list_filter = ['date_joined','last_login',]
     search_fileds = ['email','first_name',]
     readonly_fields = ['id','date_joined','last_login',]    
+
+
+@admin.register(Address)
+class AdminAdderess(admin.ModelAdmin):
+    list_display = ['address','state','district','postal']
+     

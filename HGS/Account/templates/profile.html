@@ -47,19 +47,23 @@ My Profile
                     </div>
                 </div>
                 <div class="card mt-3 d-none" id="updateDetails">
+                    <form action="{% url 'account:updateProfile' %}" method="post">
+                        {% csrf_token %}
                     <div class="card-body">
                         <h3>Update Account Details</h3>
+                        
+
                         <div class="row mt-2">
                             <div class="col-sm-9">
                                 <label class="text-uppercase">First Name:</label>
                                 <div class="form-group">
-                                    <input type="text" class="form-control form-control--sm" placeholder="Jenny">
+                                    <input type="text" name="firstName" class="form-control form-control--sm" value={{ request.user.first_name }}>
                                 </div>
                             </div>
                             <div class="col-sm-9">
                                 <label class="text-uppercase">Last Name:</label>
                                 <div class="form-group">
-                                    <input type="text" class="form-control form-control--sm" placeholder="Raider">
+                                    <input type="text" name="lastName" class="form-control form-control--sm" value={{ request.user.last_name }}>
                                 </div>
                             </div>
                         </div>
@@ -67,13 +71,13 @@ My Profile
                             <div class="col-sm-9">
                                 <label class="text-uppercase">E-mail:</label>
                                 <div class="form-group">
-                                    <input type="email" class="form-control form-control--sm" placeholder="jennyraider@hotmail.com">
+                                    <input type="email" name="email" class="form-control form-control--sm" value={{ request.user.email }}>
                                 </div>
                             </div>
                             <div class="col-sm-9">
                                 <label class="text-uppercase">Phone:</label>
                                 <div class="form-group">
-                                    <input type="text" class="form-control form-control--sm" placeholder="876-432-4323">
+                                    <input type="text" name="phoneNumber" class="form-control form-control--sm" value={{ request.user.phone_number }}>
                                 </div>
                             </div>
                         </div>
@@ -82,6 +86,7 @@ My Profile
                             <button type="submit" class="btn ml-1">Update</button>
                         </div>
                     </div>
+                </form>
                 </div>
             </div>
         </div>

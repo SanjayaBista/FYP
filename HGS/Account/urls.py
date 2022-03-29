@@ -8,7 +8,9 @@ urlpatterns = [
     path('register/',views.userRegister,name='register'),
     path('forgetPassword/',views.forgetPassword,name='forgot'),
     path('profile/',views.profile,name='profile'),
+    path('updateProfile/',views.updateProfile,name='updateProfile'),
     path('address/',views.address,name='address'),
+    path('updateAddress/',views.updateAddress,name='updateAddress'),
     path('wishlist/',views.wishlist,name='wishlist'),
     path('history/',views.history,name='history'),
 ]

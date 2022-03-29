@@ -18,4 +18,6 @@ class FormComment(ModelForm):
                 'placeholder': 'review'
                 })
         } 
-      
+
+class SearchQuery(forms.Form):
+    search = forms.CharField()
