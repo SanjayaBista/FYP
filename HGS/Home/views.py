@@ -29,29 +29,14 @@ def home(request):
 def categoryItem(request,id,slug=None):
     category = Category.objects.all()
     allProd = Product.objects.all()
-    ATOZID = request.GET.get('ATOZ')
-    ZTOAID = request.GET.get('ZTOA')
-    print(ATOZID)
-    # print(ATOZID)
-    # sort_by = request.GET.get('ATOZ') 
-    # print(sort_by)
-    # if id:
-    #     products = Product.objects.filter(category_id = id)
-    # elif sort_by == "l2h":
-    #     products = Product.objects.filter(category_id = id).order_by('-name')
-    # elif sort_by == "h2l":
-    #     products = Product.objects.filter(category_id = id).order_by('name')
+    products = Product.objects.filter(category_id = id)
 
-# error in sorting and filtering
-    if id:
-        products = Product.objects.filter(category_id = id)
-    elif ATOZID:
-        products = Product.objects.filter(category_id = id).order_by('-name')
-       
-    elif ZTOAID:
-        products = Product.objects.filter(category_id = id).order_by('name')
-    else:
-        products = Product.objects.filter(category_id = id)
+    ordering = request.GET.get('ordering',"")
+    if ordering:
+        products = products.order_by(ordering)
+   
+
+
     paginator = Paginator(products, 4)
     page = request.GET.get('page')
     try:
