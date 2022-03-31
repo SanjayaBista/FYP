@@ -49,7 +49,7 @@
                         <div class="select-label">Sort BY:</div>
                         <div class="select-wrapper select-wrapper-xxs">
                             <select name="sort" id="sort-list" onchange="location = finalurl();" class="form-control input-sm">  
-                                <option id="placeholder" value="">Click to Sort</option>
+                                <option id="placeholder" value=""  disabled selected hidden>Click to Sort</option>
                                 <option id="name" value="name">Alphabetically, Ascending</option>
                                 <option id="-name" value="-name">Alphabetically, Descending</option>
                                 <option id="price" value="price">Price, Low to High</option>
@@ -150,7 +150,7 @@
                                              data-product="{{product.id}}"  title="Add To Wishlist"><i class="icon-heart-stroke"></i></a>
                                                 <a href="#"
                                                 class="circle-label-compare circle-label-wishlist--off js-remove-wishlist mt-0"
-                                                title="Remove From Wishlist"><i class="icon-heart-hover"></i></a>
+                                                 data-product="{{product.id}}" title="Remove From Wishlist"><i class="icon-heart-hover"></i></a>
                                         </div>
                                     </div>
                                     <div class="prd-info">

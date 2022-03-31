@@ -50,6 +50,7 @@ INSTALLED_APPS = [
     'coupon',
     'django_filters',
     'django.contrib.postgres',
+    'django_social_share',
 ]
 
 SITE_ID = 1

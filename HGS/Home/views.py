@@ -32,12 +32,14 @@ def categoryItem(request,id,slug=None):
     products = Product.objects.filter(category_id = id)
 
     ordering = request.GET.get('ordering',"")
+    filtering = request.GET.get('filtering',"")
     if ordering:
         products = products.order_by(ordering)
-   
+    if filtering:
+        products = products.filter(filtering)
 
 
-    paginator = Paginator(products, 4)
+    paginator = Paginator(products, 8)
     page = request.GET.get('page')
     try:
         products = paginator.page(page)
@@ -66,7 +68,7 @@ def productDetail(request,id,slug):
     category = Category.objects.all()
     product = Product.objects.get(pk = id)
     latest_product = Product.objects.all().order_by('-id').exclude(id=id)[:4]
-    count_item = Wishlist.objects.filter(user=request.user).count()
+    count_item = Wishlist.objects.filter().count()
     comment = Comment.objects.filter(product_id = id, active = True)
     cart_product_form = CartAddProductForm()
     context = {'category':category, 'product':product,'latest_product':latest_product, 'comment':comment,'cart_product_form':cart_product_form, 'count_item':count_item}
@@ -166,7 +168,12 @@ def add_wishlist(request):
         }
     return JsonResponse(data)
 
+def remove_wishlist(request):
 
+    customer=request.user.customer
+    Wishlist.objects.filter(customer_id=customer.id, product=Product.objects.get(id=id)).delete()
+   
+    return HttpResponseRedirect('/wishlist')
 # def search(arr, x):
 #     products = Product.objects.values_list('name',flat=True)
 #     products = list(products)

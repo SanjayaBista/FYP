@@ -1,6 +1,6 @@
 {% extends 'base.html '%}
 {% load static %}
-
+{% load social_share %}
 {% block title %}
 {{ product.category.name }}
 {% endblock %}
@@ -98,6 +98,7 @@
 					<h2>Share me on
 						<div class="hdr-line-separate">
 							<ul class="social-list list-unstyled">
+								
 								<li>
 									
 									<a href="#"><i class="icon-facebook" style="font-size:28px"></i></a>
@@ -106,7 +107,7 @@
 									<a href="#"><i class="icon-twitter" style="font-size:28px"></i></a>
 								</li>
 								<li>
-									<a href="#"><i class="icon-google" style="font-size:28px"></i></a>
+									<a href=""><i class="icon-google" style="font-size:28px"></i></a>
 								</li>
 								<li>
 									<a href="#"><i class="icon-instagram" style="font-size:28px"></i></a>
@@ -198,12 +199,44 @@
 								<li><i class="icon-size-guide"></i><a href="#" data-fancybox class="modal-info-link"
 										data-src="#sizeGuide">Customize Jersey</a></li>
 								<li><i class="icon-size-guide"></i><a href="#" data-fancybox class="modal-info-link"
-										data-src="#sizeGuide">Size Guide</a></li>
+										data-src="#sizeGGuide">Size Guide</a></li>
 								<li><i class="icon-delivery-1"></i><a href="#" data-fancybox class="modal-info-link"
 										data-src="#deliveryInfo">Delivery and Return</a></li>
 
 							</ul>
 							<div id="sizeGuide" style="display: none;" class="modal-info-content modal-info-content-lg">
+								<div class="modal-info-heading">
+									
+									<h2>Enter your name and jersey number to customize.</h2>
+								</div>
+								<div class="table-responsive">
+									{% if product.image2 %}
+									<form action="#" class="form-control">
+										<label for="name">Enter Name:</label>
+										<input type="text" id="name" name="name" >
+										<label for="number">Number :</label>
+										<input type="text" id="number" name="number" >
+										<input type="submit" value="Customize">
+									  </form> 
+
+									<div class="prd prd--style2 prd-labels--max prd-labels-shadow ">
+										<div class="prd-inside">
+											<div class="prd-img-area">
+												<a href="#"
+													class="prd-img image-hover-scale image-container">
+													<img src="{% if product.image %} {{ product.image2.url }} {% else %} {% static 'images/NoImage.png' %}{% endif %}"
+													width="200" 
+													height="300" data-src="" alt="" class="js-prd-img lazyload fade-up">
+												</a>
+											</div>
+										</div>
+									</div>
+									
+									{% endif %}
+								  
+								</div>
+							</div>
+							<div id="sizeGGuide" style="display: none;" class="modal-info-content modal-info-content-lg">
 								<div class="modal-info-heading">
 									<div class="mb-1"><i class="icon-size-guide"></i></div>
 									<h2>Size Guide</h2>
@@ -211,56 +244,56 @@
 								<div class="table-responsive">
 									<table class="table table-striped table-borderless text-center">
 										<thead>
-											<tr>
-												<th>USA</th>
-												<th>UK</th>
-												<th>France</th>
-												<th>Japanese</th>
-												<th>Bust</th>
-												<th>Waist</th>
-											</tr>
+										<tr>
+											<th>USA</th>
+											<th>UK</th>
+											<th>France</th>
+											<th>Japanese</th>
+											<th>Bust</th>
+											<th>Waist</th>
+										</tr>
 										</thead>
 										<tbody>
-											<tr>
-												<td>4</td>
-												<td>8</td>
-												<td>36</td>
-												<td>7</td>
-												<td>32"</td>
-												<td>61 cm</td>
-											</tr>
-											<tr>
-												<td>6</td>
-												<td>10</td>
-												<td>38</td>
-												<td>11</td>
-												<td>34"</td>
-												<td>67 cm</td>
-											</tr>
-											<tr>
-												<td>8</td>
-												<td>12</td>
-												<td>40</td>
-												<td>15</td>
-												<td>36"</td>
-												<td>74 cm</td>
-											</tr>
-											<tr>
-												<td>10</td>
-												<td>14</td>
-												<td>42</td>
-												<td>17</td>
-												<td>38"</td>
-												<td>79 cm</td>
-											</tr>
-											<tr>
-												<td>12</td>
-												<td>16</td>
-												<td>44</td>
-												<td>21</td>
-												<td>40"</td>
-												<td>84 cm</td>
-											</tr>
+										<tr>
+											<td>4</td>
+											<td>8</td>
+											<td>36</td>
+											<td>7</td>
+											<td>32"</td>
+											<td>61 cm</td>
+										</tr>
+										<tr>
+											<td>6</td>
+											<td>10</td>
+											<td>38</td>
+											<td>11</td>
+											<td>34"</td>
+											<td>67 cm</td>
+										</tr>
+										<tr>
+											<td>8</td>
+											<td>12</td>
+											<td>40</td>
+											<td>15</td>
+											<td>36"</td>
+											<td>74 cm</td>
+										</tr>
+										<tr>
+											<td>10</td>
+											<td>14</td>
+											<td>42</td>
+											<td>17</td>
+											<td>38"</td>
+											<td>79 cm</td>
+										</tr>
+										<tr>
+											<td>12</td>
+											<td>16</td>
+											<td>44</td>
+											<td>21</td>
+											<td>40"</td>
+											<td>84 cm</td>
+										</tr>
 										</tbody>
 									</table>
 								</div>

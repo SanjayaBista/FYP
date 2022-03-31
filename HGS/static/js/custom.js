@@ -27,10 +27,23 @@ function get(name) {
 if(get('ordering'))
     document.getElementById('placeholder').innerHTML =  document.getElementById(get('ordering')).innerHTML;
 
+if(get('filtering'))
+    document.getElementById('filter-placeholder').innerHTML =  document.getElementById(get('filtering')).innerHTML;
+
+    
 function finalurl() {
     var url = new URL(window.location.href);
     var search_params = url.searchParams;
     search_params.set('ordering', document.getElementById("sort-list").value);
+    url.search = search_params.toString();
+    var new_url = url.toString();
+    return new_url
+  }
+
+function finalurl2() {
+    var url = new URL(window.location.href);
+    var search_params = url.searchParams;
+    search_params.set('filtering', document.getElementById("filter-list").value);
     url.search = search_params.toString();
     var new_url = url.toString();
     return new_url
