@@ -11,7 +11,7 @@ $(document).ready(function(){
             dataType: 'json',
             success:function(res){
                 if(res.bool==true){
-                    _vm.addClass('disabled').removeClass('js-add-wishlist');
+                    _vm.addClass('disabled').removeClass('js-remove-wishlist');
                 }
             }
         });

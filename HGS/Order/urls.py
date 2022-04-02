@@ -3,5 +3,5 @@ from .import views
 app_name = 'order'
 
 urlpatterns = [
-    path('login/',views.userLogin,name='login'),
+    path('orderItem/',views.orderItem,name='orderItem'),
 ]

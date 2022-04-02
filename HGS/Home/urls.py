@@ -15,7 +15,6 @@ urlpatterns = [
     path('condition/',views.conditon,name='condition'),
     path('exchange/',views.exchange,name='exchange'),
     path('shipping/',views.shipping,name='shipping'),
-    path('checkout/',views.checkout,name='checkout'),
     path('search/',views.prodSearch, name='search'),
     
 

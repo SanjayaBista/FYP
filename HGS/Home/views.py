@@ -15,6 +15,8 @@ from .filters import ProdFilter
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.contrib.postgres.search import SearchVector
 from django.db.models import Q
+from django.contrib.auth.decorators import login_required
+
 
 # Create your views here.
 def home(request):
@@ -134,11 +136,11 @@ def exchange(request):
     context = {'category':category}
     return render(request,'exchange.html',context)
 
-def checkout(request):
-    category = Category.objects.all()
-    cart = Cart(request)
-    context = {'category':category, 'cart':cart}
-    return render(request,'checkout.html',context)
+# def checkout(request):
+#     category = Category.objects.all()
+#     cart = Cart(request)
+#     context = {'category':category, 'cart':cart}
+#     return render(request,'checkout.html',context)
 
 def shipping(request):
     category = Category.objects.all()
@@ -149,6 +151,8 @@ def shipping(request):
 #     pid = request.GET['product']
 #     return JsonResponse({'bool':True})
 
+
+@login_required(login_url='account:login')
 def add_wishlist(request):
     pid=request.GET['product']
     product = Product.objects.get(pk=pid)
@@ -168,12 +172,22 @@ def add_wishlist(request):
         }
     return JsonResponse(data)
 
-def remove_wishlist(request):
+def remove_wishlist(request, product_id):
+    product = Wishlist.objects.get(id=product_id, user=request.user)
 
-    customer=request.user.customer
-    Wishlist.objects.filter(customer_id=customer.id, product=Product.objects.get(id=id)).delete()
-   
+    product.delete()
     return HttpResponseRedirect('/wishlist')
+
+    # category = Category.objects.all()
+    # cart = Cart(request)
+    # product = get_object_or_404(Product, id=product_id)
+    # cart.remove(product)
+    # if cart:
+    #     return redirect('cart:cart_detail')
+    # return redirect('/', {'category':category}
+
+
+
 # def search(arr, x):
 #     products = Product.objects.values_list('name',flat=True)
 #     products = list(products)

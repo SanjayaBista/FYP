@@ -1,3 +1,4 @@
+
 {% extends 'base.html '%}
 {% load static %}
 {% load social_share %}
@@ -6,8 +7,6 @@
 {% endblock %}
 
 {% block content %}
-
-
 
 <div class="page-content">
 	<div class="holder breadcrumbs-wrap mt-0">
@@ -98,7 +97,7 @@
 					<h2>Share me on
 						<div class="hdr-line-separate">
 							<ul class="social-list list-unstyled">
-								
+								{% post_to_facebook object_or_url "<p style='color: green;'>facebook</p>" %}
 								<li>
 									
 									<a href="#"><i class="icon-facebook" style="font-size:28px"></i></a>
@@ -143,7 +142,6 @@
 							<form method="post" action="{% url 'cart:cart_add' product.id  %}">
 								{% csrf_token %}
 								<div class="prd-block_options">
-				
 									<div class="prd-size swatches">
 										<div class="option-label">Size:</div>
 										 {% comment %} <select class="form-control hidden single-option-selector-modalQuickView" id="SingleOptionSelector-1" data-index="option2">
@@ -151,9 +149,9 @@
 											<option value="Medium">Medium</option>
 											<option value="Large">Large</option>
 										</select>  {% endcomment %}
-										
+
 										<div class="form-group">
-                                            <select class="form-control">
+                                            <select class="">
 												<div class="col-xs-10">
 												{% for attr in product.productattribute_set.all %}
                                                 <option value="size"> <h3 style:color="red"> {{ attr.size.title }} </h3> </option>
@@ -173,7 +171,7 @@
 								</div>
 								<br>
 							
-								{{ cart_product_form }}
+								{{ cart_product_form  }}
 								<br>
 								<div class="prd-block_actions prd-block_actions--wishlist">
 							
@@ -466,33 +464,15 @@
 															<textarea class="form-control" name="review" id="message-text" required></textarea>
 														</div>
 														<div class="form-group">
-															<label for="message-text" class="col-form-label">Provide
-																Rating : </label>
-																<!-- mycode -->
-															<!-- <div class="prd-block_reviews" data-toggle="tooltip"
-																data-placement="top">
-																
-																<i name="rating" value="5" class="icon-star-fill fill"></i>
-																<i name="rating" value="4" class="icon-star-fill fill"></i>
-																<i name="rating" value="3" class="icon-star-fill fill"></i>
-																<i name="rating" value="2" class="icon-star-fill fill"></i>
-																<i name="rating" value="1" class="icon-star-fill fill"></i>
-															</div> -->
-															<!-- endcode -->
-															<!-- democode -->
-															
-																<div class="ratePro">
-																	
-																	<input type="radio" name="rating" id="rating5" value="5" required /> <label for="rating5" title="5"></label>
-																	<input type="radio" name="rating" id="rating4" value="4" required /> <label for="rating4" title="4"></label>
-																	<input type="radio" name="rating" id="rating3" value="3" required /> <label for="rating3" title="3"></label>
-																	<input type="radio" name="rating" id="rating2" value="2" required /> <label for="rating2" title="2"></label>	
-																	<input type="radio" name="rating" id="rating1" value="1" required /> <label for="rating1" title="1"></label>
-
-																</div>
+															<label for="message-text" class="col-form-label">Provide Rating : </label>
 														
-												
-															<!-- endcodeDemo -->
+																<div class="ratePro">
+																	<input type="radio" name="rating" id="rating5" value="5" required/> <label for="rating5" title="5"></label>
+																	<input type="radio" name="rating" id="rating4" value="4" required/> <label for="rating4" title="4"></label>
+																	<input type="radio" name="rating" id="rating3" value="3" required/> <label for="rating3" title="3"></label>
+																	<input type="radio" name="rating" id="rating2" value="2" required/> <label for="rating2" title="2"></label>	
+																	<input type="radio" name="rating" id="rating1" value="1" required/> <label for="rating1" title="1"></label>
+																</div>
 														</div>
 
 
@@ -516,6 +496,7 @@
 							</div>
 
 						</div>
+						
 						<hr>
 						<!--  -->
 						<div id="productReviewsBottom">

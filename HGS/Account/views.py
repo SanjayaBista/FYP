@@ -84,7 +84,7 @@ def address(request):
 
 def updateAddress(request):
     category = Category.objects.all()
-    context = {'category':category, 'info':info}
+    context = {'category':category}
     if request.method=="POST":
         info = Address()
         state = request.POST.get('state')
@@ -100,7 +100,7 @@ def updateAddress(request):
         info.save()
         return redirect('account:address')
 
-    return render (request, 'myaddress.html', context)
+    return render (request, 'myaddress.html', {'info':info})
 def wishlist(request):
     category = Category.objects.all()
     wish = Wishlist.objects.filter(user=request.user).order_by('-id')

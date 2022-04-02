@@ -22,6 +22,8 @@
             <h1 class="text-center">Checkout accordion</h1>
             <div class="row">
                 <div class="col-md-8">
+                    <form action="{% url 'order:orderItem' %}" method="post">
+                        {% csrf_token %}
                     <div class="panel-group panel-group--style1" id="checkoutAccordion">
                         <div class="panel">
                             <div class="panel-heading active">
@@ -38,68 +40,45 @@
                                             <div class="col-sm-9">
                                                 <label>First Name:</label>
                                                 <div class="form-group">
-                                                    <input type="text" class="form-control form-control--sm">
+                                                    <input type="text" name="firstName" class="form-control form-control--sm" required>
                                                 </div>
                                             </div>
                                             <div class="col-sm-9">
                                                 <label>Last Name:</label>
                                                 <div class="form-group">
-                                                    <input type="text" class="form-control form-control--sm">
+                                                    <input type="text"name="lastName" class="form-control form-control--sm" required>
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="mt-2"></div>
+                                        <label>Email :</label>
+                                        <div class="form-group">
+                                            <input type="email" name="email" class="form-control form-control--sm" required>
+                                        </div>
+                                        <div class="mt-2"></div>
                                         <label>State:</label>
-                                        <div class="form-group select-wrapper">
-                                            <select class="form-control form-control--sm">
-                                                <option value="United States">United States</option>
-                                                <option value="Canada">Canada</option>
-                                                <option value="China">China</option>
-                                                <option value="India">India</option>
-                                                <option value="Italy">Italy</option>
-                                                <option value="Mexico">Mexico</option>
-                                            </select>
+                                        <div class="form-group">
+                                            <input type="text" name="state" class="form-control form-control--sm" required >
                                         </div>
                                         <div class="row">
                                             <div class="col-sm-9">
                                                 <label>District:</label>
-                                                <div class="form-group select-wrapper">
-                                                    <select class="form-control form-control--sm">
-                                                        <option value="AL">Alabama</option>
-                                                        <option value="AK">Alaska</option>
-                                                        <option value="AZ">Arizona</option>
-                                                        <option value="AR">Arkansas</option>
-                                                        <option value="CA">California</option>
-                                                        <option value="CO">Colorado</option>
-                                                        <option value="CT">Connecticut</option>
-                                                        <option value="DE">Delaware</option>
-                                                        <option value="DC">District Of Columbia</option>
-                                                        <option value="FL">Florida</option>
-                                                        <option value="GA">Georgia</option>
-                                                        <option value="HI">Hawaii</option>
-                                                        <option value="ID">Idaho</option>
-                                                        <option value="IL">Illinois</option>
-                                                        <option value="IN">Indiana</option>
-                                                        <option value="IA">Iowa</option>
-                                                        <option value="KS">Kansas</option>
-                                                        <option value="KY">Kentucky</option>
-                                                        <option value="LA">Louisiana</option>
-                                                    </select>
+                                                <div class="form-group">
+                                                    <input type="text" name="district" class="form-control form-control--sm" required >
                                                 </div>
                                             </div>
                                             <div class="col-sm-9">
                                                 <label>zip/postal code:</label>
                                                 <div class="form-group">
-                                                    <input type="text" class="form-control form-control--sm">
+                                                    <input type="text" name="postalCode" class="form-control form-control--sm" required>
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="mt-2"></div>
                                         <label>Address :</label>
                                         <div class="form-group">
-                                            <input type="text" class="form-control form-control--sm">
+                                            <input type="text" name="address" class="form-control form-control--sm" required>
                                         </div>
-
                                     </div>
                                 </div>
                             </div>
@@ -115,7 +94,7 @@
                             <div id="step4" data-parent="#checkoutAccordion" class="panel-collapse collapse">
                                 <div class="panel-body">
                                     <div class="panel-body-inside">
-                                        <div class="clearfix">
+                                        {% comment %} <div class="clearfix">
                                             <input id="formcheckoutRadio4" value="" name="radio2" type="radio"
                                                 class="radio" checked="checked">
                                             <label for="formcheckoutRadio4">Credit Card</label>
@@ -163,13 +142,13 @@
                                                     </select>
                                                 </div>
                                             </div>
-                                        </div>
-                                        <div class="mt-2">
+                                        </div> {% endcomment %}
+                                        {% comment %} <div class="mt-2">
                                             <label>CVV Code</label>
                                             <div class="form-group">
                                                 <input type="text" class="form-control form-control--sm">
                                             </div>
-                                        </div>
+                                        </div> {% endcomment %}
                                         <div class="clearfix mt-2">
                                             <button type="submit" class="btn btn--lg w-100">Place Order</button>
                                         </div>
@@ -178,11 +157,11 @@
                             </div>
                         </div>
                     </div>
+                    </form>
                 </div>
                 <div class="col-md-10 pl-lg-8 mt-2 mt-md-0">
                     <h2 class="custom-color">Order Summary</h2>
 
-                    
                     <div class="cart-table cart-table--sm pt-3 pt-md-0">
                         <div class="cart-table-prd cart-table-prd--head py-1 d-none d-md-flex">
                             <div class="cart-table-prd-image text-center">

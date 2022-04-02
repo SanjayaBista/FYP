@@ -40,13 +40,13 @@ My Address
                                 <h3> Address</h3>
                                 <p> Username: {{request.user.username }}
                                     {% if request.user.is_authenticated %}
-                                    <br> State: {{ Address.state }}
+                                    <br> State: {{ info.state }}
                                     <br> District: {{ address.district }} 
                                    <br> City: {{ user.address.address }}
                                    <br> Postal Code: {{ user.address.postal }}</p>
                                     {% endif %}
                                 <div class="mt-2 clearfix">
-                                    <a href="#" class="link-icn js-show-form" data-form="#updateAddress"><i class="icon-pencil"></i>Edit</a>
+                                    <a href="#" class="link-icn js-show-form" data-form="#updateAddress"><i class="icon-pencil"></i>Add</a>
                                    
                                 </div>
                             </div>
@@ -56,7 +56,7 @@ My Address
                 </div>
                 <div class="card mt-3 d-none" id="updateAddress">
                     <div class="card-body">
-                        <h3>Edit Address</h3>
+                        <h3>Add Address</h3>
                         <label class="text-uppercase">State:</label>
                         <div class="form-group">
                             <input type="text" name="state" class="form-control form-control--sm" required >

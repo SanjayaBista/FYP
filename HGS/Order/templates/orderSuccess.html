@@ -1,0 +1,21 @@
+{%  extends 'base.html '%}
+{% load static %}
+
+{% block title %}
+My Profile
+{% endblock %}
+
+{% block content %}
+
+<div class="title-wrap text-center">
+    <h2 style="color: brown;" class="h1-style">Order Successfull</h2>
+    <hr color="#1BECB4" style="width:50%;text-align:center;">
+    <h1 style="color: blue;" >Your Order ID is {{ order.id }}</h1>
+    <h2 style="color: grey;"><a href="{% url 'home:home' %}"> <h3 style="color:red;">Continue Shopping </h3></a></h2>
+    <!-- <div class="h-sub maxW-825">Hurry up! Limited</div> -->
+</div>
+
+
+
+
+{% endblock %}
