@@ -4,4 +4,5 @@ app_name = 'order'
 
 urlpatterns = [
     path('orderItem/',views.orderItem,name='orderItem'),
+    path('api/verify_payment/',views.verify_payment,name='verify_payment')
 ]

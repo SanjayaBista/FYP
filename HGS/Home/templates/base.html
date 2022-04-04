@@ -16,8 +16,13 @@
     <link href="{% static "css/style.css" %}" rel="stylesheet">
     <script src="https://kit.fontawesome.com/7d0f8a7e12.js" crossorigin="anonymous"></script>
     <link href="{% static "fonts/icomoon/icons.css" %}" rel="stylesheet">
-    
-    
+    <script src="https://khalti.s3.ap-south-1.amazonaws.com/KPG/dist/2020.12.17.0.0.0/khalti-checkout.iffe.js"></script> 
+    {% comment %} <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <script>
+        {% for message in messages %}
+        swal("{{ message }}");
+        {% endfor %}
+    </script> {% endcomment %}
     {% comment %} <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"> {% endcomment %}
    
      
@@ -856,7 +861,8 @@
     <script src="{% static 'js/vendor-special/ls.bgset.min.js' %}"></script>  
     <script src="{% static 'js/vendor-special/ls.aspectratio.min.js' %}"></script> 
     <script src="{% static 'js/vendor/vendor.min.js' %}"></script> 
-    <script src="{% static 'js/app-html.js' %}"></script> 
+    <script src="{% static 'js/app-html.js' %}"></script>
+   
  
     </body>
 

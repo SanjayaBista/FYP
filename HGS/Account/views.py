@@ -53,7 +53,7 @@ def userRegister(request):
 def forgetPassword(request):
     category = Category.objects.all()
     context = {'category':category}
-    return render(request,'resetpassword.html',context)
+    return render(request,'password_reset.html',context)
 
 def profile(request):
     category = Category.objects.all()
