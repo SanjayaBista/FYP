@@ -172,11 +172,17 @@ def add_wishlist(request):
         }
     return JsonResponse(data)
 
-def remove_wishlist(request, product_id):
-    product = Wishlist.objects.get(id=product_id, user=request.user)
+def remove_wishlist(request, product_id, wishlist_id):
+    product = get_object_or_404(Product, id=product_id)
+    if request.user.is_authenticated:
+        cart_item = Wishlist.objects.get(product=product, user=request.user, id=wishlist_id)
+    cart_item.delete()
+    return redirect('wishlist')
 
-    product.delete()
-    return HttpResponseRedirect('/wishlist')
+    # product = Wishlist.objects.get(id=product_id, user=request.user)
+
+    # product.delete()
+    # return HttpResponseRedirect('/wishlist')
 
     # category = Category.objects.all()
     # cart = Cart(request)

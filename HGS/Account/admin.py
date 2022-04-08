@@ -12,5 +12,5 @@ class AdminCustomer(admin.ModelAdmin):
 
 @admin.register(Address)
 class AdminAdderess(admin.ModelAdmin):
-    list_display = ['address','state','district','postal','user']
+    list_display = ['city','state','district','postal','user','shippingAddress']
      

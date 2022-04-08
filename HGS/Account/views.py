@@ -50,11 +50,6 @@ def userRegister(request):
     context = {'user_form':user_form,'category':category}
     return render(request,'accountCreate.html',context)
 
-def forgetPassword(request):
-    category = Category.objects.all()
-    context = {'category':category}
-    return render(request,'password_reset.html',context)
-
 def profile(request):
     category = Category.objects.all()
     context = {'category':category}
@@ -79,28 +74,33 @@ def updateProfile(request):
 
 def address(request):
     category = Category.objects.all()
-    context = {'category':category}
+    addressDet = Address.objects.filter(user=request.user)
+    context = {'category':category,'addressDet':addressDet}
     return render(request,'myaddress.html',context)
 
 def updateAddress(request):
     category = Category.objects.all()
-    context = {'category':category}
+    addressDet = Address.objects.filter(user=request.user)
+    context = {'category':category,'addressDet':addressDet}
     if request.method=="POST":
         info = Address()
         state = request.POST.get('state')
         district = request.POST.get('district')
-        address = request.POST.get('address')
-        postal  = request.POST.get('zip')
+        city = request.POST.get('city')
+        postal  = request.POST.get('postal')
+        shippingAddress  = request.POST.get('shippingAddress')
         info.state = state
         info.district = district
-        info.address = address
+        info.city = city
         info.postal = postal
+        info.shippingAddress = shippingAddress
         current_user = request.user
         info.user_id = current_user.id
         info.save()
         return redirect('account:address')
+    return render (request, 'myaddress.html',context)
 
-    return render (request, 'myaddress.html', {'info':info})
+
 def wishlist(request):
     category = Category.objects.all()
     wish = Wishlist.objects.filter(user=request.user).order_by('-id')

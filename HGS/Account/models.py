@@ -70,9 +70,9 @@ class Customer(AbstractBaseUser):
 
 class Address(models.Model):
    
-    address = models.CharField(max_length=100, blank=True, null=True)
+    city = models.CharField(max_length=100, blank=True, null=True)
     shippingAddress = models.CharField(max_length=100, blank=True, null=True)
     state = models.CharField(max_length=100, blank=True, null=True)
     district = models.CharField(max_length=100, blank=True, null=True)
-    postal = models.CharField(max_length=100, blank=True, null=True)
+    postal = models.TextField(max_length=100, blank=True, null=True)
     user = models.ForeignKey(Customer, on_delete=models.CASCADE)

@@ -192,6 +192,7 @@ $.ajax({
                 // hit merchant api for initiating verfication
                 console.log(payload);
                 verifyPayment(payload)
+                
             },
             onError(error) {
                 console.log(error);
@@ -206,7 +207,7 @@ $.ajax({
     var btn = document.getElementById("payment-button");
     btn.onclick = function () {
         // minimum transaction amount must be 10, i.e 1000 in paisa.
-        checkout.show({amount: 1000});
+        checkout.show({amount: {{cart.get_total_price}}*100});
     }
 </script>
                                         

@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Category, Product, Comment , Contact, Size, ProductAttribute, Wishlist
+from .models import Category, Product, Comment , Contact, Size, ProductAttribute, Wishlist, ExchangeRate
 from mptt.admin import DraggableMPTTAdmin
 
 # Register your models here.
@@ -71,3 +71,7 @@ class AdminContact(admin.ModelAdmin):
 @admin.register(Wishlist)
 class AdminWishlist(admin.ModelAdmin):
     list_display = ['user', 'product']
+
+@admin.register(ExchangeRate)
+class AdminExhangeRate(admin.ModelAdmin):
+    list_display = ['currency', 'value']

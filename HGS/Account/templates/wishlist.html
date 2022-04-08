@@ -49,7 +49,7 @@
 
                      <div class="prd-circle-labels">
                       <form class="circle-label-compare"
-                      title="Remove From Wishlist" action="{% url 'home:remove_wishlist' %}" method="POST">
+                      title="Remove From Wishlist" action="{% url 'home:remove_wishlist'  %}" method="POST">
                           <input type="submit" value="X">
                           {% csrf_token %}
                       </form> 

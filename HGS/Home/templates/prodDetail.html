@@ -97,7 +97,7 @@
 					<h2>Share me on
 						<div class="hdr-line-separate">
 							<ul class="social-list list-unstyled">
-								{% post_to_facebook object_or_url "<p style='color: green;'>facebook</p>" %}
+								{% comment %} {% post_to_facebook object_or_url "<p style='color: green;'>facebook</p>" %} {% endcomment %}
 								<li>
 									
 									<a href="#"><i class="icon-facebook" style="font-size:28px"></i></a>
@@ -119,14 +119,14 @@
 						<div class="prd-block_info-top prd-block_info_item order-0 order-md-2">
 
 							<div class="prd-block_price prd-block_price--style2">
-								<h2>Price <div class="prd-block_price--actual"> <h2>${{ product.price }}</h2></div>
+								<h2>Price <div class="prd-block_price--actual"> <h2>${{ product.myPrice }}</h2></div>
 								</h2>
 							</div>
 							<div class="prd-block_viewed-wrap d-none d-md-flex">
 
 							</div>
 						</div>
-						{% if product.availibility == True %}
+						{% if product.stock >= 1  %}
 						<h3>Availability :  In stock </h3>
 						{% else %}
 						<h3>Availability : Out of stock </h3>
@@ -170,14 +170,15 @@
 									
 								</div>
 								<br>
-							
 								{{ cart_product_form  }}
-								<br>
+								
 								<div class="prd-block_actions prd-block_actions--wishlist">
 							
 									<div class="btn-wrap">
+										{% comment %} {% if product.stock >= 1 %} {% endcomment %}
 										<button  class="btn btn--add-to-cart js-trigger-addtocart js-prd-addtocart">Add to cart</button>
-											
+										{% comment %} {% else %} {% endcomment %}
+										{% comment %} <h1>No items left</h1> {% endcomment %}
 									</div>
 									<div class="btn-wishlist-wrap">
 										
@@ -576,7 +577,7 @@
 									</div>
 									<div class="prd-hovers">
 										<div class="prd-price">
-											<div class="price-new">${{ product.price }}</div>
+											<div class="price-new">${{ product.myPrice }}</div>
 										</div>
 										<div class="prd-action">
 											<div class="prd-action-left">

@@ -10,6 +10,18 @@ from Account.models import Customer
 User = settings.AUTH_USER_MODEL
 # Create your models here.
 
+class CurrencyState(models.Model):
+    state = models.CharField(max_length=50)
+
+class ExchangeRate(models.Model):
+    currency = (('NRS','NRS'),
+                ('INR','INR'),
+                ('USD','USD'),
+                )
+    currency = models.CharField(max_length=50, choices=currency)
+    value = models.FloatField()
+
+
 choices = {
     ''
 }
@@ -64,6 +76,13 @@ class Product(models.Model):
 
     def get_absolute_url(self):
         return reverse('home:productDetail',args=[self.id, self.slug])
+
+    def myPrice(self):
+        state = CurrencyState.objects.last()
+        if state:
+            rate = ExchangeRate.objects.get(currency = state.state)
+            return float(self.price) * float(rate.value)
+        return self.price
 
 class ProductAttribute(models.Model):
     product = models.ForeignKey(Product, on_delete=models.CASCADE)

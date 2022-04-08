@@ -30,7 +30,12 @@ urlpatterns = [
     path('accounts/', include('Account.urls',namespace='account')),
     path('orders/', include('Order.urls',namespace='orders')),
     path('accounts/', include('allauth.urls')),
-    path('password_reset/', auth_views.PasswordResetView.as_view(template_name='password_reset.html'), name='password_reset')
+    path('', include('django.contrib.auth.urls')),
+    path('reset_password/',auth_views.PasswordResetView.as_view(template_name="account/password_reset.html"), name='password_reset'),
+    path('reset_password_sent/',auth_views.PasswordResetDoneView.as_view(template_name="account/password_reset_done.html"),name='password_reset_done'),
+    path('reset/<uidb64>/<token>/',auth_views.PasswordResetConfirmView.as_view(template_name="account/password_reset_confirm.html"), name='password_reset_confirm'),
+    path('reset_password_complete/',auth_views.PasswordResetCompleteView.as_view(template_name="account/password_reset_complete.html"), name='password_reset_complete'),
+    
 
 ]
 if settings.DEBUG:

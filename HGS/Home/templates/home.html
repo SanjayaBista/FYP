@@ -131,7 +131,7 @@
 
                             <div class="prd-hovers">
                                 <div class="prd-price">
-                                    <div class="price-new">${{ product.price }}</div>
+                                    <div class="price-new">{{ product.myPrice }}</div>
                                 </div>
                                 <div class="prd-action">
                                     <div class="prd-action-left">
@@ -139,7 +139,6 @@
                                             {% csrf_token %}
                                             
                                             <button  class="btn btn--add-to-cart js-trigger-addtocart js-prd-addtocart">View Product</button>
-                                           
                                         </form>
                                     </div>
                                 </div>

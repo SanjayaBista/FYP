@@ -1,5 +1,6 @@
 from django.db import models
-from Home.models import Product
+
+from Home.models import Product, ProductAttribute
 # Create your models here.
 
 class Order(models.Model):

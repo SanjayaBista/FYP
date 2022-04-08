@@ -74,6 +74,7 @@ TEMPLATES = [
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
+                'Home.processor.template_processor',
                 'django.template.context_processors.debug',
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
@@ -185,9 +186,10 @@ SESSION_COOKIE_AGE = 60 * 60 * 24 * 7 * 2
 SESSION_EXPIRE_AT_BROWSER_CLOSE = False 
 
 
+
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
-EMAIL_HOST_USER = 'iicfinalproject2021@gmail.com'
-EMAIL_HOST_PASSWORD = 'crqowmctslxeqzfl'
 EMAIL_USE_TLS = True
+EMAIL_HOST_USER = 'sanjayfyp@gmail.com'
+EMAIL_HOST_PASSWORD = 'sanjayfyp2021@'

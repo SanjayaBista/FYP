@@ -39,12 +39,16 @@ My Address
                             <div class="card-body">
                                 <h3> Address</h3>
                                 <p> Username: {{request.user.username }}
-                                    {% if request.user.is_authenticated %}
-                                    <br> State: {{ info.state }}
-                                    <br> District: {{ address.district }} 
-                                   <br> City: {{ user.address.address }}
-                                   <br> Postal Code: {{ user.address.postal }}</p>
-                                    {% endif %}
+                                    {% for add in addressDet%}
+                                    <br> State: {{ add.state }}
+                                    <br> District: {{ add.district }} 
+                                   <br> City: {{ add.city }}
+                                   <br> Postal Code: {{ add.postal}}
+                                   <br> Shipping Address: {{ add.shippingAddress }}
+                                {%endfor%}
+                                </p>
+                              
+
                                 <div class="mt-2 clearfix">
                                     <a href="#" class="link-icn js-show-form" data-form="#updateAddress"><i class="icon-pencil"></i>Add</a>
                                    
@@ -67,15 +71,21 @@ My Address
                         </div>
                         <div class="row">
                             <div class="col-sm-6">
-                                <label class="text-uppercase">Address:</label>
+                                <label class="text-uppercase">City:</label>
                                 <div class="form-group">
-                                    <input type="text" name="address" class="form-control" required>
+                                    <input type="text" name="city" class="form-control" required>
                                 </div>
                             </div>
                             <div class="col-sm-6">
-                                <label class="text-uppercase">zip/postal code:</label>
+                                <label class="text-uppercase">Postal Code:</label>
                                 <div class="form-group">
                                     <input type="text" name="postal" class="form-control" required>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <label class="text-uppercase">Shipping Address:</label>
+                                <div class="form-group">
+                                    <input type="text" name="shippingAddress" class="form-control" required>
                                 </div>
                             </div>
                         </div>

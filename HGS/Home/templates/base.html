@@ -142,7 +142,39 @@
                             <div class="hdr-inline-link">
                                 <div class="dropdn_currency">
                                     <div class="dropdn dropdn_caret">
-                                        <a href="#" class="dropdn-link js-dropdn-link">US dollars<i
+                                        {%if currency%}
+                                        <a href="#" class="dropdn-link js-dropdn-link">{{currency}}<i
+                                                class="icon-angle-down"></i></a>
+                                        {%else%}
+                                        <a href="{%url 'home:home'%}?currency=NRS" class="dropdn-link js-dropdn-link">NRS<i
+                                                class="icon-angle-down"></i></a>
+                                                {%endif%}
+                                        <div class="dropdn-content">
+                                            <ul>
+                                                {%for i in exchange_rate%}
+                                                <li><a href="?currency={{i.currency}}"><span>{{i.currency}}</span></a></li>
+                                                {%endfor%}
+                                                
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                                {% comment %} <div class="dropdn_currency">
+                                    <div class="dropdn dropdn_caret">
+                                        {%if currency%}
+                                            <a href="#" class="dropdn-link js-dropdn-link">{{currency}}<i class="icon-angle-down"></i></a>
+                                        {%else%}
+                                             <a href="{%url 'home:home'%}?currency=NRS" class="dropdn-link js-dropdn-link">NRS<i class="icon-angle-down"></i></a>
+                                        {%endif%}
+                                        <div class="dropdn-content">
+                                            <ul>
+                                                {%for i in exchange_rate%}
+                                                    <li><a href="?currency={{i.currency}}"><span>{{i.currency}}</span></a></li>
+                                                {%endfor%}
+                                                
+                                            </ul>
+                                        </div> {% endcomment %}
+                                        {% comment %} <a href="#" class="dropdn-link js-dropdn-link">US dollars<i
                                                 class="icon-angle-down"></i></a>
                                         <div class="dropdn-content">
                                             <ul>
@@ -150,9 +182,9 @@
                                                 <li><a href="#"><span>INR</span></a></li>
                                                 <li><a href="#"><span>NRS</span></a></li>
                                             </ul>
-                                        </div>
-                                    </div>
-                                </div>
+                                        </div> {% endcomment %}
+                                    {% comment %} </div>
+                                </div> {% endcomment %}
 
                                 <div class="hdr_container_desktop">
                                     <div class="dropdn dropdn_account dropdn_fullheight">

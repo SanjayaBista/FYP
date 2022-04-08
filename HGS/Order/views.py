@@ -47,7 +47,7 @@ def verify_payment(request):
     }
    
     response = requests.post(url, payload, headers = headers)
-    response_data = response.json
+    response_data = response.json()
     status_code = str(response.status_code)  
 
     if status_code == '400':
@@ -57,5 +57,5 @@ def verify_payment(request):
     import pprint 
     pp = pprint.PrettyPrinter(indent=4)
     pp.pprint(response_data)
-    return render(request,messages.error(request, "Payment Success"))
-    # return JsonResponse(f"Payment Done !! With IDX. {response_data['user']['idx']}",safe=False)
+    # return render(request,messages.error(request, "Payment Success"))
+    return JsonResponse(f"Payment Done !! With IDX. {response_data['user']['idx']}",safe=False)
