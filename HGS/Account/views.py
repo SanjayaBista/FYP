@@ -2,14 +2,23 @@ from multiprocessing import context
 from django.shortcuts import redirect, render
 from django.contrib.auth import authenticate, login, logout
 from django.urls import reverse_lazy
+from django.views import View
 from django.views.generic.edit import CreateView
-from Order.models import Order
+from Order.models import ItemOrdered, Order
 
 from Order.views import orderItem
 from .models import Customer , Address
 from .forms import RegisterForm
 from Home.models import Category, Wishlist
 from django.contrib import messages
+from io import BytesIO
+from django.http import HttpResponse
+from django.template.loader import get_template
+from xhtml2pdf import pisa
+
+
+
+
 # Create your views here.
 def userLogin(request):
     category = Category.objects.all()
@@ -116,3 +125,43 @@ def history(request):
     ordHist = Order.objects.filter(user=request.user).order_by('id')
     context = {'category':category,'ordHist':ordHist}
     return render(request, 'history.html',context)
+
+def historyDetail(request):
+    category = Category.objects.all()
+    ordHist = Order.objects.filter(user=request.user).order_by('id')
+    downHist = ItemOrdered.objects.filter(order__id__in=ordHist)
+    context = {'category':category,'downHist':downHist}
+    return render(request, 'historyDetail.html',context)
+
+
+def render_to_pdf(template_src, context_dict={}):
+	template = get_template(template_src)
+	html  = template.render(context_dict)
+	result = BytesIO()
+	pdf = pisa.pisaDocument(BytesIO(html.encode("ISO-8859-1")), result)
+	if not pdf.err:
+		return HttpResponse(result.getvalue(), content_type='application/pdf')
+	return None
+
+data = {
+	"store": "Store: Halgada Jersey Store",
+	"address": "Address: Itahari-1",
+	"city": "City: Halgada",
+	"state": "State: State-1",
+	"zipcode": "ZipCode: 0025",
+
+
+	"phone": "Contact: 9819069112",
+	"email": "E-mail: halgadajerseystore.com",
+	"website": "Website: www.hgs.com",
+	}
+class DownloadPDF(View):
+	def get(self, request, *args, **kwargs):
+		
+		pdf = render_to_pdf('pdf.html',data)
+
+		response = HttpResponse(pdf, content_type='application/pdf')
+		filename = "Invoice_%s.pdf" %("12341231")
+		content = "attachment; filename='%s'" %(filename)
+		response['Content-Disposition'] = content
+		return response

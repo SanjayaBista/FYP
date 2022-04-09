@@ -1,0 +1,72 @@
+{%  extends 'base.html '%}
+{% load static %}
+
+{% block title %}
+Purchase History
+{% endblock %}
+
+{% block content %}
+
+
+<div class="page-content">
+	<div class="holder breadcrumbs-wrap mt-0">
+	<div class="container">
+		<ul class="breadcrumbs">
+			<li><a href="{% url 'home:home' %}">Home</a></li>
+			<li><span>History Detail</span></li>
+		</ul>
+	</div>
+</div>
+	<div class="holder">
+	<div class="container">
+		<div class="row">
+			<div class="col-md-4 aside aside--left">
+				<div class="list-group">
+                    <a href="{% url 'account:profile' %}" class="list-group-item ">Account Details</a>
+                    <a href="{% url 'account:address' %}" class="list-group-item">My Addresses</a>
+                    <a href="{% url 'account:wishlist' %}"class="list-group-item">My Wishlist</a>
+                    <a href="{% url 'account:history' %}" class="list-group-item">My Order History</a>
+					
+				</div>
+			</div>
+			<div class="col-md-14 aside">
+			<h1 class="mb-3"> History Detail </h1>
+				<div class="table-responsive">
+					<table class="table table-bordered table-striped table-order-history">
+						<thead>
+						<tr>
+							<th scope="col">Product ID</th>
+							<th scope="col">Product Name </th>
+							<th scope="col">Price</th>
+							<th scope="col">Quantity</th>
+                            <th scope="col">Total</th>
+							<th scope="col"></th>
+						</tr>
+						</thead>
+						<tbody>
+                            {%  for item in downHist %}
+						<tr>
+
+							<td><b>{{item.product.id }}</b></td>
+							<td>{{ item.product.name }}</td>
+							<td>Rs.{{item.price}}</td>
+							<td>{{  item.quantity}}</td>
+                            <td>Rs.{{  item.get_price}}</td>
+							<td><a href="{% url 'account:pdf_download' %}" class="btn btn--grey btn--sm">Download Invoice</a></td>
+
+						</tr> 
+					
+						{%endfor%}
+						</tbody>
+					</table>
+				</div>
+				
+			</div>
+		</div>
+	</div>
+</div>
+</div>
+
+
+
+{% endblock %}

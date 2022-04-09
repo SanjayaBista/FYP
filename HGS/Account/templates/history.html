@@ -39,27 +39,33 @@ Purchase History
 							<th scope="col">Order Number</th>
 							<th scope="col">Order Date </th>
 							<th scope="col">Email</th>
-							<th scope="col">Total Price</th>
+							<th scope="col">Shipping Address</th>
 							<th scope="col"></th>
 						</tr>
 						</thead>
 						<tbody>
 							{% for h in ordHist %}
 						<tr>
-							<td><b>{{h.id}}</b></td>
+							<td><b>{{h.id}}</b><a href="{% url 'account:historyDetail' %}" class="ml-1">View Details</a></td>
 							<td>{{ h.orderedOn }}</td>
 							<td>{{h.email}}</td>
-							<td><span class="color">$1252.00</span></td>
-							<td><a href="#" class="btn btn--grey btn--sm">Download Invoice</a></td>
-							
-						</tr>
+							<td><span class="color">{{h.state}},{{h.address}}</span></td>
+							<td><a href="{% url 'account:pdf_download' %}" class="btn btn--grey btn--sm">Download Invoice</a></td>
+
+						</tr> 
+						{% comment %} <tr>
+							<td><b>{{h.product}}</b></td>
+							<td>{{ h.orderedOn }}</td>
+							<td>{{h.email}}</td>
+							<td><span class="color">{{h.state}},{{h.address}}</span></td>
+							<td><a href="{% url 'account:pdf_download' %}" class="btn btn--grey btn--sm">Download Invoice</a></td>
+
+						</tr> {% endcomment %}
 						{% endfor %}
 						</tbody>
 					</table>
 				</div>
-				<div class="text-right mt-2">
-					<a href="#" class="btn btn--alt">Clear History</a>
-				</div>
+				
 			</div>
 		</div>
 	</div>

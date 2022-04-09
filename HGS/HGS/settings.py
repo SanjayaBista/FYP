@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     'allauth.account',
     'allauth.socialaccount',
     'allauth.socialaccount.providers.google',
+    'allauth.socialaccount.providers.facebook',
     'coupon',
     'django_filters',
     'django.contrib.postgres',
@@ -163,7 +164,7 @@ AUTHENTICATION_BACKENDS = [
     'Account.backends.CaseInsensitiveModelBackend',
     'django.contrib.auth.backends.ModelBackend',
     'allauth.account.auth_backends.AuthenticationBackend',
-    'social_core.backends.facebook.FacebookOAuth2',
+    
 ]
 SILENCED_SYSTEM_CHECKS = ["auth.W004"]
 

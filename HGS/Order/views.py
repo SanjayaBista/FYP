@@ -28,7 +28,7 @@ def orderItem(request):
             order.save()
             for item in cart:
                 ItemOrdered.objects.create(order=order, product=item['product'], price=item['price'], quantity=item['quantity'])
-            send_mail(
+                send_mail(
                         'Ordered Successfull',
                         'Thank you for Ordering. You will receive the product soon.',
                         settings.EMAIL_HOST_USER,
@@ -36,7 +36,9 @@ def orderItem(request):
                         fail_silently=False,
                     )
             cart.clear()
+        
             return render(request, 'orderSuccess.html', {'order':order, 'category':category})
+        
     else:
         form = OrderItemForm()
     return render(request, 'checkout.html', {'cart':cart, 'form':form, 'category':category})
