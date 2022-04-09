@@ -1,4 +1,5 @@
 from email import message
+from django.conf import settings
 import requests
 import json 
 from django.contrib import messages
@@ -10,6 +11,7 @@ from .forms import OrderItemForm
 from cart.cart import Cart
 from Home.models import Category
 from django.views.decorators.csrf import csrf_exempt
+from django.core.mail import send_mail
 # Create your views here.
 def orderItem(request):
     category = Category.objects.all()
@@ -21,9 +23,18 @@ def orderItem(request):
             if cart.coupon:
                 order.coupon = cart.coupon
                 order.discount = cart.coupon.discount
+            current_user = request.user
+            order.user_id = current_user.id
             order.save()
             for item in cart:
                 ItemOrdered.objects.create(order=order, product=item['product'], price=item['price'], quantity=item['quantity'])
+            send_mail(
+                        'Ordered Successfull',
+                        'Thank you for Ordering. You will receive the product soon.',
+                        settings.EMAIL_HOST_USER,
+                        [request.user.email],
+                        fail_silently=False,
+                    )
             cart.clear()
             return render(request, 'orderSuccess.html', {'order':order, 'category':category})
     else:
@@ -59,3 +70,4 @@ def verify_payment(request):
     pp.pprint(response_data)
     # return render(request,messages.error(request, "Payment Success"))
     return JsonResponse(f"Payment Done !! With IDX. {response_data['user']['idx']}",safe=False)
+

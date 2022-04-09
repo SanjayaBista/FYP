@@ -69,7 +69,6 @@ class Customer(AbstractBaseUser):
         return True
 
 class Address(models.Model):
-   
     city = models.CharField(max_length=100, blank=True, null=True)
     shippingAddress = models.CharField(max_length=100, blank=True, null=True)
     state = models.CharField(max_length=100, blank=True, null=True)

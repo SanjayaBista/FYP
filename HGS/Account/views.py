@@ -3,6 +3,9 @@ from django.shortcuts import redirect, render
 from django.contrib.auth import authenticate, login, logout
 from django.urls import reverse_lazy
 from django.views.generic.edit import CreateView
+from Order.models import Order
+
+from Order.views import orderItem
 from .models import Customer , Address
 from .forms import RegisterForm
 from Home.models import Category, Wishlist
@@ -110,5 +113,6 @@ def wishlist(request):
 
 def history(request):
     category = Category.objects.all()
-    context = {'category':category}
-    return render(request,'history.html',context)
+    ordHist = Order.objects.filter(user=request.user).order_by('id')
+    context = {'category':category,'ordHist':ordHist}
+    return render(request, 'history.html',context)

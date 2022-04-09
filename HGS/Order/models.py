@@ -1,7 +1,9 @@
+from django.conf import settings
 from django.db import models
-
+from Account.models import Customer
 from Home.models import Product, ProductAttribute
 # Create your models here.
+User = settings.AUTH_USER_MODEL
 
 class Order(models.Model):
     firstName = models.CharField(max_length=100)
@@ -13,7 +15,7 @@ class Order(models.Model):
     address = models.CharField(max_length=100)
     orderedOn = models.DateTimeField(auto_now_add=True)
     moneyPaid = models.BooleanField(default=False)
-
+    user = models.ForeignKey(Customer,on_delete=models.CASCADE)
     class Meta:
         ordering = ('-orderedOn',)
 

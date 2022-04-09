@@ -100,7 +100,7 @@ WSGI_APPLICATION = 'HGS.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'DatabaseFYP',
+        'NAME': 'FYPDB',
         'USER': 'postgres',
         'PASSWORD': 'Sanjay',
         'HOST': '127.0.0.1',
@@ -163,6 +163,7 @@ AUTHENTICATION_BACKENDS = [
     'Account.backends.CaseInsensitiveModelBackend',
     'django.contrib.auth.backends.ModelBackend',
     'allauth.account.auth_backends.AuthenticationBackend',
+    'social_core.backends.facebook.FacebookOAuth2',
 ]
 SILENCED_SYSTEM_CHECKS = ["auth.W004"]
 
@@ -185,7 +186,8 @@ SESSION_COOKIE_AGE = 60 * 60 * 24 * 7 * 2
 # Whether a user's session cookie expires when the Web browser is closed 
 SESSION_EXPIRE_AT_BROWSER_CLOSE = False 
 
-
+SOCIAL_AUTH_FACEBOOK_KEY = '1968841253503764' # Facebook App ID
+SOCIAL_AUTH_FACEBOOK_SECRET = '4828c532f14f10af81dd0c169877f709' # Facebook App Secret
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
