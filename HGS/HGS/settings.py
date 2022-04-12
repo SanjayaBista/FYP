@@ -31,6 +31,7 @@ AUTH_USER_MODEL = "Account.Customer"
 # Application definition
 
 INSTALLED_APPS = [
+    # 'jazzmin',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -52,6 +53,7 @@ INSTALLED_APPS = [
     'django_filters',
     'django.contrib.postgres',
     'django_social_share',
+    'import_export',
 ]
 
 SITE_ID = 1

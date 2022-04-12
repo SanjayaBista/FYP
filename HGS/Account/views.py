@@ -15,7 +15,7 @@ from io import BytesIO
 from django.http import HttpResponse
 from django.template.loader import get_template
 from xhtml2pdf import pisa
-
+from django.contrib.auth.decorators import login_required
 
 
 
@@ -112,7 +112,7 @@ def updateAddress(request):
         return redirect('account:address')
     return render (request, 'myaddress.html',context)
 
-
+@login_required(login_url='account:login')
 def wishlist(request):
     category = Category.objects.all()
     wish = Wishlist.objects.filter(user=request.user).order_by('-id')
@@ -144,12 +144,12 @@ def render_to_pdf(template_src, context_dict={}):
 	return None
 
 data = {
+    
 	"store": "Store: Halgada Jersey Store",
 	"address": "Address: Itahari-1",
 	"city": "City: Halgada",
 	"state": "State: State-1",
 	"zipcode": "ZipCode: 0025",
-
 
 	"phone": "Contact: 9819069112",
 	"email": "E-mail: halgadajerseystore.com",

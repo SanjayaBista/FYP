@@ -111,10 +111,12 @@
                                     data-src="" alt=""  class="js-prd-img lazyload fade-up">
                               </a>
                             <div class="prd-circle-labels">
-                                <a href="#"
-                                class="circle-label-compare circle-label-wishlist--add js-add-wishlist mt-0"
-                                 data-product="{{product.id}}"  title="Add To Wishlist"><i class="icon-heart-stroke"></i></a>
-                              
+                                <form action='{% url 'home:add_wishlist' product.id %}' method="get">
+                    
+                            <button type="submit"
+                                class="circle-label-compare circle-label-wishlist--add mt-0"
+                                 title="Add To Wishlist"><i class="icon-heart-stroke"></i></button>
+                                </form>
                             </div>
                         </div>
                         <div class="prd-info">

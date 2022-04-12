@@ -33,7 +33,7 @@ def orderItem(request):
                         'Thank you for Ordering. You will receive the product soon.',
                         settings.EMAIL_HOST_USER,
                         [request.user.email],
-                        fail_silently=False,
+                        fail_silently=True,
                     )
             cart.clear()
         

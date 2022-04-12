@@ -29,10 +29,13 @@
     display: inline-block;
     font-size: 1.1em;
     font-family: FontAwesome;
-    content: "\f005";
+    content: "\f005" !important;
     margin: 0;
     padding: 0.3em 0.2em;
     cursor: pointer;
+}
+.ratePro > label:after{
+    width: 0 !important;
 }
 .ratePro input:not(:checked) ~ label:hover, 
 .ratePro input:not(:checked) ~ label:hover ~label{
@@ -40,4 +43,10 @@
 }
 .ratePro input:checked ~ label{
     color: #EFA600;
+}
+
+
+
+#wishlist-btn.active{
+    color: red !important;
 }

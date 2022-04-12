@@ -1,7 +1,7 @@
 from django.contrib import admin
 from .models import Category, Product, Comment , Contact, Size, ProductAttribute, Wishlist, ExchangeRate
 from mptt.admin import DraggableMPTTAdmin
-
+from import_export.admin import ImportExportModelAdmin
 # Register your models here.
 
 # class AdminCategory(admin.ModelAdmin):
@@ -61,7 +61,11 @@ class AdminAttribute(admin.ModelAdmin):
 
 @admin.register(Comment)
 class AdminComment(admin.ModelAdmin):
-    list_display = ['user','title','review','rating','created','updated']
+    list_display = ['user_id','user','product','title','review','rating','created','updated']
+
+# @admin.register(Comment)
+# class AdminCommentImpExp(ImportExportModelAdmin):
+#     pass
 
     
 @admin.register(Contact)

@@ -18774,7 +18774,7 @@ body:not(.has-sticky) .bnr-sticky
     display: flex;
         flex-direction: row-reverse;
 
-    width: 33px;
+    width: 49px;
 
     cursor: pointer;
     text-align: right;

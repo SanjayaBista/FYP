@@ -1,4 +1,5 @@
 from ast import Pass
+import csv
 from email import message
 from itertools import count
 from math import prod
@@ -8,7 +9,7 @@ from django.http import HttpResponse, HttpResponseNotAllowed, HttpResponseNotFou
 from django.shortcuts import redirect, render
 from django.shortcuts import get_object_or_404
 from .forms import FormComment, SearchQuery
-from .models import Category, Contact , Product, Comment, Wishlist
+from .models import Category, Contact , Product, Comment, ProductAttribute, Wishlist
 from cart.forms import CartAddProductForm
 from cart.cart import Cart
 from .filters import ProdFilter
@@ -22,6 +23,7 @@ from django.contrib.auth.decorators import login_required
 def home(request):
     category = Category.objects.all()
     latest_product = Product.objects.all().order_by('-id')[:4]
+    
     count_item = Wishlist.objects.filter().count()
     cart_product_form = CartAddProductForm()
     context = {'category':category, 'latest_product':latest_product, 'cart_product_form':cart_product_form, 'count_item':count_item}
@@ -40,8 +42,8 @@ def categoryItem(request,id,slug=None):
     if filtering:
         products = products.filter(filtering)
 
-
-    paginator = Paginator(products, 8)
+    page_size_val = request.GET.get('page_size_val',2)
+    paginator = Paginator(products, page_size_val)
     page = request.GET.get('page')
     try:
         products = paginator.page(page)
@@ -51,7 +53,7 @@ def categoryItem(request,id,slug=None):
         products = paginator.page(paginator.num_pages)
     countProd = Product.objects.filter(category_id = id).count()
 
-    context = {'category':category,'products':products,'page':page, 'countProd':countProd, 'allProd':allProd}
+    context = {'category':category,'products':products,'page':page, 'countProd':countProd, 'allProd':allProd,'page_size_val':int(page_size_val)}
     return render(request, 'national.html', context)
 
 # def findProd(request):
@@ -66,6 +68,7 @@ def categoryItem(request,id,slug=None):
 
 
 #detail page
+
 def productDetail(request,id,slug):
     category = Category.objects.all()
     product = Product.objects.get(pk = id)
@@ -73,7 +76,13 @@ def productDetail(request,id,slug):
     count_item = Wishlist.objects.filter().count()
     comment = Comment.objects.filter(product_id = id, active = True)
     cart_product_form = CartAddProductForm()
-    context = {'category':category, 'product':product,'latest_product':latest_product, 'comment':comment,'cart_product_form':cart_product_form, 'count_item':count_item}
+   
+    is_wishlist = False
+
+    checkWish=Wishlist.objects.filter(product=product,user=request.user).count()
+    if checkWish > 0:
+        is_wishlist = True
+    context = {'category':category, 'product':product,'latest_product':latest_product, 'comment':comment,'cart_product_form':cart_product_form, 'count_item':count_item,'is_wishlist':is_wishlist}
     return render(request, 'prodDetail.html',context)
 
 def addComment(request,id):
@@ -153,24 +162,22 @@ def shipping(request):
 
 
 @login_required(login_url='account:login')
-def add_wishlist(request):
-    pid=request.GET['product']
-    product = Product.objects.get(pk=pid)
-    data={}
+def add_wishlist(request, id):
+    url = request.META.get('HTTP_REFERER')
+    # pid=request.GET['product']
+    product = Product.objects.get(pk=id)
     checkWish=Wishlist.objects.filter(product=product,user=request.user).count()
     if checkWish > 0:
-        data = {
-            'bool':False
-        }
+        # prudct_id = 1 && user_id = 1
+        wishlist = Wishlist.objects.get(product=product, user=request.user)
+        wishlist.delete()
     else:
         wishlist = Wishlist.objects.create(
             product=product,
             user=request.user
         )
-        data = {
-            'bool':True
-        }
-    return JsonResponse(data)
+    
+    return HttpResponseRedirect(url)
 
 def remove_wishlist(request, product_id, wishlist_id):
     product = get_object_or_404(Product, id=product_id)
@@ -228,3 +235,38 @@ def prodSearch(request):
         return render(request, 'search.html', context)
     else:
         return redirect('home:home')
+
+
+def csvExport(request):
+    rating = Comment.objects.all()
+    response = HttpResponse('text/csv')
+    response['Content-Disposition'] = 'attachment; filename=rating.csv'
+    writer = csv.writer(response)
+    writer.writerow(['User ID','Product ID','Rating'])
+    ratingFields = rating.values_list('user_id','product_id','rating')
+    for rate in ratingFields:
+        writer.writerow(rate)
+    return response
+
+def csvExport2(request):
+    product = Product.objects.all()
+    response = HttpResponse('text/csv')
+    response['Content-Disposition'] = 'attachment; filename=product.csv'
+    writer = csv.writer(response)
+    writer.writerow(['Product ID','Category ID','Price','Description'])
+    productFields = product.values_list('id','category_id','price','description')
+    for product in productFields:
+        writer.writerow(product)
+    return response
+
+
+def csvExport3(request):
+    size = ProductAttribute.objects.all()
+    response = HttpResponse('text/csv')
+    response['Content-Disposition'] = 'attachment; filename=size.csv'
+    writer = csv.writer(response)
+    writer.writerow(['Product ID','Size'])
+    sizeFields = size.values_list('product_id','size_id')
+    for size in sizeFields:
+        writer.writerow(size)
+    return response

@@ -46,8 +46,8 @@ Purchase History
 						<tbody>
 							{% for h in ordHist %}
 						<tr>
-							<td><b>{{h.id}}</b><a href="{% url 'account:historyDetail' %}" class="ml-1">View Details</a></td>
-							<td>{{ h.orderedOn }}</td>
+							<td><b>{{h.id}}</b><a href="{% url 'account:historyDetail' %}" class="ml-1">Details</a></td>
+							<td>{{ h.orderedOn|date:"M d, Y"  }}</td>
 							<td>{{h.email}}</td>
 							<td><span class="color">{{h.state}},{{h.address}}</span></td>
 							<td><a href="{% url 'account:pdf_download' %}" class="btn btn--grey btn--sm">Download Invoice</a></td>
@@ -64,8 +64,58 @@ Purchase History
 						{% endfor %}
 						</tbody>
 					</table>
-				</div>
 				
+				</div>
+				<div class="text-right mt-2">
+					<div class="prd-block_info_item">
+						<ul class="prd-block_links list-unstyled">
+							<li><a href="#" data-fancybox class="modal-info-link"
+									data-src="#sizeGuide"><h2 style="width:900%;text-align:center; color: green;">Click to Refund</h2></a></li>
+						
+
+						</ul>
+						<div id="sizeGuide" style="display: none;" class="modal-info-content modal-info-content-lg">
+					
+							<div class="table-responsive">
+								<form>
+									<h2>We will verify your request and return the money.</h2>
+									<div class="form-group">
+										<label for="exampleFormControlInput1">Username</label>
+										<input type="text" class="form-control" id="exampleFormControlInput1" placeholder="Sanjay">
+									  </div>
+									<div class="form-group">
+									  <label for="exampleFormControlInput1">Email address</label>
+									  <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="sanjaybista82@gmail.com">
+									</div>
+									<div class="form-group">
+										<label for="exampleFormControlInput1">Phone</label>
+										<input type="text" class="form-control" id="exampleFormControlInput1" placeholder="9819069112">
+									  </div>
+									<div class="form-group">
+									  <label for="exampleFormControlSelect1">Select Order</label>
+									  <select class="form-control" id="exampleFormControlSelect1">
+										<option>1</option>
+										<option>2</option>
+										<option>3</option>
+										<option>4</option>
+										<option>5</option>
+									  </select>
+									</div>
+									
+									<div class="form-group">
+									  <label for="exampleFormControlTextarea1">Reason To Refund</label>
+									  <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+									</div>
+									<div class="text-center">
+										<button class="btn">Send Refund Request</button>
+									</div>
+								  </form>
+							  
+							</div>
+						</div>
+				
+					</div>
+				</div>
 			</div>
 		</div>
 	</div>

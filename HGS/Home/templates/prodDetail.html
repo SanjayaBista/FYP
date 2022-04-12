@@ -139,7 +139,7 @@
 
 
 						<div class="order-0 order-md-100">
-							<form method="post" action="{% url 'cart:cart_add' product.id  %}">
+							<form method="post" id="add-to-cart-form" action="{% url 'cart:cart_add' product.id  %}">
 								{% csrf_token %}
 								<div class="prd-block_options">
 									<div class="prd-size swatches">
@@ -172,25 +172,29 @@
 								<br>
 								{{ cart_product_form  }}
 								
-								<div class="prd-block_actions prd-block_actions--wishlist">
-							
-									<div class="btn-wrap">
-										{% comment %} {% if product.stock >= 1 %} {% endcomment %}
-										<button  class="btn btn--add-to-cart js-trigger-addtocart js-prd-addtocart">Add to cart</button>
-										{% comment %} {% else %} {% endcomment %}
-										{% comment %} <h1>No items left</h1> {% endcomment %}
-									</div>
-									<div class="btn-wishlist-wrap">
-										
-										<a href="#"
-											class="btn-add-to-wishlist ml-auto btn-add-to-wishlist--add js-add-wishlist"
-											data-product="{{product.id}}"  title="Add To Wishlist"><i class="icon-heart-stroke"></i></a>
-										<a href="#"
-											class="btn-add-to-wishlist ml-auto btn-add-to-wishlist--off js-remove-wishlist"
-											title="Remove From Wishlist"><i class="icon-heart-hover"></i></a>
-									</div>
-								</div>
+
 							</form>
+							<div class="prd-block_actions prd-block_actions--wishlist">
+								<div class="btn-wrap">
+									{% comment %} {% if product.stock >= 1 %} {% endcomment %}
+									<button form="add-to-cart-form" type="submit"  class="btn btn--add-to-cart js-trigger-addtocart js-prd-addtocart">Add to cart</button>
+									{% comment %} {% else %} {% endcomment %}
+									{% comment %} <h1>No items left</h1> {% endcomment %}
+								</div>
+								<div class="btn-wishlist-wrap">
+							
+									<form action='{% url 'home:add_wishlist' product.id %}' method="get">
+										<button type="submit" id="wishlist-btn"
+										class="btn-add-to-wishlist ml-auto {% if is_wishlist == True %} active {% else %} {% endif %}"
+									title="{% if is_wishlist == True %}Remove from wishlist {% else %}Add to wishlist {% endif %}" style="border: none; background: none;"><i class="icon-heart-stroke"></i></button>
+									</form>
+									{% comment %} <a href="#"
+										class="btn-add-to-wishlist ml-auto btn-add-to-wishlist--off js-remove-wishlist"
+										title="Remove From Wishlist" data-product="{{product.id}}"><i class="icon-heart-hover"></i></a> {% endcomment %}
+								</div>
+							</div>
+								
+							
 
 						</div>
 						<div class="prd-block_info_item">
