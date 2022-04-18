@@ -9,7 +9,7 @@ from django.http import HttpResponse, HttpResponseNotAllowed, HttpResponseNotFou
 from django.shortcuts import redirect, render
 from django.shortcuts import get_object_or_404
 from .forms import FormComment, SearchQuery
-from .models import Category, Contact , Product, Comment, ProductAttribute, Wishlist
+from .models import Category, Contact, Customize , Product, Comment, ProductAttribute, Wishlist
 from cart.forms import CartAddProductForm
 from cart.cart import Cart
 from .filters import ProdFilter
@@ -17,13 +17,19 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.contrib.postgres.search import SearchVector
 from django.db.models import Q
 from django.contrib.auth.decorators import login_required
-
+from PIL import Image , ImageDraw, ImageFont
 
 # Create your views here.
 def home(request):
     category = Category.objects.all()
     latest_product = Product.objects.all().order_by('-id')[:4]
-    
+    for i in latest_product:
+        is_wishlist = False
+        if request.user.is_authenticated:
+            checkWish=Wishlist.objects.filter(product=i,user=request.user).count()
+            if checkWish > 0:
+                is_wishlist = True
+        i.is_wishlist = is_wishlist    
     count_item = Wishlist.objects.filter().count()
     cart_product_form = CartAddProductForm()
     context = {'category':category, 'latest_product':latest_product, 'cart_product_form':cart_product_form, 'count_item':count_item}
@@ -34,7 +40,13 @@ def categoryItem(request,id,slug=None):
     category = Category.objects.all()
     allProd = Product.objects.all()
     products = Product.objects.filter(category_id = id)
-
+    for i in products:
+        is_wishlist = False
+        if request.user.is_authenticated:
+            checkWish=Wishlist.objects.filter(product=i,user=request.user).count()
+            if checkWish > 0:
+                is_wishlist = True
+        i.is_wishlist = is_wishlist    
     ordering = request.GET.get('ordering',"")
     filtering = request.GET.get('filtering',"")
     if ordering:
@@ -62,11 +74,7 @@ def categoryItem(request,id,slug=None):
 #     if request.method == 'POST':
 #         chosenProd = request.POST.get('product')
 #         produts = products.filter(product=chosenProd)
-        
-
-
-
-
+ 
 #detail page
 
 def productDetail(request,id,slug):
@@ -78,12 +86,38 @@ def productDetail(request,id,slug):
     cart_product_form = CartAddProductForm()
    
     is_wishlist = False
-
-    checkWish=Wishlist.objects.filter(product=product,user=request.user).count()
-    if checkWish > 0:
-        is_wishlist = True
+    if request.user.is_authenticated:
+        checkWish=Wishlist.objects.filter(product=product,user=request.user).count()
+        if checkWish > 0:
+            is_wishlist = True
     context = {'category':category, 'product':product,'latest_product':latest_product, 'comment':comment,'cart_product_form':cart_product_form, 'count_item':count_item,'is_wishlist':is_wishlist}
     return render(request, 'prodDetail.html',context)
+
+def customize(request,id):
+    url = request.META.get('HTTP_REFERER')
+    category = Category.objects.all()
+    product = Product.objects.get(pk = id)
+    img = Image.open(product.image2)
+    d = ImageDraw.Draw(img)
+    fnt = ImageFont.truetype("comicbd.ttf",100)
+    if request.method == "POST":
+        customize = Customize()
+        name = request.POST.get('name')
+        number = request.POST.get('number')
+        customize.name = name
+        customize.number = number
+        customize.product_id = id
+        current_user = request.user
+        customize.user_id = current_user.id
+        customize.save()
+    # name = request.POST.get('name')
+    # number = request.POST.get('number')
+    d.text((230,100),name,font=fnt,fill=(255,255,255))
+    d.text((320,230),number,font=fnt,fill=(255,255,255))
+    img.save('a.png')
+    context = {'category':category,'product':product}
+    return HttpResponseRedirect(url, context)
+
 
 def addComment(request,id):
     url = request.META.get('HTTP_REFERER')

@@ -36,3 +36,13 @@ class ItemOrdered(models.Model):
     
     def get_price(self):
         return self.price * self.quantity
+
+class Refund(models.Model):
+    refundOrder = models.ForeignKey(ItemOrdered, on_delete=models.CASCADE)
+    username = models.CharField(max_length=100)
+    phone = models.CharField(max_length=100)
+    email = models.EmailField(max_length=100)
+    reason = models.CharField(max_length=500)
+
+    def __str__(self):
+        return str(self.id)

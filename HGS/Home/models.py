@@ -90,7 +90,14 @@ class ProductAttribute(models.Model):
     
     def __str__(self):
         return self.product.name
+class Customize(models.Model):
+    product = models.ForeignKey(Product,on_delete=models.CASCADE)
+    name = models.CharField(max_length=100)
+    number = models.IntegerField()
+    user = models.ForeignKey(Customer,on_delete=models.CASCADE)
 
+    def __str__(self):
+        return self.product.name
 
 class Comment(models.Model):
     user = models.ForeignKey(Customer, on_delete=models.CASCADE)

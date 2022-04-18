@@ -45,8 +45,10 @@
     color: #EFA600;
 }
 
-
-
 #wishlist-btn.active{
-    color: red !important;
+    color: red;
+}
+
+#wishlist-front.active{
+    color: red;
 }

@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Category, Product, Comment , Contact, Size, ProductAttribute, Wishlist, ExchangeRate
+from .models import Category, Customize, Product, Comment , Contact, Size, ProductAttribute, Wishlist, ExchangeRate
 from mptt.admin import DraggableMPTTAdmin
 from import_export.admin import ImportExportModelAdmin
 # Register your models here.
@@ -71,6 +71,10 @@ class AdminComment(admin.ModelAdmin):
 @admin.register(Contact)
 class AdminContact(admin.ModelAdmin):
     list_display = ['firstName', 'email', 'phoneNumber','message']
+
+@admin.register(Customize)
+class AdminCustomize(admin.ModelAdmin):
+    list_display = ['user', 'product', 'name','number']
 
 @admin.register(Wishlist)
 class AdminWishlist(admin.ModelAdmin):

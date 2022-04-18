@@ -133,7 +133,6 @@ def historyDetail(request):
     context = {'category':category,'downHist':downHist}
     return render(request, 'historyDetail.html',context)
 
-
 def render_to_pdf(template_src, context_dict={}):
 	template = get_template(template_src)
 	html  = template.render(context_dict)

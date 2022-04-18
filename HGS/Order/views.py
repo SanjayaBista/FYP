@@ -1,15 +1,16 @@
 from email import message
+from weakref import ref
 from django.conf import settings
 import requests
 import json 
 from django.contrib import messages
-from django.http import JsonResponse
+from django.http import HttpResponseRedirect, JsonResponse
 
 from django.shortcuts import render
-from .models import ItemOrdered, Order
+from .models import ItemOrdered, Order, Refund
 from .forms import OrderItemForm
 from cart.cart import Cart
-from Home.models import Category
+from Home.models import Category, Product
 from django.views.decorators.csrf import csrf_exempt
 from django.core.mail import send_mail
 # Create your views here.
@@ -36,12 +37,32 @@ def orderItem(request):
                         fail_silently=True,
                     )
             cart.clear()
+            
         
             return render(request, 'orderSuccess.html', {'order':order, 'category':category})
-        
     else:
         form = OrderItemForm()
     return render(request, 'checkout.html', {'cart':cart, 'form':form, 'category':category})
+
+def refund(request,id):
+    url = request.META.get('HTTP_REFERER')
+    product = Product.objects.get(pk=id)
+    refundOrd = ItemOrdered.objects.get(product=product, user=request.user)
+    if request.method == "POST":
+            refund = Refund()
+            username = request.POST.get('username')
+            refundOrder = request.POST.get('refundOrder')
+            phone  = request.POST.get('phone')
+            email = request.POST.get('email')
+            reason = request.POST.get('reason')
+            refund.username = username
+            refund.refundOrder = refundOrder
+            refund.phone = phone
+            refund.email = email
+            refund.reason = reason
+            refund.save()
+    return HttpResponseRedirect(url)
+
 
 @csrf_exempt
 def verify_payment(request):

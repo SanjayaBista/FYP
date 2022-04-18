@@ -115,7 +115,7 @@
                     
                             <button type="submit"
                                 class="circle-label-compare circle-label-wishlist--add mt-0"
-                                 title="Add To Wishlist"><i class="icon-heart-stroke"></i></button>
+                                 title="Add To Wishlist"><i class="icon-heart-stroke {% if product.is_wishlist == True %} active {% else %} {% endif %}" id="wishlist-front"></i></button>
                                 </form>
                             </div>
                         </div>

@@ -41,18 +41,20 @@
                       <img src="{% if w.product.image %} {{ w.product.image.url }} {% else %} {% static 'images/NoImage.png' %}{% endif %}"
                           data-src="" alt=""  class="js-prd-img lazyload fade-up">
                     </a>
-                    {% comment %} <div class="prd-circle-labels">
-                      <a href="{% url 'home:remove_wishlist' %}" class="circle-label-compare circle-label-wishlist--off js-remove-wishlist"
-                       title="Remove From Wishlist"><i class="icon-recycle"></i></a>
+                     <div class="prd-circle-labels">
+                      <form action='{% url 'home:add_wishlist' w.product.id %}' method="get">
+                        <button type=submit class="circle-label-compare circle-label-wishlist--off"
+                        title="Remove From Wishlist"><i class="icon-recycle"></i></button>
+                      </form>
                     
-                    </div> {% endcomment %}
+                    </div> 
 
                      <div class="prd-circle-labels">
-                      <form class="circle-label-compare"
+                      {% comment %} <form class="circle-label-compare"
                       title="Remove From Wishlist" action="{% url 'home:remove_wishlist' %}" method="POST">
                           <input type="submit" value="X">
                           {% csrf_token %}
-                      </form> 
+                      </form>  {% endcomment %}
                   </div>
 
                   </div>

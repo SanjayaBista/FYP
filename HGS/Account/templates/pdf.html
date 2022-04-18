@@ -52,12 +52,12 @@
                 <th>Quantity</th>
                 <th>Total</th>
             </tr>
-            {% for item in downHist %}
+            {% for item in ordHist %}
             <tr>
-                <td>{{ item.product.name }}</td>
-                <td>Rs.{{item.price}}</td>
-                <td>{{  item.quantity}}</td>
-                <td>Rs.{{  item.get_price}}</td>
+                <td>{{ item.id }}</td>
+                <td>Rs.{{item.orderedOn|date:"M d, Y" }}</td>
+                <td>{{  item.email}}</td>
+                <td>Rs.{{  item.state}}</td>
             </tr> 
             {% endfor %}     
         </table>

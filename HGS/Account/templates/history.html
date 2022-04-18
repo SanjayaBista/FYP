@@ -77,34 +77,34 @@ Purchase History
 						<div id="sizeGuide" style="display: none;" class="modal-info-content modal-info-content-lg">
 					
 							<div class="table-responsive">
-								<form>
+								<form method="post" action="{% url 'order:refund'   %}"> 
+									{% csrf_token %}
 									<h2>We will verify your request and return the money.</h2>
 									<div class="form-group">
 										<label for="exampleFormControlInput1">Username</label>
-										<input type="text" class="form-control" id="exampleFormControlInput1" placeholder="Sanjay">
+										<input name="username" type="text" class="form-control" id="exampleFormControlInput1" placeholder="Sanjay">
 									  </div>
 									<div class="form-group">
 									  <label for="exampleFormControlInput1">Email address</label>
-									  <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="sanjaybista82@gmail.com">
+									  <input name="email" type="text" class="form-control" id="exampleFormControlInput1" placeholder="sanjaybista82@gmail.com">
 									</div>
 									<div class="form-group">
 										<label for="exampleFormControlInput1">Phone</label>
-										<input type="text" class="form-control" id="exampleFormControlInput1" placeholder="9819069112">
+										<input name="phone" type="text" class="form-control" id="exampleFormControlInput1" placeholder="9819069112">
 									  </div>
 									<div class="form-group">
+										{% for ord in refundOrd %}
 									  <label for="exampleFormControlSelect1">Select Order</label>
-									  <select class="form-control" id="exampleFormControlSelect1">
-										<option>1</option>
-										<option>2</option>
-										<option>3</option>
-										<option>4</option>
-										<option>5</option>
+									  <select name="refundOrder" class="form-control" id="exampleFormControlSelect1">
+										<option>{{ord.id}}</option>
+
 									  </select>
+									  {% endfor %}
 									</div>
 									
 									<div class="form-group">
 									  <label for="exampleFormControlTextarea1">Reason To Refund</label>
-									  <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+									  <textarea name="reason" class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
 									</div>
 									<div class="text-center">
 										<button class="btn">Send Refund Request</button>

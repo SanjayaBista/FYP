@@ -32,7 +32,7 @@
                 <div class="col-md-8">
                     <form action="{% url 'order:orderItem' %}" method="post">
                         {% csrf_token %}
-                    <div class="panel-group panel-group--style1" id="checkoutAccordion">
+                        <div class="panel-group panel-group--style1" id="checkoutAccordion">
                         <div class="panel">
                             <div class="panel-heading active">
                                 <h4 class="panel-title">
@@ -162,55 +162,6 @@
                 <button id="payment-button" class="form-control form-control--sm"><h3>Pay with Khalti</h3></button>
                 <!-- Place this where you need payment button -->
                 <!-- Paste this code anywhere in you body tag -->
-<script>
-    
-function verifyPayment(payload) {
-$.ajax({
-    url: "{% url 'order:verify_payment' %}",
-    type: "POST",
-    data: payload,
-    dataType: 'json',
-    success: function (response) { alert(response) },
-    error: function (error) { alert(error.responseJSON['message']) }
-});
-}
-    var config = {
-        // replace the publicKey with yours
-        "publicKey": "test_public_key_3365d87245694ad296e9117b8dd17a1f",
-        "productIdentity": "1234567890",
-        "productName": "Dragon",
-        "productUrl": "http://gameofthrones.wikia.com/wiki/Dragons",
-        "paymentPreference": [
-            "KHALTI",
-            "EBANKING",
-            "MOBILE_BANKING",
-            "CONNECT_IPS",
-            "SCT",
-            ],
-        "eventHandler": {
-            onSuccess (payload) {
-                // hit merchant api for initiating verfication
-                console.log(payload);
-                verifyPayment(payload)
-                
-            },
-            onError(error) {
-                console.log(error);
-            },
-            onClose() {
-                console.log('widget is closing');
-            }
-        }
-    };
-
-    var checkout = new KhaltiCheckout(config);
-    var btn = document.getElementById("payment-button");
-    btn.onclick = function () {
-        // minimum transaction amount must be 10, i.e 1000 in paisa.
-        checkout.show({amount: 1000});
-        {% comment %} checkout.show({amount: {{cart.get_total_price}}*100}); {% endcomment %}
-    }
-</script>
                                         
                                         {% comment %} <div class="clearfix mt-2">
                                             <button type="submit" class="btn btn--lg w-100">Place Order</button>
@@ -269,22 +220,28 @@ $.ajax({
                     </div>
                     
                     <div class="mt-2"></div>
-                    <div class="card">
-                        <div class="card-body">
-                            <h3>Apply Discount Code </h3>
-                            <p>Get discount with your discount code </p>
-                            <div class="form-inline mt-2">
-                                <input type="text" class="form-control form-control--sm"
-                                    placeholder="Promotion/Discount Code">
-                                <button type="submit" class="btn">Apply</button>
-                            </div>
-                        </div>
-                    </div>
+                   
                     <div class="mt-2"></div>
+                    {% if cart.coupon  %}  
                     <div class="cart-total-sm">
-                        <span>Total</span>
+                      
+                        <span><h2>Total</h2></span>
                         <span class="card-total-price">${{ cart.get_total_price|floatformat:2 }}</span>
+                        
                     </div>
+                    <div class="cart-total-sm">
+                        <span><h3>Discount ({{ cart.coupon.discount }} %)</h3></span>
+                        <span class="card-total-price"><h3> - ${{ cart.get_discount|floatformat:2 }}</h3></span>
+                        
+                    </div>
+                    <hr>
+                    {% endif %}
+                    <div class="cart-total-sm">
+                        <span><h2> New Total</h2></span>
+                        <span class="card-total-price"> <h2>  ${{ cart.get_total_price_after_discount|floatformat:2 }}</h2></span>
+                        
+                    </div>
+                    
                     <div class="mt-2"></div>
                    
                 </div>
@@ -292,5 +249,53 @@ $.ajax({
         </div>
     </div>
 </div>
+<script>  
+    function verifyPayment(payload) {
+    $.ajax({
+        url: "{% url 'order:verify_payment' %}",
+        type: "POST",
+        data: payload,
+        dataType: 'json',
+        success: function (response) { alert(response) },
+        error: function (error) { alert(error.responseJSON['message']) }
+    });
+    }
+        var config = {
+            // replace the publicKey with yours
+            "publicKey": "test_public_key_3365d87245694ad296e9117b8dd17a1f",
+            "productIdentity": "1234567890",
+            "productName": "Dragon",
+            "productUrl": "http://gameofthrones.wikia.com/wiki/Dragons",
+            "paymentPreference": [
+                "KHALTI",
+                "EBANKING",
+                "MOBILE_BANKING",
+                "CONNECT_IPS",
+                "SCT",
+                ],
+            "eventHandler": {
+                onSuccess (payload) {
+                    // hit merchant api for initiating verfication
+                    console.log(payload);
+                    verifyPayment(payload)
+                    
+                },
+                onError(error) {
+                    console.log(error);
+                },
+                onClose() {
+                    console.log('widget is closing');
+                }
+            }
+        };
+    
+        var checkout = new KhaltiCheckout(config);
+        var btn = document.getElementById("payment-button");
+        btn.onclick = function () {
+            // minimum transaction amount must be 10, i.e 1000 in paisa.
+            {% comment %} checkout.show({amount: 1000}); {% endcomment %}
+             checkout.show({amount: {{cart.get_total_price_after_discount}}*100}); 
+        }
+</script>
 
 {% endblock content %}
