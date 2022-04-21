@@ -46,7 +46,7 @@ Purchase History
 						<tbody>
 							{% for h in ordHist %}
 						<tr>
-							<td><b>{{h.id}}</b><a href="{% url 'account:historyDetail' %}" class="ml-1">Details</a></td>
+							<td><b>{{h.id}}</b><a href="{% url 'account:historyDetail' h.id   %}" class="ml-1">Details</a></td>
 							<td>{{ h.orderedOn|date:"M d, Y"  }}</td>
 							<td>{{h.email}}</td>
 							<td><span class="color">{{h.state}},{{h.address}}</span></td>

@@ -8,6 +8,8 @@ from unicodedata import category
 from django.http import HttpResponse, HttpResponseNotAllowed, HttpResponseNotFound, HttpResponseRedirect, JsonResponse
 from django.shortcuts import redirect, render
 from django.shortcuts import get_object_or_404
+
+from Home.recommender import get_recommended_room
 from .forms import FormComment, SearchQuery
 from .models import Category, Contact, Customize , Product, Comment, ProductAttribute, Wishlist
 from cart.forms import CartAddProductForm
@@ -80,7 +82,7 @@ def categoryItem(request,id,slug=None):
 def productDetail(request,id,slug):
     category = Category.objects.all()
     product = Product.objects.get(pk = id)
-    latest_product = Product.objects.all().order_by('-id').exclude(id=id)[:4]
+  
     count_item = Wishlist.objects.filter().count()
     comment = Comment.objects.filter(product_id = id, active = True)
     cart_product_form = CartAddProductForm()
@@ -90,7 +92,11 @@ def productDetail(request,id,slug):
         checkWish=Wishlist.objects.filter(product=product,user=request.user).count()
         if checkWish > 0:
             is_wishlist = True
-    context = {'category':category, 'product':product,'latest_product':latest_product, 'comment':comment,'cart_product_form':cart_product_form, 'count_item':count_item,'is_wishlist':is_wishlist}
+    prodIds = get_recommended_room(id)
+    recommProd = []
+    for i in range(0, len(prodIds)):
+        recommProd.append(Product.objects.get(id = prodIds[i]))
+    context = {'category':category, 'product':product,'recommProd':recommProd, 'comment':comment,'cart_product_form':cart_product_form, 'count_item':count_item,'is_wishlist':is_wishlist}
     return render(request, 'prodDetail.html',context)
 
 def customize(request,id):
@@ -271,36 +277,61 @@ def prodSearch(request):
         return redirect('home:home')
 
 
-def csvExport(request):
+# def csvExport(request):
+#     rating = Comment.objects.all()
+#     response = HttpResponse('text/csv')
+#     response['Content-Disposition'] = 'attachment; filename=rating.csv'
+#     writer = csv.writer(response)
+#     writer.writerow(['User ID','Product ID','Rating'])
+#     ratingFields = rating.values_list('user_id','product_id','rating')
+#     for rate in ratingFields:
+#         writer.writerow(rate)
+#     return response
+
+# def csvExport2(request):
+#     product = Product.objects.all()
+#     response = HttpResponse('text/csv')
+#     response['Content-Disposition'] = 'attachment; filename=product.csv'
+#     writer = csv.writer(response)
+#     writer.writerow(['Product ID','Category ID','Price','Description'])
+#     productFields = product.values_list('id','category_id','price','description')
+#     for product in productFields:
+#         writer.writerow(product)
+#     return response
+
+
+# def csvExport3(request):
+#     size = ProductAttribute.objects.all()
+#     response = HttpResponse('text/csv')
+#     response['Content-Disposition'] = 'attachment; filename=size.csv'
+#     writer = csv.writer(response)
+#     writer.writerow(['Product ID','Size'])
+#     sizeFields = size.values_list('product_id','size_id')
+#     for size in sizeFields:
+#         writer.writerow(size)
+#     return response
+
+def csvExport4(request):
     rating = Comment.objects.all()
-    response = HttpResponse('text/csv')
+    size = ProductAttribute.objects.all()
+    product = Product.objects.all()
+    response = HttpResponse()
     response['Content-Disposition'] = 'attachment; filename=rating.csv'
     writer = csv.writer(response)
-    writer.writerow(['User ID','Product ID','Rating'])
-    ratingFields = rating.values_list('user_id','product_id','rating')
-    for rate in ratingFields:
-        writer.writerow(rate)
-    return response
-
-def csvExport2(request):
-    product = Product.objects.all()
-    response = HttpResponse('text/csv')
-    response['Content-Disposition'] = 'attachment; filename=product.csv'
-    writer = csv.writer(response)
-    writer.writerow(['Product ID','Category ID','Price','Description'])
-    productFields = product.values_list('id','category_id','price','description')
+    writer.writerow(['id','Price','Description','Rating','Size'])
+    ratingFields = rating.values_list('rating')
+    sizeFields = size.values_list('size_id')
+    productFields = product.values_list('id','price','description')
+    product_list = []
+    rate_list = []
+    size_list = []
     for product in productFields:
-        writer.writerow(product)
-    return response
-
-
-def csvExport3(request):
-    size = ProductAttribute.objects.all()
-    response = HttpResponse('text/csv')
-    response['Content-Disposition'] = 'attachment; filename=size.csv'
-    writer = csv.writer(response)
-    writer.writerow(['Product ID','Size'])
-    sizeFields = size.values_list('product_id','size_id')
+        product_list.append(product)
+    for rate in ratingFields:
+        rate_list.append(rate)
     for size in sizeFields:
-        writer.writerow(size)
+        size_list.append(size)
+    for i in range(0,len(product_list)):
+        writer.writerow( product_list[i] + rate_list[i] +size_list[i] )
     return response
+

@@ -17,8 +17,8 @@ urlpatterns = [
     path('exchange/',views.exchange,name='exchange'),
     path('shipping/',views.shipping,name='shipping'),
     path('search/',views.prodSearch, name='search'),
-    path('csvExport/',views.csvExport, name='csvExport'),
-    path('csvExport2/',views.csvExport2, name='csvExport2'),
-    path('csvExport3/',views.csvExport3, name='csvExport3'),
-
+    # path('csvExport/',views.csvExport, name='csvExport'),
+    # path('csvExport2/',views.csvExport2, name='csvExport2'),
+    # path('csvExport3/',views.csvExport3, name='csvExport3'),
+    path('csvExport4/',views.csvExport4, name='csvExport4'),
 ]

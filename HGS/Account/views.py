@@ -126,10 +126,10 @@ def history(request):
     context = {'category':category,'ordHist':ordHist}
     return render(request, 'history.html',context)
 
-def historyDetail(request):
+def historyDetail(request,id):
     category = Category.objects.all()
-    ordHist = Order.objects.filter(user=request.user).order_by('id')
-    downHist = ItemOrdered.objects.filter(order__id__in=ordHist)
+    ordHist = Order.objects.get(id=id)
+    downHist = ItemOrdered.objects.filter(order=ordHist)
     context = {'category':category,'downHist':downHist}
     return render(request, 'historyDetail.html',context)
 
@@ -153,6 +153,8 @@ data = {
 	"phone": "Contact: 9819069112",
 	"email": "E-mail: halgadajerseystore.com",
 	"website": "Website: www.hgs.com",
+
+    
 	}
 class DownloadPDF(View):
 	def get(self, request, *args, **kwargs):

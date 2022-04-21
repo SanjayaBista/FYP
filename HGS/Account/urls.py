@@ -13,7 +13,7 @@ urlpatterns = [
     path('updateAddress/',views.updateAddress,name='updateAddress'),
     path('wishlist/',views.wishlist,name='wishlist'),
     path('history/',views.history,name='history'),
-    path('historyDetail/',views.historyDetail,name='historyDetail'),
+    path('historyDetail/<int:id>/',views.historyDetail,name='historyDetail'),
     path('pdf_download/', views.DownloadPDF.as_view(), name="pdf_download"),
 
     

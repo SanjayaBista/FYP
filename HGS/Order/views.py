@@ -38,7 +38,6 @@ def orderItem(request):
                     )
             cart.clear()
             
-        
             return render(request, 'orderSuccess.html', {'order':order, 'category':category})
     else:
         form = OrderItemForm()
