@@ -7,14 +7,16 @@ class Cart(object):
         self.session = request.session
         cart = self.session.get(settings.CART_SESSION_ID)
         if not cart:
-            cart = self.session[settings.CART_SESSION_ID] = { }
+            cart = self.session[settings.CART_SESSION_ID] = {}
         self.cart = cart
         self.coupon_id = self.session.get('coupon_id')
-
+# ,is_customize=False
     def add(self,product,quantity=1,override_quantity=False):
         product_id = str(product.id)
         if product_id not in self.cart:
             self.cart[product_id] = {'quantity':0, 'price':str(product.price)}
+        # if int(is_customize) == 1:
+        #     self.cart[product_id] ['is_customize'] = True
         if override_quantity:
             self.cart[product_id] ['quantity'] = quantity
         else:
@@ -38,6 +40,9 @@ class Cart(object):
             cart[str(product.id)] ['product'] = product
         
         for item in cart.values():
+            # if item['is_customize'] == True:
+            #     item['price'] = Decimal(item['price']) + 100
+            # else:
             item['price'] = Decimal(item['price'])
             item['total_price'] = item['price'] * item['quantity']
             yield item 

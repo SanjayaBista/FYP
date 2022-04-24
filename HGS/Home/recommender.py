@@ -1,3 +1,4 @@
+from ast import Pass
 import pandas as pd
 import numpy as np
 from pathlib import Path
@@ -10,53 +11,47 @@ df = pd.read_csv(path)
 
 # pre-processing data
 # replacing the null field with the empty string
-features = ['Rating', 'Size', 'Price', 'Description']
-for feature in features:
-    df[feature] = df[feature].fillna('')
-
-# merging all the fields
+feature = ['Rating', 'Size', 'Price', 'Description']
+for feat in feature:
+    df[feat] = df[feat].fillna('')
 
 
-def combined_feature(row):
+def merging(row):
     return str(row['Rating'])+" "+str(row['Size'])+" "+str(row['Price'])+" "+str(row['Description'])
 
 
-df["merged_feature"] = df.apply(combined_feature, axis=1)
+df["mergingFeatures"] = df.apply(merging, axis=1)
 
 # Initializing vectorizer class
 vector_data = TfidfVectorizer()
-# converting string of data into the matrix
-matrix_data = vector_data.fit_transform(df["merged_feature"])
+# converting string  data into the matrix
+matrix_data = vector_data.fit_transform(df["mergingFeatures"])
 
 # retreiving the cosine value of type numpy array and storing in the variable
 similarity_score = cosine_similarity(matrix_data)
 
-
-def get_recommended_room(product_id):
-    # getting list of similar room on the basis of room_id from cosine value
-    r_id = df[df.id == product_id]["id"].index.values[0]
-    similar_room = list(enumerate(similarity_score[r_id]))
+def getRecommendation(product_id):
+    # getting  similar item on the basis of productid from cosine value
+    prod_id = df[df.id == product_id]["id"].index.values[0]
+    similarJersey = list(enumerate(similarity_score[prod_id]))
     # sorting and reversing the list
-    sorted_room = sorted(similar_room, key=lambda x: x[1], reverse=True)
-    # retreiving the top 10 matched item
+    sortedJersey = sorted(similarJersey, key=lambda x: x[1], reverse=True)
+    # retreiving the top 4 matched item
     i = 1
-    room_list = []
-    for i in range(1,len(sorted_room)):
-        room = sorted_room[i]
+    jerseyList = []
+    for i in range(1,len(sortedJersey)):
+        jersey = sortedJersey[i]
         i += 1
-        room_list.append(df["id"].iloc[room[0]])
-        if i > 3:
-            return room_list
+        jerseyList.append(df["id"].iloc[jersey[0]])
+        if i > 4:
+            return jerseyList
         
 
-
-def get_room_from_id(id):
-    
+def getJerseyID(id):
     try:
-        room_ids = df[df.id == id]["id"].values[0]
+        jerseyID = df[df.id == id]["id"].values[0]
     except:
-        message = str(id) + " id Room is not avaiable"
-        return message
-    return get_recommended_room(product_id=room_ids)
+        Pass
+    return getRecommendation(product_id=jerseyID)
 
     

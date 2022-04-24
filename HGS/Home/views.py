@@ -9,7 +9,7 @@ from django.http import HttpResponse, HttpResponseNotAllowed, HttpResponseNotFou
 from django.shortcuts import redirect, render
 from django.shortcuts import get_object_or_404
 
-from Home.recommender import get_recommended_room
+from Home.recommender import getRecommendation
 from .forms import FormComment, SearchQuery
 from .models import Category, Contact, Customize , Product, Comment, ProductAttribute, Wishlist
 from cart.forms import CartAddProductForm
@@ -56,7 +56,7 @@ def categoryItem(request,id,slug=None):
     if filtering:
         products = products.filter(filtering)
 
-    page_size_val = request.GET.get('page_size_val',2)
+    page_size_val = request.GET.get('page_size_val',4)
     paginator = Paginator(products, page_size_val)
     page = request.GET.get('page')
     try:
@@ -92,7 +92,7 @@ def productDetail(request,id,slug):
         checkWish=Wishlist.objects.filter(product=product,user=request.user).count()
         if checkWish > 0:
             is_wishlist = True
-    prodIds = get_recommended_room(id)
+    prodIds = getRecommendation(id)
     recommProd = []
     for i in range(0, len(prodIds)):
         recommProd.append(Product.objects.get(id = prodIds[i]))
@@ -121,8 +121,13 @@ def customize(request,id):
     d.text((230,100),name,font=fnt,fill=(255,255,255))
     d.text((320,230),number,font=fnt,fill=(255,255,255))
     img.save('a.png')
-    context = {'category':category,'product':product}
-    return HttpResponseRedirect(url, context)
+    image_path = 'C:/Users/DeLL/Desktop/CodingFYP/HGS/a.png'
+    img = Image.open(image_path)
+    img.save('static/b.png')
+    # print(img.path,'-------------------------')
+   
+    return JsonResponse({'status':'success'})
+    # return HttpResponseRedirect(url, context)
 
 
 def addComment(request,id):

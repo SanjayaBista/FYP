@@ -153,14 +153,13 @@ data = {
 	"phone": "Contact: 9819069112",
 	"email": "E-mail: halgadajerseystore.com",
 	"website": "Website: www.hgs.com",
-
     
+
 	}
 class DownloadPDF(View):
 	def get(self, request, *args, **kwargs):
-		
+       
 		pdf = render_to_pdf('pdf.html',data)
-
 		response = HttpResponse(pdf, content_type='application/pdf')
 		filename = "Invoice_%s.pdf" %("12341231")
 		content = "attachment; filename='%s'" %(filename)

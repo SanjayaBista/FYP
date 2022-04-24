@@ -54,6 +54,7 @@ INSTALLED_APPS = [
     'django.contrib.postgres',
     'django_social_share',
     'import_export',
+    'django_extensions',
 ]
 
 SITE_ID = 1
@@ -198,3 +199,8 @@ EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 EMAIL_HOST_USER = 'sanjayfyp@gmail.com'
 EMAIL_HOST_PASSWORD = 'sanjayfyp2021@'
+
+GRAPH_MODELS = {
+  'all_applications': True,
+  'group_models': True,
+}
