@@ -26,6 +26,7 @@ def orderItem(request):
                 order.discount = cart.coupon.discount
             current_user = request.user
             order.user_id = current_user.id
+            order.moneyPaid = True
             order.save()
             for item in cart:
                 ItemOrdered.objects.create(order=order, product=item['product'], price=item['price'], quantity=item['quantity'])
@@ -36,8 +37,7 @@ def orderItem(request):
                         [request.user.email],
                         fail_silently=True,
                     )
-            cart.clear()
-            
+            cart.clear() 
             return render(request, 'orderSuccess.html', {'order':order, 'category':category})
     else:
         form = OrderItemForm()
@@ -90,6 +90,5 @@ def verify_payment(request):
     import pprint 
     pp = pprint.PrettyPrinter(indent=4)
     pp.pprint(response_data)
-    # return render(request,messages.error(request, "Payment Success"))
     return JsonResponse(f"Payment Done !! With IDX. {response_data['user']['idx']}",safe=False)
 

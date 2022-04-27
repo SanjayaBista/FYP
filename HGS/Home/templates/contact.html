@@ -27,16 +27,16 @@
                     </div>
                     <form method="post">
                         {% csrf_token %}
-                        <div class="form-confirm">
-                            <div class="success-confirm">
-                                Thanks! Your message has been sent. We will get back to you
-                                soon!
-                            </div>
-                            <div class="error-confirm">
-                                Oops! There was an error submitting form. Refresh and send
-                                again.
-                            </div>
+                        {% if messages %}
+                        {% for message in messages %}
+                        <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+                            {{  message }}
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                              <span aria-hidden="true">&times;</span>
+                            </button>
                         </div>
+                        {% endfor %}
+                        {% endif %}
                         <div class="form-group">
                             <div class="row vert-margin-middle">
                                 <div class="col-lg">

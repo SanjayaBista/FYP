@@ -8,7 +8,7 @@ from unicodedata import category
 from django.http import HttpResponse, HttpResponseNotAllowed, HttpResponseNotFound, HttpResponseRedirect, JsonResponse
 from django.shortcuts import redirect, render
 from django.shortcuts import get_object_or_404
-
+from django.contrib import messages
 from Home.recommender import getRecommendation
 from .forms import FormComment, SearchQuery
 from .models import Category, Contact, Customize , Product, Comment, ProductAttribute, Wishlist
@@ -55,7 +55,6 @@ def categoryItem(request,id,slug=None):
         products = products.order_by(ordering)
     if filtering:
         products = products.filter(filtering)
-
     page_size_val = request.GET.get('page_size_val',4)
     paginator = Paginator(products, page_size_val)
     page = request.GET.get('page')
@@ -176,6 +175,7 @@ def contactUs(request):
         contact.phoneNumber = phoneNumber
         contact.message = message
         contact.save()
+        messages.error(request, "Message Sent Successfully ")
         return redirect ('home:contactUs')
         
     return render(request,'contact.html',context)
@@ -221,7 +221,6 @@ def add_wishlist(request, id):
             product=product,
             user=request.user
         )
-    
     return HttpResponseRedirect(url)
 
 def remove_wishlist(request, product_id, wishlist_id):
@@ -337,6 +336,6 @@ def csvExport4(request):
     for size in sizeFields:
         size_list.append(size)
     for i in range(0,len(product_list)):
-        writer.writerow( product_list[i] + rate_list[i] +size_list[i] )
+        writer.writerow( product_list[i] + rate_list[i] +size_list[i])
     return response
 

@@ -4,14 +4,14 @@
             size: a4 portrait;
             @frame header_frame {           /* Static Frame */
                 -pdf-frame-content: header_content;
-                left: 50pt; width: 512pt; top: 50pt; height: 40pt;
+                left: 80pt; width: 512pt; top: 50pt; height: 40pt;
             }
             @frame content_frame {          /* Content Frame */
                 left: 50pt; width: 512pt; top: 90pt; height: 632pt;
             }
             @frame footer_frame {           /* Another static Frame */
                 -pdf-frame-content: footer_content;
-                left: 50pt; width: 512pt; top: 772pt; height: 20pt;
+                left: 500pt; width: 512pt; top: 772pt; height: 20pt;
             }
         }
     </style>
@@ -47,10 +47,17 @@
         <table>
          
             <tr>
-                <th>{{Product}}</th>
+                <th>Product</th>
                 <th>Price</th>
                 <th>Quantity</th>
                 <th>Total</th>
+            </tr>
+            <tr>
+ 
+                <td>Real Madrid</td>
+                <td>$900</td>
+                <td>1</td>
+                <td>$900</td>
             </tr>
             {% for item in ordHist %}
             <tr>
@@ -63,6 +70,6 @@
         </table>
         <hr>
 
-        <p><strong>Total: $3000</strong></p>
+        <p><strong>Total: $900</strong></p>
     </body>
     </html>

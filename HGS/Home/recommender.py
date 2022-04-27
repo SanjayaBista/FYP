@@ -46,7 +46,6 @@ def getRecommendation(product_id):
         if i > 4:
             return jerseyList
         
-
 def getJerseyID(id):
     try:
         jerseyID = df[df.id == id]["id"].values[0]

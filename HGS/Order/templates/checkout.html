@@ -30,7 +30,8 @@
             {% endfor %}
             <div class="row">
                 <div class="col-md-8">
-                    <form action="{% url 'order:orderItem' %}" method="post">
+                    {% comment %} {% url 'order:orderItem' %} {% endcomment %}
+                    <form  id='order_form' action="{% url 'order:orderItem' %}" method="post">
                         {% csrf_token %}
                         <div class="panel-group panel-group--style1" id="checkoutAccordion">
                         <div class="panel">
@@ -48,7 +49,7 @@
                                             <div class="col-sm-9">
                                                 <label>First Name:</label>
                                                 <div class="form-group">
-                                                    <input type="text" name="firstName" class="form-control form-control--sm" required>
+                                                    <input type="text" name="firstName" class="form-control form-control--sm" required >
                                                 </div>
                                             </div>
                                             <div class="col-sm-9">
@@ -87,6 +88,7 @@
                                         <div class="form-group">
                                             <input type="text" name="address" class="form-control form-control--sm" required>
                                         </div>
+                                        <button type='button' id="payment-button" class="form-control form-control--sm"><h3>Pay with Khalti</h3></button>
                                     </div>
                                 </div>
                             </div>
@@ -158,11 +160,8 @@
                                             </div>
                                         </div> {% endcomment %}
 
-                <!-- Place this where you need payment button -->
-                <button id="payment-button" class="form-control form-control--sm"><h3>Pay with Khalti</h3></button>
-                <!-- Place this where you need payment button -->
-                <!-- Paste this code anywhere in you body tag -->
-                                        
+               
+                                        <input type='submit' style='display:none' id='order_form_button'>
                                         {% comment %} <div class="clearfix mt-2">
                                             <button type="submit" class="btn btn--lg w-100">Place Order</button>
                                         </div> {% endcomment %}
@@ -240,10 +239,8 @@
                         <span><h2> New Total</h2></span>
                         <span class="card-total-price"> <h2>  ${{ cart.get_total_price_after_discount|floatformat:2 }}</h2></span>
                         
-                    </div>
-                    
-                    <div class="mt-2"></div>
-                   
+                    </div> 
+                    <div class="mt-2"></div>  
                 </div>
             </div>
         </div>
@@ -278,7 +275,7 @@
                     // hit merchant api for initiating verfication
                     console.log(payload);
                     verifyPayment(payload)
-                    
+                    $('#order_form_button').click()
                 },
                 onError(error) {
                     console.log(error);
@@ -293,8 +290,8 @@
         var btn = document.getElementById("payment-button");
         btn.onclick = function () {
             // minimum transaction amount must be 10, i.e 1000 in paisa.
-            {% comment %} checkout.show({amount: 1000}); {% endcomment %}
-             checkout.show({amount: {{cart.get_total_price_after_discount}}*100}); 
+            checkout.show({amount: 1000});
+             {% comment %} checkout.show({amount: {{cart.get_total_price_after_discount}}*100});  {% endcomment %}
         }
 </script>
 
