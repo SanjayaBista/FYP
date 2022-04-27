@@ -7,7 +7,7 @@ from django.contrib import messages
 from django.http import HttpResponseRedirect, JsonResponse
 
 from django.shortcuts import render
-from .models import ItemOrdered, Order, Refund
+from .models import ItemOrdered, Order, Refund, RefundMsg
 from .forms import OrderItemForm
 from cart.cart import Cart
 from Home.models import Category, Product
@@ -43,25 +43,70 @@ def orderItem(request):
         form = OrderItemForm()
     return render(request, 'checkout.html', {'cart':cart, 'form':form, 'category':category})
 
-def refund(request,id):
-    url = request.META.get('HTTP_REFERER')
-    product = Product.objects.get(pk=id)
-    refundOrd = ItemOrdered.objects.get(product=product, user=request.user)
-    if request.method == "POST":
-            refund = Refund()
-            username = request.POST.get('username')
-            refundOrder = request.POST.get('refundOrder')
-            phone  = request.POST.get('phone')
-            email = request.POST.get('email')
-            reason = request.POST.get('reason')
-            refund.username = username
-            refund.refundOrder = refundOrder
-            refund.phone = phone
-            refund.email = email
-            refund.reason = reason
-            refund.save()
-    return HttpResponseRedirect(url)
+# def refund(request):
+#     url = request.META.get('HTTP_REFERER')
+    # refundOrd = ItemOrdered.objects.get(user=request.user)
+    # if request.method == "POST":
+    #         refund = Refund()
+    #         username = request.POST.get('username')
+    #         refundOrder = request.POST.get('refundOrder')
+    #         phone  = request.POST.get('phone')
+    #         email = request.POST.get('email')
+    #         reason = request.POST.get('reason')
+    #         refund.username = username
+    #         refund.refundOrder = refundOrder
+    #         refund.phone = phone
+    #         refund.email = email
+    #         refund.reason = reason
+    #         refund.save()
+    # return HttpResponseRedirect(url)
 
+
+    # category = Category.objects.all()
+    # context = {'category':category}
+
+    # if request.method == "POST":
+    #     refund = Refund()
+    #     username = request.POST.get('username')
+    #     id = request.POST.get('id')
+    #     phone  = request.POST.get('phone')
+    #     email = request.POST.get('email')
+    #     reason = request.POST.get('reason')
+    #     refund.username = username
+    #     refund.id = id
+    #     refund.phone = phone
+    #     refund.email = email
+    #     refund.reason = reason
+    #     refund.product_id = id
+    #     current_user = request.user
+    #     refund.user_id = current_user.id
+    #     refund.save()
+    #     messages.error(request, "Refund Message Sent Successfully ")
+    #     return HttpResponseRedirect(url)
+        
+def refundMsg(request):
+    url = request.META.get('HTTP_REFERER')
+    category = Category.objects.all()
+    context = {'category':category}
+
+    if request.method == "POST":
+        refund = RefundMsg()
+        username = request.POST.get('username')
+        prodid = request.POST.get('prodid')
+        phone  = request.POST.get('phone')
+        email = request.POST.get('email')
+        reason = request.POST.get('reason')
+        refund.username = username
+        refund.prodid = prodid
+        refund.phone = phone
+        refund.email = email
+        refund.reason = reason
+        current_user = request.user
+        refund.user_id = current_user.id
+        refund.save()
+        messages.error(request, "Refund Message Sent Successfully ")
+        return HttpResponseRedirect(url)
+        
 
 @csrf_exempt
 def verify_payment(request):
