@@ -160,11 +160,15 @@
                                     </div>
                                     <div class="prd-info">
                                         <div class="prd-info-wrap">
-                                            <div class="prd-rating justify-content-center"><i
-                                                    class="icon-star-fill fill"></i><i
-                                                    class="icon-star-fill fill"></i><i
-                                                    class="icon-star-fill fill"></i><i
-                                                    class="icon-star-fill fill"></i><i class="icon-star-fill fill"></i>
+                                            <div class="prd-rating justify-content-center">
+                                                <div class="ratePro">
+                                                    <i class="fa fa-star{% if product.averageReview < 1 %}-o empty{% endif %}"></i>
+                                                    <i class="fa fa-star{% if product.averageReview < 2 %}-o empty{% endif %}"></i>
+                                                    <i class="fa fa-star{% if product.averageReview < 3 %}-o empty{% endif %}"></i>
+                                                    <i class="fa fa-star{% if product.averageReview < 4 %}-o empty{% endif %}"></i>
+                                                    <i class="fa fa-star{% if product.averageReview < 5 %}-o empty{% endif %}"></i>
+                                                   
+                                                </div>
                                             </div>
                                             <div class="prd-tag"><a href="{% url 'home:categoryItem' product.category.id product.category.slug  %}">{{ product.category.name }}</a></div>
                                             <h2 class="prd-title"><a href="#">{{ product.name }}</a></h2>

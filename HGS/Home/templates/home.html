@@ -121,9 +121,16 @@
                         </div>
                         <div class="prd-info">
                             <div class="prd-info-wrap">
-                                <div class="prd-rating justify-content-center"><i class="icon-star-fill fill"></i><i
-                                        class="icon-star-fill fill"></i><i class="icon-star-fill fill"></i><i
-                                        class="icon-star-fill fill"></i><i class="icon-star-fill fill"></i></div>
+                                <div class="prd-rating justify-content-center">
+                                    <div class="ratePro">
+                                        <i class="fa fa-star{% if product.averageReview < 1 %}-o empty{% endif %}"></i>
+                                        <i class="fa fa-star{% if product.averageReview < 2 %}-o empty{% endif %}"></i>
+                                        <i class="fa fa-star{% if product.averageReview < 3 %}-o empty{% endif %}"></i>
+                                        <i class="fa fa-star{% if product.averageReview < 4 %}-o empty{% endif %}"></i>
+                                        <i class="fa fa-star{% if product.averageReview < 5 %}-o empty{% endif %}"></i>
+                                       
+                                    </div>
+                                    </div>
                                 <div class="prd-tag"><a href="#">{{ product.name }}</a></div>
                                 <h2 class="prd-title"><a href="product.html">{{ product.category.name }}</a></h2>
 
@@ -139,7 +146,6 @@
                                     <div class="prd-action-left">
                                         <form method="post" action="{{ product.get_absolute_url }}">
                                             {% csrf_token %}
-                                            
                                             <button  class="btn btn--add-to-cart js-trigger-addtocart js-prd-addtocart">View Product</button>
                                         </form>
                                     </div>

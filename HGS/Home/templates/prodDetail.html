@@ -25,22 +25,16 @@
 				<div class="col">
 					<div class="js-prd-d-holder">
 						<div class="prd-block_title-wrap">
-							<div class="prd-block_reviews" data-toggle="tooltip" data-placement="top"
-								title="Click to see reviews">
-								<i class="icon-star-fill fill"></i>
-								<i class="icon-star-fill fill"></i>
-								<i class="icon-star-fill fill"></i>
-								<i class="icon-star-fill fill"></i>
-								<i class="icon-star"></i>
-								<span class="reviews-link"><a href="#" class="js-reviews-link">
-									{% with review.count as total_review %}
-									<h2>
-									{{ total_review }} {{ total_review|pluralize }}
-									</h2>
-									{% endwith %}
-								</a></span>
+							<div class="ratePro">
+								<i class="fa fa-star{% if product.averageReview < 1 %}-o empty{% endif %}"></i>
+								<i class="fa fa-star{% if product.averageReview < 2 %}-o empty{% endif %}"></i>
+								<i class="fa fa-star{% if product.averageReview < 3 %}-o empty{% endif %}"></i>
+								<i class="fa fa-star{% if product.averageReview < 4 %}-o empty{% endif %}"></i>
+								<i class="fa fa-star{% if product.averageReview < 5 %}-o empty{% endif %}"></i>
+								<span class="reviews-link"><a href="#" class="js-reviews-link">  {{ product.countReview}} Reviews </a></span>
 							</div>
-							<h1 class="prd-block_title">{{ product.name }}</h1>
+							
+							<h1 class="prd-block_title">{{product.name}}</h1>
 						</div>
 					</div>
 				</div>
@@ -492,7 +486,7 @@
 									<i class="fa fa-star{% if com.rating < 3 %}-o empty{% endif %}"></i>
 									<i class="fa fa-star{% if com.rating < 4 %}-o empty{% endif %}"></i>
 									<i class="fa fa-star{% if com.rating < 5 %}-o empty{% endif %}"></i>
-							</div>
+								</div>
 								<div class="review-item_top row align-items-center">
 									<div class="col">
 										<h5 class="review-item_author">{{ com.user.username }} on {{ com.created }}</h5>
@@ -537,20 +531,26 @@
 										<img src="{% if product.image %} {{ product.image.url }} {% else %} {% static 'images/NoImage.png' %}{% endif %}"
 											data-src="" alt="" class="js-prd-img lazyload fade-up">
 									</a>
-									<div class="prd-circle-labels">
+									{% comment %} <div class="prd-circle-labels">
 										<a href="#"
 											class="circle-label-compare circle-label-wishlist--add js-add-wishlist mt-0"
 											title="Add To Wishlist"><i class="icon-heart-stroke"></i></a><a href="#"
 											class="circle-label-compare circle-label-wishlist--off js-remove-wishlist mt-0"
 											title="Remove From Wishlist"><i class="icon-heart-hover"></i></a>
-									</div>
+									</div> {% endcomment %}
 								</div>
 								<div class="prd-info">
 									<div class="prd-info-wrap">
-										<div class="prd-rating justify-content-center"><i
-												class="icon-star-fill fill"></i><i class="icon-star-fill fill"></i><i
-												class="icon-star-fill fill"></i><i class="icon-star-fill fill"></i><i
-												class="icon-star-fill fill"></i></div>
+										<div class="prd-rating justify-content-center">
+											<div class="ratePro">
+												<i class="fa fa-star{% if product.averageReview < 1 %}-o empty{% endif %}"></i>
+												<i class="fa fa-star{% if product.averageReview < 2 %}-o empty{% endif %}"></i>
+												<i class="fa fa-star{% if product.averageReview < 3 %}-o empty{% endif %}"></i>
+												<i class="fa fa-star{% if product.averageReview < 4 %}-o empty{% endif %}"></i>
+												<i class="fa fa-star{% if product.averageReview < 5 %}-o empty{% endif %}"></i>
+											   
+											</div>
+										</div>
 										<div class="prd-tag"><a href="#">{{ product.name }}</a></div>
 										<h2 class="prd-title"><a href="product.html">{{ product.category.name }}</a>
 										</h2>
@@ -562,10 +562,10 @@
 										</div>
 										<div class="prd-action">
 											<div class="prd-action-left">
-												<form action="#">
-													<button class="btn js-prd-addtocart"
-														data-product='{"name": "Oversized Cotton Blouse", "path":"images/skins/fashion/products/product-03-1.webp", "url":"product.html", "aspect_ratio":0.778}'>Add
-														To Cart</button>
+												<form method="post" action="{{ product.get_absolute_url }}">
+													{% csrf_token %}
+													
+													<button  class="btn btn--add-to-cart js-trigger-addtocart js-prd-addtocart">View Product</button>
 												</form>
 											</div>
 										</div>

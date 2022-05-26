@@ -5,7 +5,7 @@ from django.db import models
 from mptt.models import MPTTModel, TreeForeignKey
 from django.urls import reverse
 from django.conf import settings
-
+from django.db.models import Avg, Count
 from Account.models import Customer
 User = settings.AUTH_USER_MODEL
 # Create your models here.
@@ -83,6 +83,21 @@ class Product(models.Model):
             rate = ExchangeRate.objects.get(currency = state.state)
             return float(self.price) * float(rate.value)
         return self.price
+    
+    def averageReview(self):
+        reviews = Comment.objects.filter(product=self, active=True).aggregate(average=Avg('rating'))
+        avg = 0
+        if reviews['average'] is not None:
+            avg=float(reviews['average'])
+        return avg
+    
+    def countReview(self):
+        reviews = Comment.objects.filter(product=self, active=True).aggregate(count=Count('id'))
+        cnt = 0
+        if reviews['count'] is not None:
+            cnt = int(reviews['count'])
+        return cnt
+
 
 class ProductAttribute(models.Model):
     product = models.ForeignKey(Product, on_delete=models.CASCADE)

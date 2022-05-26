@@ -64,9 +64,14 @@
                         <div class="prd-tag"><a href="#">Bigsteps</a></div>
                       </div>
                       <div class="prd-rating justify-content-center">
-                        <i class="icon-star-fill fill"></i><i class="icon-star-fill fill"></i><i
-                          class="icon-star-fill fill"></i><i class="icon-star-fill fill"></i><i
-                          class="icon-star-fill fill"></i>
+                        <div class="ratePro">
+                          <i class="fa fa-star{% if w.product.averageReview < 1 %}-o empty{% endif %}"></i>
+                          <i class="fa fa-star{% if w.product.averageReview < 2 %}-o empty{% endif %}"></i>
+                          <i class="fa fa-star{% if w.product.averageReview < 3 %}-o empty{% endif %}"></i>
+                          <i class="fa fa-star{% if w.product.averageReview < 4 %}-o empty{% endif %}"></i>
+                          <i class="fa fa-star{% if w.product.averageReview < 5 %}-o empty{% endif %}"></i>
+                         
+                      </div>
                       </div>
                       <div class="prd-tag"><a href="#">{{ w.product.category.name }}</a></div>
                       <h2 class="prd-title">
