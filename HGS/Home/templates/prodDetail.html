@@ -74,11 +74,11 @@
 				</div>
 
 				<div class="col-md-10 col-lg-10 col-xl-10 mt-1 mt-md-0">
-					<h2>Share me on
+					<h2>Share me on {% post_to_facebook object_or_url "<p style='color: #4267B2;'>facebook</p>" %}
 						<div class="hdr-line-separate">
 							<ul class="social-list list-unstyled">
-								{% comment %} {% post_to_facebook object_or_url "<p style='color: green;'>facebook</p>" %} {% endcomment %}
-								<li>
+								
+								{% comment %} <li>
 									
 									<a href="#"><i class="icon-facebook" style="font-size:28px"></i></a>
 								</li>
@@ -90,7 +90,7 @@
 								</li>
 								<li>
 									<a href="#"><i class="icon-instagram" style="font-size:28px"></i></a>
-								</li>
+								</li> {% endcomment %}
 							</ul>
 						</div>
 					</h2>
@@ -99,7 +99,20 @@
 						<div class="prd-block_info-top prd-block_info_item order-0 order-md-2">
 
 							<div class="prd-block_price prd-block_price--style2">
-								<h2 >Price <div class="prd-block_price--actual"> <h2>$<span  id='product_price'>{{ product.price }}</span></h2></div>
+								<h2 >Price 
+									{% if currency == 'INR' %}
+									<div class="prd-block_price--actual">
+									 <h2><span  id='product_price'>₹{{ product.myPrice }}</span></h2>
+									</div>
+									{% elif currency == "USD" %}
+									<div class="prd-block_price--actual">
+										<h2><span  id='product_price'>${{ product.myPrice }}</span></h2>
+									</div>
+									{% else %}
+									<div class="prd-block_price--actual">
+										<h2><span  id='product_price'>Rs.{{ product.myPrice }}</span></h2>
+									</div>
+									{% endif %}
 								</h2>
 							</div>
 							<div class="prd-block_viewed-wrap d-none d-md-flex">
@@ -146,10 +159,11 @@
 							</form>
 							<div class="prd-block_actions prd-block_actions--wishlist">
 								<div class="btn-wrap">
-									{% comment %} {% if product.stock >= 1 %} {% endcomment %}
+									{% if product.stock >= 1 %}
 									<button form="add-to-cart-form" type="submit"  class="btn btn--add-to-cart js-trigger-addtocart js-prd-addtocart">Add to cart</button>
-									{% comment %} {% else %} {% endcomment %}
-									{% comment %} <h1>No items left</h1> {% endcomment %}
+									{% else %}
+									<h1>No items left</h1>
+									{% endif %}
 								</div>
 								<div class="btn-wishlist-wrap">
 							
@@ -558,8 +572,15 @@
 									</div>
 									<div class="prd-hovers">
 										<div class="prd-price">
+											{% if currency == 'INR' %}
+											<div class="price-new">₹{{ product.myPrice }}</div>
+											{% elif currency == "USD" %}
 											<div class="price-new">${{ product.myPrice }}</div>
-										</div>
+											{% else %}
+											<div class="price-new">Rs.{{ product.myPrice }}</div>
+											{% endif %}
+											
+									</div>
 										<div class="prd-action">
 											<div class="prd-action-left">
 												<form method="post" action="{{ product.get_absolute_url }}">
@@ -589,15 +610,13 @@
 				url: "{% url 'home:customize' product.id %}",
 				data: form,
 				success: function (data) {
-				
-				
+
 					document.getElementById('sizeGuide').style.display = 'none'
 					var product_price = document.getElementById('product_price').innerHTML 
-					product_price = parseFloat(product_price) + 100
+					product_price = parseFloat(product_price)
 					document.getElementById('product_price').innerHTML = product_price
 					document.getElementById('product_image').src = 'http://127.0.0.1:8000/static/b.png'
 					document.getElementById('is_customize').value = 1
-					
 				}
 			  });
 		}

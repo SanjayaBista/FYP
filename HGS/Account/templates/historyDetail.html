@@ -52,7 +52,7 @@ Purchase History
 							<td>Rs.{{item.price}}</td>
 							<td>{{  item.quantity}}</td>
                             <td>Rs.{{  item.get_price}}</td>
-							<td><a href="{% url 'account:pdf_download' %}" class="btn btn--grey btn--sm">Download Invoice</a></td>
+							{% comment %} <td><a href="{% url 'account:pdf_download' id %}" class="btn btn--grey btn--sm">Download Invoice</a></td> {% endcomment %}
 
 						</tr> 
 					

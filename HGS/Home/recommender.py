@@ -15,10 +15,8 @@ feature = ['Rating', 'Size', 'Price', 'Description']
 for feat in feature:
     df[feat] = df[feat].fillna('')
 
-
 def merging(row):
     return str(row['Rating'])+" "+str(row['Size'])+" "+str(row['Price'])+" "+str(row['Description'])
-
 
 df["mergingFeatures"] = df.apply(merging, axis=1)
 

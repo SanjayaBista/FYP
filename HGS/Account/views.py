@@ -1,5 +1,5 @@
 from multiprocessing import context
-from django.shortcuts import redirect, render
+from django.shortcuts import get_object_or_404, redirect, render
 from django.contrib.auth import authenticate, login, logout
 from django.urls import reverse_lazy
 from django.views import View
@@ -61,7 +61,8 @@ def userRegister(request):
         user_form = RegisterForm()
     context = {'user_form':user_form,'category':category}
     return render(request,'accountCreate.html',context)
-
+    
+@login_required(login_url='account:login')
 def profile(request):
     category = Category.objects.all()
     context = {'category':category}
@@ -120,6 +121,7 @@ def wishlist(request):
     context = {'category':category,'wish':wish, 'count_item':count_item}
     return render(request,'wishlist.html',context)
 
+@login_required(login_url='account:login')
 def history(request):
     category = Category.objects.all()
     ordHist = Order.objects.filter(user=request.user).order_by('id')
@@ -142,26 +144,36 @@ def render_to_pdf(template_src, context_dict={}):
 		return HttpResponse(result.getvalue(), content_type='application/pdf')
 	return None
 
-data = {
-    
-	"store": "Store: Halgada Jersey Store",
-	"address": "Address: Itahari-1",
-	"city": "City: Halgada",
-	"state": "State: State-1",
-	"zipcode": "ZipCode: 0025",
 
-	"phone": "Contact: 9819069112",
-	"email": "E-mail: halgadajerseystore.com",
-	"website": "Website: www.hgs.com",
-    
-
-	}
 class DownloadPDF(View):
-	def get(self, request, *args, **kwargs):
-       
-		pdf = render_to_pdf('pdf.html',data)
-		response = HttpResponse(pdf, content_type='application/pdf')
-		filename = "Invoice_%s.pdf" %("12341231")
-		content = "attachment; filename='%s'" %(filename)
-		response['Content-Disposition'] = content
-		return response
+    def get(self, request,pk, *args, **kwargs):
+        try:
+            ordHist = get_object_or_404(Order, user=request.user, id=pk)
+            downHist = ItemOrdered.objects.filter(order=ordHist)
+            # pdfHist = ItemOrdered.objects.filter(order=ordHist)    
+        except:
+            return HttpResponse("505 Not Found") 
+
+        data = {
+        "store": "Store: Halgada Jersey Store",
+        "address": "Address: Itahari-1",
+        "city": "City: Halgada",
+        "state": "State: State-1",
+        "zipcode": "ZipCode: 0025",
+
+        "phone": "Contact: 9819069112",
+        "email": "E-mail: halgadajerseystore.com",
+        "website": "Website: www.hgs.com",
+        "order":ordHist,
+        "name": ordHist.id,
+        "saman":downHist,
+     
+        }
+        pdf = render_to_pdf('pdf.html',data)
+        if pdf:
+            response = HttpResponse(pdf, content_type='application/pdf')
+            filename = "Invoice_%s.pdf" %("Invoice")
+            content = "inline; filename='%s'" %(filename)
+            content = "attachment; filename='%s'" %(filename)
+            response['Content-Disposition'] = content
+            return response

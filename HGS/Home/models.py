@@ -18,6 +18,7 @@ class ExchangeRate(models.Model):
                 ('INR','INR'),
                 ('USD','USD'),
                 )
+    
     currency = models.CharField(max_length=50, choices=currency)
     value = models.FloatField()
 
@@ -60,7 +61,7 @@ class Product(models.Model):
     slug = models.SlugField(max_length=200, db_index=True, unique=True, null=False )
     image = models.ImageField(blank=True)
     image2 = models.ImageField(blank=True, null=True)
-    price = models.DecimalField(max_digits=10,decimal_places=2)
+    price = models.DecimalField(max_digits=10,decimal_places=0)
     stock = models.IntegerField()
     description = models.TextField(blank=True)
     long_description = models.TextField(blank=True, null=True)

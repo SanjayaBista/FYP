@@ -95,12 +95,12 @@
                         </div>
 
                         <div class="panel">
-                            <div class="panel-heading">
+                            {% comment %} <div class="panel-heading">
                                 <h4 class="panel-title">
                                     <a data-toggle="collapse" href="#step4"> Payment Method</a>
                                     <span class="toggle-arrow"><span></span><span></span></span>
                                 </h4>
-                            </div>
+                            </div> {% endcomment %}
                             <div id="step4" data-parent="#checkoutAccordion" class="panel-collapse collapse">
                                 <div class="panel-body">
                                     <div class="panel-body-inside">
@@ -201,7 +201,7 @@
                                 </div>
                                 
                                 <div class="cart-table-prd-price-total">
-                                    ${{  item.price }}
+                                    Rs.{{  item.price }}
                                 </div>
                                 <div class="cart-table-prd-qty">
                                     <div class="qty qty-changer">
@@ -210,7 +210,7 @@
                                     </div>
                                 </div>
                                 <div class="cart-table-prd-price-total">
-                                    ${{ item.total_price }}
+                                    Rs.{{ item.total_price }}
                                 </div>
                             </div>
                         </div>
@@ -225,19 +225,19 @@
                     <div class="cart-total-sm">
                       
                         <span><h2>Total</h2></span>
-                        <span class="card-total-price">${{ cart.get_total_price|floatformat:2 }}</span>
+                        <span class="card-total-price">Rs.{{ cart.get_total_price|floatformat:2 }}</span>
                         
                     </div>
                     <div class="cart-total-sm">
                         <span><h3>Discount ({{ cart.coupon.discount }} %)</h3></span>
-                        <span class="card-total-price"><h3> - ${{ cart.get_discount|floatformat:2 }}</h3></span>
+                        <span class="card-total-price"><h3> - Rs.{{ cart.get_discount|floatformat:2 }}</h3></span>
                         
                     </div>
                     <hr>
                     {% endif %}
                     <div class="cart-total-sm">
                         <span><h2> New Total</h2></span>
-                        <span class="card-total-price"> <h2>  ${{ cart.get_total_price_after_discount|floatformat:2 }}</h2></span>
+                        <span class="card-total-price"> <h2> Rs.{{ cart.get_total_price_after_discount|floatformat:2 }}</h2></span>
                         
                     </div> 
                     <div class="mt-2"></div>  
@@ -259,7 +259,7 @@
     }
         var config = {
             // replace the publicKey with yours
-            "publicKey": "test_public_key_3365d87245694ad296e9117b8dd17a1f",
+            "publicKey": "test_public_key_a36063ecbda7448883204dc5afd3e8ba",
             "productIdentity": "1234567890",
             "productName": "Dragon",
             "productUrl": "http://gameofthrones.wikia.com/wiki/Dragons",

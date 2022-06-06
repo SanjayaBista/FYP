@@ -139,9 +139,19 @@
 
 
                             <div class="prd-hovers">
+                                {% if currency == 'INR' %}
                                 <div class="prd-price">
-                                    <div class="price-new">{{ product.myPrice }}</div>
+                                    <div class="price-new">₹{{ product.myPrice }}</div>
                                 </div>
+                                {% elif currency == "USD" %}
+                                <div class="prd-price">
+                                    <div class="price-new">${{ product.myPrice }}</div>
+                                </div>
+                                {% else %}
+                                <div class="prd-price">
+                                    <div class="price-new">Rs. {{ product.myPrice }}</div>
+                                </div>
+                                {% endif %}
                                 <div class="prd-action">
                                     <div class="prd-action-left">
                                         <form method="post" action="{{ product.get_absolute_url }}">

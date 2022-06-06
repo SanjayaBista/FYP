@@ -14,7 +14,7 @@ urlpatterns = [
     path('wishlist/',views.wishlist,name='wishlist'),
     path('history/',views.history,name='history'),
     path('historyDetail/<int:id>/',views.historyDetail,name='historyDetail'),
-    path('pdf_download/', views.DownloadPDF.as_view(), name="pdf_download"),
+    path('pdf_download/<int:pk>/', views.DownloadPDF.as_view(), name="pdf_download"),
 
     
 

@@ -45,7 +45,7 @@ class AdminCategory2(DraggableMPTTAdmin):
 
 @admin.register(Product)
 class AdminProduct(admin.ModelAdmin):
-    list_display = ['name','slug','price','availibility','created','updated','category']
+    list_display = ['name','price','availibility','stock','category']
     list_filter = ['created','availibility','updated']
     list_editable = ['price','availibility']
     prepopulated_fields = {'slug':('name',)}

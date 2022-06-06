@@ -94,7 +94,14 @@
                        
                       </div>
                       <div class="prd-price">
-                        <div class="price-new">${{ w.product.price }}</div>
+                        {% if currency == 'INR' %}
+											<div class="price-new">₹{{ w.product.myPrice }}</div>
+											{% elif currency == "USD" %}
+											<div class="price-new">${{ w.product.myPrice }}</div>
+											{% else %}
+											<div class="price-new">Rs.{{ w.product.myPrice }}</div>
+											{% endif %}
+                       
                       </div>
                       <div class="prd-action">
                         <div class="prd-action-left">

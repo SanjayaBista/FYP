@@ -22,7 +22,7 @@ Cart Page
     <div class="holder">
         <div class="container">
             <div class="page-title text-center">
-                <h1>Shopping Cart</h1>
+                <h1>Shopping Cart (Prices in Nrs.)</h1>
                 <a href="index.html">Continue Shopping</a>
             </div>
             {% if messages %}
@@ -67,7 +67,7 @@ Cart Page
                                     
                                 </div>
                                 <div class="cart-table-prd-price-total">
-                                    ${{  item.price }}
+                                    Rs.{{  item.price }}
                                 </div>
                                 <div class="cart-table-prd-qty">
                                     <div class="qty qty-changer">
@@ -80,7 +80,7 @@ Cart Page
                                     </div>
                                 </div>
                                 <div class="cart-table-prd-price-total">
-                                    ${{ item.total_price }}
+                                    Rs.{{ item.total_price }}
                                 </div>
                             </div>
                             <div class="cart-table-prd-action">
@@ -105,18 +105,18 @@ Cart Page
                      {% if cart.coupon  %}  
                         <div class="row d-flex">
                             <div class="col card-total-txt"> <h3>Total</h3></div>
-                            <div class="col-auto card-total-price text-right"> <h3>${{ cart.get_total_price|floatformat:2 }}</h3> </div>
+                            <div class="col-auto card-total-price text-right"> <h3>Rs.{{ cart.get_total_price|floatformat:2 }}</h3> </div>
                         </div>
                         <div class="row d-flex">
                             <div class="col card-total-txt"> <h3>Discount ({{ cart.coupon.discount }} %)</h3></div>
-                            <div class="col-auto card-total-price text-right"> <h3> - ${{ cart.get_discount|floatformat:2 }}</h3> </div>
+                            <div class="col-auto card-total-price text-right"> <h3> - Rs.{{ cart.get_discount|floatformat:2 }}</h3> </div>
                         </div>
                         <hr>
                     {% endif %}
                    
                         <div class="row d-flex">
                             <div class="col card-total-txt"> <h3> New Total</h3></div>
-                            <div class="col-auto card-total-price text-right"> <h3>  ${{ cart.get_total_price_after_discount|floatformat:2 }}</h3> </div>
+                            <div class="col-auto card-total-price text-right"> <h3>  Rs.{{ cart.get_total_price_after_discount|floatformat:2 }}</h3> </div>
                         </div>
                       
                         <form action="{% url 'order:orderItem'  %}" method="post">
@@ -227,12 +227,12 @@ Cart Page
                             <img src="{% if product.image %} {{ product.image.url }} {% else %} {% static 'images/NoImage.png' %}{% endif %}"
                                 data-src="" alt=""  class="js-prd-img lazyload fade-up">
                         </a>
-            <div class="prd-circle-labels">
+            {% comment %} <div class="prd-circle-labels">
                 <a href="#" class="circle-label-compare circle-label-wishlist--add js-add-wishlist mt-0"
                     title="Add To Wishlist"><i class="icon-heart-stroke"></i></a><a href="#"
                     class="circle-label-compare circle-label-wishlist--off js-remove-wishlist mt-0"
                     title="Remove From Wishlist"><i class="icon-heart-hover"></i></a>
-            </div>
+            </div> {% endcomment %}
         </div>
         <div class="prd-info">
             <div class="prd-info-wrap">
@@ -252,7 +252,14 @@ Cart Page
             </div>
             <div class="prd-hovers">
                 <div class="prd-price">
-                    <div class="price-new">${{ product.price }}</div>
+                    {% if currency == 'INR' %}
+                    <div class="price-new">₹{{ product.myPrice }}</div>
+                    {% elif currency == "USD" %}
+                    <div class="price-new">${{ product.myPrice }}</div>
+                    {% else %}
+                    <div class="price-new">Rs.{{ product.myPrice }}</div>
+                    {% endif %}
+                 
                 </div>
                 <div class="prd-action">
                     <div class="prd-action-left">

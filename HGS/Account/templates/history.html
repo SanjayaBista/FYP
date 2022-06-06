@@ -61,7 +61,7 @@ Purchase History
 							<td>{{ h.orderedOn|date:"M d, Y"  }}</td>
 							<td>{{h.email}}</td>
 							<td><span class="color">{{h.state}},{{h.address}}</span></td>
-							<td><a href="{% url 'account:pdf_download' %}" class="btn btn--grey btn--sm">Download Invoice</a></td>
+							<td><a href="{% url 'account:pdf_download' pk=h.id %}" class="btn btn--grey btn--sm">Download Invoice</a></td>
 
 						</tr> 
 						{% comment %} <tr>

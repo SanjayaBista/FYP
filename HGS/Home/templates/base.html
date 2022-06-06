@@ -513,11 +513,11 @@
                     <li><a href="{% url 'account:login' %}"><span>Log In</span><i class="icon-login"></i></a></li>
                     <li><a href="{% url 'account:register' %}"><span>Register</span><i class="icon-user2"></i></a></li>
                     {% endif %}
-                    <li><a href="checkout-2.html"><span>Checkout</span><i class="icon-card"></i></a></li>
+                    {% comment %} <li><a href="checkout-2.html"><span>Checkout</span><i class="icon-card"></i></a></li> {% endcomment %}
                 </ul>
                 <div class="dropdn-form-wrapper">
-                    <h5>Quick Login</h5>
-                    <form action="#">
+                    {% comment %} <h5>Quick Login</h5> {% endcomment %}
+                    {% comment %} <form action="#">
                         <div class="form-group">
                             <input type="text" class="form-control form-control--sm is-invalid"
                                 placeholder="Enter your e-mail">
@@ -528,7 +528,7 @@
                                 placeholder="Enter your password">
                         </div>
                         <button type="submit" class="btn">Enter</button>
-                    </form>
+                    </form> {% endcomment %}
                 </div>
             </div>
             <div class="drop-overlay js-dropdn-close"></div>

@@ -23,7 +23,7 @@ class Order(models.Model):
         return str(self.id)
 
     def total_cost(self):
-        return sum(item.get_price() for item in self.items.all )
+        return sum([item.get_price() for item in self.items.all()] )
 
 class ItemOrdered(models.Model):
     order = models.ForeignKey(Order, related_name="items", on_delete=models.CASCADE)

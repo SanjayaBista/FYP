@@ -336,6 +336,6 @@ def csvExport4(request):
     for size in sizeFields:
         size_list.append(size)
     for i in range(0,len(product_list)):
-        writer.writerow( product_list[i] + rate_list[i] +size_list[i])
+        writer.writerow( product_list[i] + rate_list[i] + size_list[i])
     return response
 

@@ -104,7 +104,7 @@ def refundMsg(request):
         current_user = request.user
         refund.user_id = current_user.id
         refund.save()
-        messages.error(request, "Refund Message Sent Successfully ")
+        messages.error(request, "Refund Message Sent Successfully. We will contact soon on email. ")
         return HttpResponseRedirect(url)
         
 
@@ -121,7 +121,7 @@ def verify_payment(request):
     "amount": amount
     }
     headers = {
-    "Authorization": "Key test_secret_key_7a19aba555514506ab3f9e50086e1c23"
+    "Authorization": "Key test_secret_key_db52a363f99b45108f229ebdf7e93de1"
     }
    
     response = requests.post(url, payload, headers = headers)
@@ -135,5 +135,5 @@ def verify_payment(request):
     import pprint 
     pp = pprint.PrettyPrinter(indent=4)
     pp.pprint(response_data)
-    return JsonResponse(f"Payment Done !! With IDX. {response_data['user']['idx']}",safe=False)
+    return JsonResponse(f"Payment Done. {response_data['user']['idx']}",safe=False)
 
