@@ -103,7 +103,7 @@
                                         data-panel="#dropdnMinicart">
                                         <i class="icon-basket"></i>
                                         <span class="minicart-qty">{{ total_items }}</span>
-                                        <span class="minicart-total hide-mobile">${{ cart.get_total_price }}</span>
+                                        <span class="minicart-total hide-mobile">Rs.{{ cart.get_total_price }}</span>
                                     </a>
                                     {% endif %}
                             
@@ -284,7 +284,7 @@
                                         data-panel="#dropdnMinicart">
                                         <i class="icon-basket"></i>
                                         <span class="minicart-qty"> {{ total_items }}</span>
-                                        <span class="minicart-total hide-mobile">${{ cart.get_total_price }}</span>
+                                        <span class="minicart-total hide-mobile">Rs.{{ cart.get_total_price }}</span>
                                     </a>
                                     {% endif %}
                                     {% if not total_items > 0 %}
@@ -552,7 +552,7 @@
                             <div class="minicart-prd-qty"><span class="minicart-prd-qty-label">Quantity:</span><span
                                     class="minicart-prd-qty-value">{{ item.quantity }}</span></div>
                             <div class="minicart-prd-price prd-price">
-                                <div class="price-new">Price: ${{  item.price }}</div>
+                                <div class="price-new">Price: Rs.{{  item.price }}</div>
                             </div>
                         </div>
                         <div class="minicart-prd-action">
@@ -585,12 +585,12 @@
                     </div>
                     <div class="minicart-drop-total js-minicart-drop-total row no-gutters align-items-center">
                         <div class="minicart-drop-total-txt col-auto heading-font">Subtotal</div>
-                        <div class="minicart-drop-total-price col" data-header-cart-total="">${{ cart.get_total_price|floatformat:2 }}</div>
+                        <div class="minicart-drop-total-price col" data-header-cart-total="">Rs.{{ cart.get_total_price|floatformat:2 }}</div>
                     </div>
                     <div class="minicart-drop-actions">
                         <a href="{% url 'cart:cart_detail' %}" class="btn btn--md btn--grey"><i class="icon-basket"></i><span>Cart
                                 Page</span></a>
-                        <a href="checkout-2.html" class="btn btn--md"><i class="icon-checkout"></i><span>Check
+                        <a href="{% url 'order:orderItem'%}" class="btn btn--md"><i class="icon-checkout"></i><span>Check
                                 out</span></a>
                     </div>
                     <ul class="payment-link mb-2">

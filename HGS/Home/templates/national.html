@@ -14,7 +14,7 @@
         <div class="container">
             <ul class="breadcrumbs">
                 <li><a href="{% url 'home:home' %}">Home</a></li>
-                <li><span>{{ category.name }}</span></li>
+                <li><span>{{ product.category.name_set.all }}</span></li>
             </ul>
         </div>
     </div>

@@ -30,6 +30,9 @@ def orderItem(request):
             order.save()
             for item in cart:
                 ItemOrdered.objects.create(order=order, product=item['product'], price=item['price'], quantity=item['quantity'])
+                newItem =Product.objects.filter(id=item['product'].id).first()
+                newItem.stock = newItem.stock - item['quantity']
+                newItem.save()
                 send_mail(
                         'Ordered Successfull',
                         'Thank you for Ordering. You will receive the product soon.',

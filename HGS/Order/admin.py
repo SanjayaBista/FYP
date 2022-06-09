@@ -12,9 +12,9 @@ class AdminOrder(admin.ModelAdmin):
     list_filter = ['moneyPaid', 'orderedOn']
     inlines = [AdminOrderItem]
 
-@admin.register(Refund)
-class AdminRefund(admin.ModelAdmin):
-    list_display = ['refundOrder','username','phone','email','reason']
+# @admin.register(Refund)
+# class AdminRefund(admin.ModelAdmin):
+#     list_display = ['refundOrder','username','phone','email','reason']
 
 @admin.register(RefundMsg)
 class AdminRefund(admin.ModelAdmin):
