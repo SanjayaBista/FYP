@@ -98,6 +98,7 @@ def productDetail(request,id,slug):
     context = {'category':category, 'product':product,'recommProd':recommProd, 'comment':comment,'cart_product_form':cart_product_form, 'count_item':count_item,'is_wishlist':is_wishlist}
     return render(request, 'prodDetail.html',context)
 
+
 def customize(request,id):
     url = request.META.get('HTTP_REFERER')
     category = Category.objects.all()
